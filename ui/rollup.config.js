@@ -84,4 +84,15 @@ export default {
     watch: {
         clearScreen: false,
     },
+
+    // wyłączenie ostrzeżeń: `this` has been rewritten to `undefined`
+    // źródłem ostrzeżeń jest class-validator, a w ogólności dekoratory
+    // https://rollupjs.org/guide/en/#error-this-is-undefined
+    onwarn: (warning, warn) => {
+        if (warning.code === 'THIS_IS_UNDEFINED') {
+            return
+        }
+
+        warn(warning)
+    },
 }

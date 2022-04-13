@@ -2,12 +2,21 @@
     "name": "format",
     "version": "1.0.0",
     "private": true,
+    "type": "module",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": "./dist/index.js",
+        "./package.json": "./package.json"
+    },
+    "engines": {
+        "node": ">=16"
+    },
     "scripts": {
         "build": "tsc --build",
         "test": "jest"
     },
     "dependencies": {
-        "class-validator": "^0.13.2"
+        "class-validator": "0.13.1"
     },
     "devDependencies": {
         "@types/jest": "^27.4.1",

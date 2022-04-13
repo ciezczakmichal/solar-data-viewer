@@ -6,6 +6,9 @@
 
     "compilerOptions": {
         "strict": true,
-        "rootDir": "src"
-    }
+        "rootDir": "src",
+        "baseUrl": "."
+    },
+
+    "references": [{ "path": "../format" }]
 }
