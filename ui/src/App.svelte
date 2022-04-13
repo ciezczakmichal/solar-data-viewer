@@ -59,12 +59,12 @@
 </script>
 
 <main>
-    <h1>Solar Data Viewer</h1>
+    <h1>🌟 Solar Data Viewer</h1>
 
     {#if status === Status.Loading}
         <h3>Trwa pobieranie danych...</h3>
     {:else if status === Status.Error}
-        <p>Pobranie danych nie powiodło się. {errorMessage}.</p>
+        <p>⚠ Pobranie danych nie powiodło się.<br />{errorMessage}.</p>
     {:else if data !== null}
         <Content {url} {data} />
     {/if}
