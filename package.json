@@ -13,7 +13,7 @@
         "build:format": "yarn format build",
         "build:ui": "yarn ui build",
         "dev": "yarn build:format && yarn ui dev",
-        "start": "yarn build:format && yarn ui start",
+        "start": "yarn ui start",
         "check": "yarn ui check"
     }
 }
