@@ -3,16 +3,19 @@
     "version": "1.0.0",
     "private": true,
     "workspaces": [
+        "calculation",
         "format",
         "ui"
     ],
     "scripts": {
+        "calculation": "yarn workspace calculation",
         "format": "yarn workspace format",
         "ui": "yarn workspace ui",
-        "build": "yarn build:format && yarn build:ui",
+        "build": "yarn build:format && yarn build:calculation && yarn build:ui",
+        "build:calculation": "yarn calculation build",
         "build:format": "yarn format build",
         "build:ui": "yarn ui build",
-        "dev": "yarn build:format && yarn ui dev",
+        "dev": "yarn build:format && yarn build:calculation && yarn ui dev",
         "start": "yarn ui start",
         "check": "yarn ui check"
     }

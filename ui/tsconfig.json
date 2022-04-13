@@ -10,5 +10,5 @@
         "baseUrl": "."
     },
 
-    "references": [{ "path": "../format" }]
+    "references": [{ "path": "../format" }, { "path": "../calculation" }]
 }
