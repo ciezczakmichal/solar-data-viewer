@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte'
-    import { validateDataFormat } from 'format'
+    import { convertObjectToDataFormat, DataFormat } from 'format'
     import Content from './Content.svelte'
     import { getHashValue } from './get-hash-value'
 
@@ -16,7 +16,7 @@
     let url: string = ''
     let data: object = {}
 
-    async function fetchData(): Promise<object> {
+    async function fetchData(): Promise<DataFormat> {
         let response, data
 
         try {
@@ -32,10 +32,7 @@
             throw new Error('Dane nie są w formacie JSON')
         }
 
-        // @todo walidacja zgodności z formatem
-        validateDataFormat(data)
-
-        return data
+        return convertObjectToDataFormat(data)
     }
 
     async function updateDataSource(): Promise<void> {
