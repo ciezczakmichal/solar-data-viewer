@@ -14,7 +14,7 @@
     let errorMessage = ''
 
     let url: string = ''
-    let data: object = {}
+    let data: DataFormat | null = null
 
     async function fetchData(): Promise<DataFormat> {
         let response, data
@@ -39,7 +39,7 @@
         status = Status.Loading
         errorMessage = ''
         url = getHashValue('data-source')
-        data = {}
+        data = null
 
         try {
             data = await fetchData()
@@ -65,7 +65,7 @@
         <h3>Trwa pobieranie danych...</h3>
     {:else if status === Status.Error}
         <p>Pobranie danych nie powiodło się. {errorMessage}.</p>
-    {:else}
+    {:else if data !== null}
         <Content {url} {data} />
     {/if}
 </main>
