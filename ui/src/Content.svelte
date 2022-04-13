@@ -110,6 +110,11 @@
         )} kWh energii`}
     />
 
+    <br />
+    <div class="beta">
+        Poniżej wartości eksperymentalne, nie uwzględniające zmian w 2022 r.
+    </div>
+
     <Item
         value={`Gdyby nie panele, trzeba by zapłacić ${savedCost.format()}`}
     />
@@ -122,3 +127,10 @@
         value={`Inwestycja zwróci się po ${investmentReturnYears} latach, ${investmentReturnMonths} miesiącach`}
     />
 </div>
+
+<style>
+    .beta {
+        color: rgb(255, 52, 52);
+        font-weight: 700;
+    }
+</style>
