@@ -1,5 +1,7 @@
 import { IsISO8601, IsNumber, IsOptional, IsString } from 'class-validator'
 
+export const MeterInfoDateTimeFormat = 'YYYY-MM-DD HH:mm'
+
 export class MeterInfo {
     @IsISO8601({ strict: true })
     date!: string

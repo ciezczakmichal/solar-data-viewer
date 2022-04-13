@@ -15,7 +15,10 @@
         "build": "tsc --build",
         "test": "jest"
     },
-    "dependencies": {},
+    "dependencies": {
+        "currency.js": "^2.0.4",
+        "dayjs": "^1.11.0"
+    },
     "devDependencies": {
         "@types/jest": "^27.4.1",
         "@types/node": "^17.0.23",
