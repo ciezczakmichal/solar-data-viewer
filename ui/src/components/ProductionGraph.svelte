@@ -88,7 +88,7 @@
 
 <div>
     <div class="graph-header">
-        <h3>Wykres energii wyprodukowanej</h3>
+        <h3>Wykres energii wyprodukowanej (narastająco)</h3>
         <div>
             <button on:click={handleSwitchRange}>{switchButtonText}</button>
         </div>
