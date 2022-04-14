@@ -1,8 +1,8 @@
 <script lang="ts">
     import { onMount } from 'svelte'
     import { convertObjectToDataFormat, DataFormat } from 'format'
-    import Content from './Content.svelte'
-    import { getHashValue } from './get-hash-value'
+    import Content from './components/Content.svelte'
+    import { getHashValue } from './utils/get-hash-value'
 
     enum Status {
         Loading,

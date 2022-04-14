@@ -2,7 +2,7 @@
     import type { DataFormat } from 'format'
     import { calculateEnergy, calculateInvestment } from 'calculation'
     import Item from './Item.svelte'
-    import { format } from './utils'
+    import { format } from '../utils/utils'
 
     export let url: string
     export let data: DataFormat
