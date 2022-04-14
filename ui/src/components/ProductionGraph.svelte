@@ -12,7 +12,12 @@
         Month,
     }
 
-    let chart: Chart | null = null
+    interface ChartDataItem {
+        x: string
+        y: number
+    }
+
+    let chart: Chart<'line', ChartDataItem[]> | null = null
     let chartCanvas: HTMLCanvasElement
     let dataRange = DataRange.Week
 
@@ -26,8 +31,7 @@
         (dataRange === DataRange.Week ? 'miesięczny' : 'tygodniowy')
 
     let valuesToUse: EnergyProducedInfo[] = []
-    let chartValues: number[] = []
-    let chartLabels: string[] = []
+    let chartData: ChartDataItem[] = []
 
     $: {
         if (dataRange === DataRange.Week) {
@@ -44,23 +48,24 @@
             })
         }
 
-        chartValues = valuesToUse.map(item => item.value)
+        chartData = valuesToUse.map(item => {
+            const date = parseDate(item.date)
+            let label
 
-        if (dataRange === DataRange.Week) {
-            chartLabels = valuesToUse.map(item => {
-                const date = parseDate(item.date)
-                return date.format('DD.MM')
-            })
-        } else {
-            chartLabels = valuesToUse.map(item => {
-                const date = parseDate(item.date)
-                return getMonthName(date.month())
-            })
-        }
+            if (dataRange === DataRange.Week) {
+                label = date.format('DD.MM')
+            } else {
+                label = getMonthName(date.month())
+            }
+
+            return {
+                x: label,
+                y: item.value,
+            }
+        })
 
         if (chart) {
-            chart.data.labels = chartLabels
-            chart.data.datasets[0].data = chartValues
+            chart.data.datasets[0].data = chartData
             chart.update()
         }
     }
@@ -69,13 +74,12 @@
         chart = new Chart(chartCanvas, {
             type: 'line',
             data: {
-                labels: chartLabels,
                 datasets: [
                     {
                         label: 'Energia wyprodukowana (kWh)',
                         backgroundColor: '#ffc107',
                         borderColor: '#ffc107',
-                        data: chartValues,
+                        data: chartData,
                     },
                 ],
             },
