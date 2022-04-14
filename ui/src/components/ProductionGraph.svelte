@@ -51,14 +51,14 @@
         chartValues = valuesToUse.map(item => item.value)
 
         if (dataRange === DataRange.Week) {
-            chartLabels = valuesToUse.map(item => item.date)
+            chartLabels = valuesToUse.map(item => {
+                const date = parseDate(item.date, EnergyProducedInfoDateFormat)
+                return date.format('DD.MM')
+            })
         } else {
             chartLabels = valuesToUse.map(item => {
-                const month = parseDate(
-                    item.date,
-                    EnergyProducedInfoDateFormat
-                ).month()
-                return getMonthName(month)
+                const date = parseDate(item.date, EnergyProducedInfoDateFormat)
+                return getMonthName(date.month())
             })
         }
 
