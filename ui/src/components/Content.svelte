@@ -2,6 +2,7 @@
     import type { DataFormat } from 'format'
     import CalculationResult from './CalculationResult.svelte'
     import Item from './Item.svelte'
+    import ProductionGraph from './ProductionGraph.svelte'
 
     export let url: string
     export let data: DataFormat
@@ -11,4 +12,6 @@
     <Item label="Źródło danych" value={url} />
     <br />
     <CalculationResult {data} />
+
+    <ProductionGraph {data} />
 </div>

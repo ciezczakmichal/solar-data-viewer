@@ -3,6 +3,7 @@
     import { convertObjectToDataFormat, DataFormat } from 'format'
     import Content from './components/Content.svelte'
     import { getHashValue } from './utils/get-hash-value'
+    import './utils/chartjs-import'
 
     enum Status {
         Loading,
