@@ -35,13 +35,14 @@
 
     $: {
         if (dataRange === DataRange.Week) {
-            valuesToUse = data.energyProduced.filter(
-                item =>
-                    parseDate(item.date, EnergyProducedInfoDateFormat).day() ===
-                    0 // niedziela
-            )
+            valuesToUse = data.energyProduced.filter(item => {
+                // dane z niedzieli
+                const date = parseDate(item.date, EnergyProducedInfoDateFormat)
+                return date.day() === 0
+            })
         } else {
             valuesToUse = data.energyProduced.filter(item => {
+                // dane z ostatniego dnia miesiąca
                 const date = parseDate(item.date, EnergyProducedInfoDateFormat)
                 return date.date() === date.daysInMonth()
             })
