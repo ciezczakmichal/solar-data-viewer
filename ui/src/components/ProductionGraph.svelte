@@ -1,11 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte'
     import { Chart } from 'chart.js'
-    import {
-        EnergyProducedInfo,
-        EnergyProducedInfoDateFormat,
-        type DataFormat,
-    } from 'format'
+    import type { EnergyProducedInfo, DataFormat } from 'format'
     import { parseDate } from 'calculation'
     import { getMonthName } from '../utils/date'
 
@@ -37,13 +33,13 @@
         if (dataRange === DataRange.Week) {
             valuesToUse = data.energyProduced.filter(item => {
                 // dane z niedzieli
-                const date = parseDate(item.date, EnergyProducedInfoDateFormat)
+                const date = parseDate(item.date)
                 return date.day() === 0
             })
         } else {
             valuesToUse = data.energyProduced.filter(item => {
                 // dane z ostatniego dnia miesiąca
-                const date = parseDate(item.date, EnergyProducedInfoDateFormat)
+                const date = parseDate(item.date)
                 return date.date() === date.daysInMonth()
             })
         }
@@ -52,12 +48,12 @@
 
         if (dataRange === DataRange.Week) {
             chartLabels = valuesToUse.map(item => {
-                const date = parseDate(item.date, EnergyProducedInfoDateFormat)
+                const date = parseDate(item.date)
                 return date.format('DD.MM')
             })
         } else {
             chartLabels = valuesToUse.map(item => {
-                const date = parseDate(item.date, EnergyProducedInfoDateFormat)
+                const date = parseDate(item.date)
                 return getMonthName(date.month())
             })
         }

@@ -1,9 +1,8 @@
-import { IsISO8601, IsNumber, IsOptional, IsString } from 'class-validator'
-
-export const MeterInfoDateTimeFormat = 'YYYY-MM-DD HH:mm'
+import { IsNumber, IsOptional, IsString } from 'class-validator'
+import { IsISO8601Date } from '../decorators/is-iso8601-date'
 
 export class MeterInfo {
-    @IsISO8601({ strict: true })
+    @IsISO8601Date()
     date!: string
 
     // energia pobrana z sieci

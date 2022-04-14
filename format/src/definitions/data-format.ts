@@ -6,8 +6,8 @@ import { PlantProperties } from './plant-properties'
 import { TariffItem } from './tariff-item'
 
 export class DataFormat {
-    @Equals('v1')
-    version!: 'v1'
+    @Equals('v2')
+    version!: 'v2'
 
     @IsArray()
     @ValidateNested({ each: true })

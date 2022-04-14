@@ -2,6 +2,7 @@
 import 'reflect-metadata'
 
 export * from './definitions/data-format'
+export * from './definitions/date-format'
 export * from './definitions/energy-produced-info'
 export * from './definitions/meter-info'
 export * from './definitions/plant-properties'

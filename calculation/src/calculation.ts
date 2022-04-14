@@ -2,7 +2,6 @@ import currency from 'currency.js'
 import {
     EnergyProducedInfo,
     MeterInfo,
-    MeterInfoDateTimeFormat,
     PlantProperties,
     TariffItem,
 } from 'format'
@@ -64,8 +63,8 @@ export function calculateEnergy(
     const baseMeterValue = meterDb[0]
     const lastMeterValue = meterDb[meterDb.length - 1]
 
-    const lastDate = parseDate(lastMeterValue.date, MeterInfoDateTimeFormat)
-    const baseDate = parseDate(baseMeterValue.date, MeterInfoDateTimeFormat)
+    const lastDate = parseDate(lastMeterValue.date)
+    const baseDate = parseDate(baseMeterValue.date)
     const days = lastDate.diff(baseDate, 'days')
 
     const charged = lastMeterValue.charged - baseMeterValue.charged
