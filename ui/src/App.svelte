@@ -4,6 +4,7 @@
     import Content from './components/Content.svelte'
     import { getHashValue } from './utils/get-hash-value'
     import './utils/chartjs-import'
+    import './utils/dayjs-import'
 
     enum Status {
         Loading,

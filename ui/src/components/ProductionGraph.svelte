@@ -7,6 +7,7 @@
         type DataFormat,
     } from 'format'
     import { parseDate } from 'calculation'
+    import { getMonthName } from '../utils/date'
 
     export let data: DataFormat
 
@@ -47,7 +48,18 @@
         }
 
         chartValues = valuesToUse.map(item => item.value)
-        chartLabels = valuesToUse.map(item => item.date)
+
+        if (dataRange === DataRange.Week) {
+            chartLabels = valuesToUse.map(item => item.date)
+        } else {
+            chartLabels = valuesToUse.map(item => {
+                const month = parseDate(
+                    item.date,
+                    EnergyProducedInfoDateFormat
+                ).month()
+                return getMonthName(month)
+            })
+        }
 
         if (chart) {
             chart.data.labels = chartLabels
