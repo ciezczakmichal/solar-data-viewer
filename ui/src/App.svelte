@@ -19,6 +19,12 @@
     let data: DataFormat | null = null
 
     async function fetchData(): Promise<DataFormat> {
+        if (!url) {
+            throw new Error(
+                'URL nie zawiera parametru "data-source", wskazującego na źródło danych dla aplikacji'
+            )
+        }
+
         let response, data
 
         try {
