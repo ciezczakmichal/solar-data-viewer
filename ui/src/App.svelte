@@ -1,7 +1,9 @@
 <script lang="ts">
     import { onMount } from 'svelte'
     import { convertObjectToDataFormat, DataFormat } from 'format'
+    import AppHeader from './components/AppHeader.svelte'
     import Content from './components/Content.svelte'
+    import AppFooter from './components/AppFooter.svelte'
     import { getHashValue } from './utils/get-hash-value'
     import './utils/chartjs-import'
     import './utils/dayjs-import'
@@ -67,7 +69,7 @@
 </script>
 
 <main>
-    <h1>🌟 Solar Data Viewer</h1>
+    <AppHeader />
 
     {#if status === Status.Loading}
         <h3>Trwa pobieranie danych...</h3>
@@ -76,4 +78,6 @@
     {:else if data !== null}
         <Content {url} {data} />
     {/if}
+
+    <AppFooter />
 </main>
