@@ -78,7 +78,7 @@
     {#if fulfillNeeds}
         <Item
             label="WYNIK"
-            value="Ilość wyprodukowanej energii wystarcza do pokrycia potrzeb, posiadana nadwyżka."
+            value="Ilość wyprodukowanej energii pokrywa zapotrzebowanie, posiadana nadwyżka."
         />
         <Item
             label="Ilość energii pozostała w magazynie do pobrania"
@@ -88,10 +88,10 @@
     {:else}
         <Item
             label="WYNIK"
-            value="Ilość wyprodukowanej energii nie wystarcza do pokrycia potrzeb."
+            value="Ilość wyprodukowanej energii nie pokrywa zapotrzebowania."
         />
         <Item
-            value={`Potrzeby na prąd spełnione w ${needsFulfilmentPercent}`}
+            value={`Zapotrzebowanie na energię elektryczną jest spełnione w ${needsFulfilmentPercent}`}
         />
         <Item
             label="Ilość energii pozostała do rozliczenia (zapłaty)"
