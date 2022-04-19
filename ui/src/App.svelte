@@ -2,7 +2,7 @@
     import { onMount } from 'svelte'
     import { convertObjectToDataFormat, DataFormat } from 'format'
     import AppHeader from './components/AppHeader.svelte'
-    import Content from './components/Content.svelte'
+    import AppContent from './components/AppContent.svelte'
     import AppFooter from './components/AppFooter.svelte'
     import { getHashValue } from './utils/get-hash-value'
     import './utils/chartjs-import'
@@ -76,7 +76,7 @@
     {:else if status === Status.Error}
         <p>⚠ Pobranie danych nie powiodło się.<br />{errorMessage}.</p>
     {:else if data !== null}
-        <Content {url} {data} />
+        <AppContent {url} {data} />
     {/if}
 
     <AppFooter />
