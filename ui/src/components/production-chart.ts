@@ -45,18 +45,30 @@ export function getChartData(
     }
 
     return valuesToUse.map((item, index) => {
+        const previousItem: EnergyProducedInfo | null =
+            index > 0 ? valuesToUse[index - 1] : null
         const date = parseDate(item.date)
         let label, value
 
         if (range === DataRange.Week) {
-            label = date.format('DD.MM')
+            const currentLabel = date.format('DD.MM')
+
+            if (type === ChartType.Line) {
+                label = currentLabel
+            } else if (previousItem) {
+                const previousLabel = parseDate(previousItem.date)
+                    .add(1, 'day')
+                    .format('DD.MM')
+                label = `${previousLabel} - ${currentLabel}`
+            } else {
+                label = `do ${currentLabel}`
+            }
         } else {
             label = getMonthName(date.month())
         }
 
         if (type === ChartType.Bar) {
-            const previousValue = index > 0 ? valuesToUse[index - 1].value : 0
-            value = item.value - previousValue
+            value = item.value - (previousItem?.value || 0)
         } else {
             value = item.value
         }
