@@ -3,7 +3,7 @@
     import { calculateEnergy, calculateInvestment } from 'calculation'
     import Item from './Item.svelte'
     import EnergyCountItem from './EnergyCountItem.svelte'
-    import { formatNumber, formatKwh } from '../utils/format'
+    import { formatNumber, formatKwh, formatPercent } from '../utils/format'
 
     export let data: DataFormat
 
@@ -55,7 +55,9 @@
 
     <Item
         label="Autokonsumpcja"
-        value={`${formatKwh(selfConsumed)} (${selfConsumedPercent} produkcji)`}
+        value={`${formatKwh(selfConsumed)} (${formatPercent(
+            selfConsumedPercent
+        )} produkcji)`}
     />
     <Item
         label="Oddano do sieci"
@@ -90,7 +92,9 @@
             value="Ilość wyprodukowanej energii nie pokrywa zapotrzebowania."
         />
         <Item
-            value={`Zapotrzebowanie na energię elektryczną jest spełnione w ${needsFulfilmentPercent}`}
+            value={`Zapotrzebowanie na energię elektryczną jest spełnione w ${formatPercent(
+                needsFulfilmentPercent
+            )}`}
         />
         <EnergyCountItem
             label="Ilość energii pozostała do rozliczenia (zapłaty)"

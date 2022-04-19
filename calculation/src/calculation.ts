@@ -6,7 +6,7 @@ import {
     TariffItem,
 } from 'format'
 import { calculateEnergyCost } from './energy-cost'
-import { makePercent, parseDate } from './utils/utils'
+import { parseDate } from './utils/parse-date'
 
 export interface EnergyCalculationInput {
     producedDb: EnergyProducedInfo[]
@@ -22,7 +22,7 @@ export interface EnergyCalculationResult {
     kWhTokWp: number
 
     selfConsumed: number
-    selfConsumedPercent: string
+    selfConsumedPercent: number
 
     donated: number
     donatedToUse: number
@@ -33,7 +33,7 @@ export interface EnergyCalculationResult {
     fulfillNeeds: boolean
     // ilość energii, która musiała by być dodatkowo pobrana z sieci, gdyby nie istniały panele (i bilansowanie)
     savedEnergy: number
-    needsFulfilmentPercent: string
+    needsFulfilmentPercent: number
     energyToBuy: number // ilość energii do zakupu
     energyToCharge: number // ilość energii do pobrania (nadwyżka) @todo ze współczynnikiem, czy nie?
 }
@@ -72,7 +72,7 @@ export function calculateEnergy(
     const donatedToUse = donated * properties.energyInWarehouseFactor
 
     const selfConsumed = produced - donated
-    const selfConsumedPercent = makePercent(selfConsumed, produced)
+    const selfConsumedPercent = selfConsumed / produced
 
     const dailyProduction = produced / days
 
@@ -80,7 +80,7 @@ export function calculateEnergy(
     const dailyConsumption = totalConsumption / days
 
     let savedEnergy: number,
-        needsFulfilmentPercent: string,
+        needsFulfilmentPercent: number,
         energyToBuy: number,
         energyToCharge: number
 
@@ -90,7 +90,7 @@ export function calculateEnergy(
         const chargedWithFactor = charged / properties.energyInWarehouseFactor
 
         savedEnergy = totalConsumption
-        needsFulfilmentPercent = makePercent(1, 1) // 100%
+        needsFulfilmentPercent = 1
         energyToBuy = 0
         energyToCharge = donated - chargedWithFactor
     } else {
@@ -98,10 +98,8 @@ export function calculateEnergy(
         energyToCharge = 0
 
         savedEnergy = charged - energyToBuy + selfConsumed
-        needsFulfilmentPercent = makePercent(
-            totalConsumption - energyToBuy,
-            totalConsumption
-        )
+        needsFulfilmentPercent =
+            (totalConsumption - energyToBuy) / totalConsumption
     }
 
     return {
