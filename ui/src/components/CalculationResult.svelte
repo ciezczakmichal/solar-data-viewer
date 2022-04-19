@@ -3,7 +3,7 @@
     import { calculateEnergy, calculateInvestment } from 'calculation'
     import Item from './Item.svelte'
     import EnergyCountItem from './EnergyCountItem.svelte'
-    import { format, formatKwh } from '../utils/format'
+    import { formatNumber, formatKwh } from '../utils/format'
 
     export let data: DataFormat
 
@@ -51,7 +51,7 @@
         label="Średnia dzienna produkcja energii"
         value={dailyProduction}
     />
-    <Item label="kWh/kWp" value={format(kWhTokWp)} />
+    <Item label="kWh/kWp" value={formatNumber(kWhTokWp)} />
 
     <Item
         label="Autokonsumpcja"

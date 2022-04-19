@@ -1,11 +1,12 @@
-export function format(value: number): string {
-    return value.toFixed(2)
-}
-
-const kwhFormat = new Intl.NumberFormat('pl-PL', {
+const numberFormat = new Intl.NumberFormat('pl-PL', {
     style: 'decimal',
+    maximumFractionDigits: 2,
 })
 
+export function formatNumber(value: number): string {
+    return numberFormat.format(value)
+}
+
 export function formatKwh(value: number): string {
-    return kwhFormat.format(value) + ' kWh'
+    return numberFormat.format(value) + ' kWh'
 }
