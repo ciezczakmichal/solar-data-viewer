@@ -15,7 +15,7 @@
     let chart: Chart<'line' | 'bar', ChartDataItem[]> | null = null
     let canvas: HTMLCanvasElement
     let options: ChartOptions = {
-        type: ChartType.Line,
+        type: ChartType.Bar,
         range: DataRange.Week,
     }
 
