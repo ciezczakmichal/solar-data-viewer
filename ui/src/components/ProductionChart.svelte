@@ -27,12 +27,22 @@
             data: {
                 datasets: [
                     {
-                        label: 'Energia wyprodukowana (kWh)',
+                        label: 'Energia wyprodukowana',
                         backgroundColor: '#ffc107',
                         borderColor: '#ffc107',
                         data: chartData,
                     },
                 ],
+            },
+            options: {
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'kWh',
+                        },
+                    },
+                },
             },
         })
     }
