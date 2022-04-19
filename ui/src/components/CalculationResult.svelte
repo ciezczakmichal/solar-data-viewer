@@ -2,7 +2,8 @@
     import type { DataFormat } from 'format'
     import { calculateEnergy, calculateInvestment } from 'calculation'
     import Item from './Item.svelte'
-    import { format } from '../utils/utils'
+    import EnergyCountItem from './EnergyCountItem.svelte'
+    import { format, formatKwh } from '../utils/format'
 
     export let data: DataFormat
 
@@ -45,33 +46,32 @@
 
 <div>
     <Item label="Czas pracy instalacji" value={days} unit="dni" />
-    <Item label="Energia wyprodukowana" value={produced} unit="kWh" />
-    <Item
+    <EnergyCountItem label="Energia wyprodukowana" value={produced} />
+    <EnergyCountItem
         label="Średnia dzienna produkcja energii"
-        value={format(dailyProduction)}
-        unit="kWh"
+        value={dailyProduction}
     />
     <Item label="kWh/kWp" value={format(kWhTokWp)} />
 
     <Item
         label="Autokonsumpcja"
-        value={`${selfConsumed} kWh (${selfConsumedPercent} produkcji)`}
+        value={`${formatKwh(selfConsumed)} (${selfConsumedPercent} produkcji)`}
     />
     <Item
         label="Oddano do sieci"
-        value={`${donated} kWh (= do pobrania ${format(donatedToUse)} kWh)`}
+        value={`${formatKwh(donated)} (= do pobrania ${formatKwh(
+            donatedToUse
+        )})`}
     />
 
-    <Item label="Pobrano energii z sieci" value={charged} unit="kWh" />
-    <Item
+    <EnergyCountItem label="Pobrano energii z sieci" value={charged} />
+    <EnergyCountItem
         label="Całkowite zużycie energii"
         value={totalConsumption}
-        unit="kWh"
     />
-    <Item
+    <EnergyCountItem
         label="Średnie dzienne zużycie energii"
-        value={format(dailyConsumption)}
-        unit="kWh"
+        value={dailyConsumption}
     />
     <br />
 
@@ -80,10 +80,9 @@
             label="WYNIK"
             value="Ilość wyprodukowanej energii pokrywa zapotrzebowanie, posiadana nadwyżka."
         />
-        <Item
+        <EnergyCountItem
             label="Ilość energii pozostała w magazynie do pobrania"
             value={energyToCharge}
-            unit="kWh"
         />
     {:else}
         <Item
@@ -93,17 +92,16 @@
         <Item
             value={`Zapotrzebowanie na energię elektryczną jest spełnione w ${needsFulfilmentPercent}`}
         />
-        <Item
+        <EnergyCountItem
             label="Ilość energii pozostała do rozliczenia (zapłaty)"
-            value={format(energyToBuy)}
-            unit="kWh"
+            value={energyToBuy}
         />
     {/if}
 
     <Item
-        value={`Gdyby nie panele, trzeba by zapłacić za ${format(
+        value={`Gdyby nie panele, trzeba by zapłacić za ${formatKwh(
             savedEnergy
-        )} kWh energii`}
+        )} energii`}
     />
 
     <br />
