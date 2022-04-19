@@ -1,21 +1,14 @@
 <script lang="ts">
     import { onMount } from 'svelte'
     import { Chart } from 'chart.js'
-    import type { EnergyProducedInfo, DataFormat } from 'format'
-    import { parseDate } from 'calculation'
-    import { getMonthName } from '../utils/date'
+    import type { DataFormat } from 'format'
+    import {
+        DataRange,
+        getChartData,
+        type ChartDataItem,
+    } from './production-graph'
 
     export let data: DataFormat
-
-    enum DataRange {
-        Week,
-        Month,
-    }
-
-    interface ChartDataItem {
-        x: string
-        y: number
-    }
 
     let chart: Chart<'line', ChartDataItem[]> | null = null
     let chartCanvas: HTMLCanvasElement
@@ -30,41 +23,12 @@
         'Przełącz na widok ' +
         (dataRange === DataRange.Week ? 'miesięczny' : 'tygodniowy')
 
-    let valuesToUse: EnergyProducedInfo[] = []
     let chartData: ChartDataItem[] = []
 
     $: {
-        if (dataRange === DataRange.Week) {
-            valuesToUse = data.energyProduced.filter(item => {
-                // dane z niedzieli
-                const date = parseDate(item.date)
-                return date.day() === 0
-            })
-        } else {
-            valuesToUse = data.energyProduced.filter(item => {
-                // dane z ostatniego dnia miesiąca
-                const date = parseDate(item.date)
-                return date.date() === date.daysInMonth()
-            })
-        }
-
-        chartData = valuesToUse.map(item => {
-            const date = parseDate(item.date)
-            let label
-
-            if (dataRange === DataRange.Week) {
-                label = date.format('DD.MM')
-            } else {
-                label = getMonthName(date.month())
-            }
-
-            return {
-                x: label,
-                y: item.value,
-            }
-        })
-
         if (chart) {
+            chartData = getChartData(data, dataRange)
+
             chart.data.datasets[0].data = chartData
             chart.update()
         }
