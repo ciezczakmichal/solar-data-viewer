@@ -60,13 +60,11 @@
     $: switchRangeButtonText =
         options.range === DataRange.Week ? 'tygodniowy' : 'miesięczny'
 
-    $: {
-        if (chart) {
-            chartData = getChartData(data, options)
+    $: if (chart) {
+        chartData = getChartData(data, options)
 
-            chart.data.datasets[0].data = chartData
-            chart.update()
-        }
+        chart.data.datasets[0].data = chartData
+        chart.update()
     }
 
     onMount(createChart)
