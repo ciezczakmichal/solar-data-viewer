@@ -36,10 +36,11 @@ export function getChartData(
             return date.day() === 0
         })
     } else {
-        valuesToUse = data.energyProduced.filter(item => {
-            // dane z ostatniego dnia miesiąca
+        valuesToUse = data.energyProduced.filter((item, index, array) => {
+            // dane z ostatniego dnia miesiąca lub ostatni dzień pomiarowy
             const date = parseDate(item.date)
-            return date.date() === date.daysInMonth()
+            const lastMonth = index + 1 >= array.length
+            return date.date() === date.daysInMonth() || lastMonth
         })
     }
 
