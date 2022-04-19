@@ -2,13 +2,19 @@ import type { DataFormat, EnergyProducedInfo } from 'format'
 import { parseDate } from 'calculation'
 import { getMonthName } from '../utils/date'
 
-// export enum GraphType {
-//     Line,
-// }
+export enum ChartType {
+    Line,
+    Bar,
+}
 
 export enum DataRange {
     Week,
     Month,
+}
+
+export interface ChartOptions {
+    type: ChartType
+    range: DataRange
 }
 
 export interface ChartDataItem {
@@ -18,8 +24,9 @@ export interface ChartDataItem {
 
 export function getChartData(
     data: DataFormat,
-    range: DataRange
+    options: ChartOptions
 ): ChartDataItem[] {
+    const { type, range } = options
     let valuesToUse: EnergyProducedInfo[] = []
 
     if (range === DataRange.Week) {
@@ -36,9 +43,9 @@ export function getChartData(
         })
     }
 
-    return valuesToUse.map(item => {
+    return valuesToUse.map((item, index) => {
         const date = parseDate(item.date)
-        let label
+        let label, value
 
         if (range === DataRange.Week) {
             label = date.format('DD.MM')
@@ -46,9 +53,16 @@ export function getChartData(
             label = getMonthName(date.month())
         }
 
+        if (type === ChartType.Bar) {
+            const previousValue = index > 0 ? valuesToUse[index - 1].value : 0
+            value = item.value - previousValue
+        } else {
+            value = item.value
+        }
+
         return {
             x: label,
-            y: item.value,
+            y: value,
         }
     })
 }
