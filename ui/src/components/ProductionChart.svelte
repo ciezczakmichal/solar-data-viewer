@@ -6,7 +6,7 @@
         DataRange,
         getChartData,
         type ChartDataItem,
-    } from './production-graph'
+    } from './production-chart'
 
     export let data: DataFormat
 
@@ -52,7 +52,7 @@
 </script>
 
 <div>
-    <div class="graph-header">
+    <div class="chart-header">
         <h3>Wykres energii wyprodukowanej (narastająco)</h3>
         <div>
             <button on:click={handleSwitchRange}>{switchButtonText}</button>
@@ -62,11 +62,11 @@
 </div>
 
 <style>
-    .graph-header {
+    .chart-header {
         display: flex;
     }
 
-    .graph-header h3 {
+    .chart-header h3 {
         flex-grow: 1;
     }
 </style>
