@@ -22,7 +22,12 @@ export interface ChartDataItem {
     y: number
 }
 
-export function getChartData(
+export interface ChartData {
+    yieldData: ChartDataItem[]
+    yieldForecastData: ChartDataItem[]
+}
+
+export function getChartYieldData(
     data: DataFormat,
     options: ChartOptions
 ): ChartDataItem[] {
@@ -78,4 +83,24 @@ export function getChartData(
             y: value,
         }
     })
+}
+
+export function getChartData(
+    data: DataFormat,
+    options: ChartOptions
+): ChartData {
+    const yieldData = getChartYieldData(data, options)
+    let yieldForecastData: ChartDataItem[] = []
+
+    if (options.type === ChartType.Bar && options.range === DataRange.Month) {
+        // pokaż dane dla miesięcy, dla których dostępne są dane produkcji
+        yieldForecastData = data.yieldForecastData
+            .map(item => ({
+                x: getMonthName(item.month - 1),
+                y: item.value,
+            }))
+            .filter(item => yieldData.some(yieldItem => yieldItem.x === item.x))
+    }
+
+    return { yieldData, yieldForecastData }
 }

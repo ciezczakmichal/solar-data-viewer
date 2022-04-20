@@ -6,33 +6,31 @@
         ChartType,
         DataRange,
         getChartData,
+        type ChartData,
         type ChartDataItem,
         type ChartOptions,
     } from './yield-chart-data'
 
     export let data: DataFormat
 
-    let chart: Chart<'line' | 'bar', ChartDataItem[]> | null = null
+    let chart: Chart<'bar' | 'line', ChartDataItem[]> | null = null
     let canvas: HTMLCanvasElement
     let options: ChartOptions = {
         type: ChartType.Bar,
         range: DataRange.Week,
     }
 
-    let chartData: ChartDataItem[] = []
+    let chartData: ChartData = {
+        yieldData: [],
+        yieldForecastData: [],
+    }
+    let chartDataNeedsUpdate = true
 
     function createChart() {
         chart = new Chart(canvas, {
             type: options.type === ChartType.Line ? 'line' : 'bar',
             data: {
-                datasets: [
-                    {
-                        label: 'Uzysk',
-                        backgroundColor: '#ffc107',
-                        borderColor: '#ffc107',
-                        data: chartData,
-                    },
-                ],
+                datasets: [],
             },
             options: {
                 scales: {
@@ -64,11 +62,45 @@
                 },
             },
         })
+
+        updateChartData()
+    }
+
+    function updateChartData() {
+        if (!chart || !chartDataNeedsUpdate) {
+            return
+        }
+
+        chartData = getChartData(data, options)
+
+        const datasets = [
+            {
+                label: 'Uzysk',
+                backgroundColor: '#ffc107',
+                borderColor: '#ffc107',
+                data: chartData.yieldData,
+            },
+        ]
+
+        if (chartData.yieldForecastData.length > 0) {
+            datasets.push({
+                label: 'Uzysk prognozowany',
+                backgroundColor: '#03a9f4',
+                borderColor: '#03a9f4',
+                data: chartData.yieldForecastData,
+            })
+        }
+
+        chart.data.datasets = datasets
+        chart.update()
+
+        chartDataNeedsUpdate = false
     }
 
     function handleSwitchType() {
         options.type =
             options.type === ChartType.Line ? ChartType.Bar : ChartType.Line
+        chartDataNeedsUpdate = true
 
         if (chart) {
             chart.destroy()
@@ -81,6 +113,7 @@
     function handleSwitchRange() {
         options.range =
             options.range === DataRange.Week ? DataRange.Month : DataRange.Week
+        chartDataNeedsUpdate = true
     }
 
     $: switchTypeButtonText =
@@ -93,11 +126,8 @@
         'Dane ' +
         (options.range === DataRange.Week ? 'tygodniowe' : 'miesięczne')
 
-    $: if (chart) {
-        chartData = getChartData(data, options)
-
-        chart.data.datasets[0].data = chartData
-        chart.update()
+    $: if (chartDataNeedsUpdate) {
+        updateChartData()
     }
 
     onMount(createChart)
