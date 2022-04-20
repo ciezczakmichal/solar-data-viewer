@@ -39,7 +39,7 @@
                     y: {
                         title: {
                             display: true,
-                            text: 'kWh',
+                            text: 'Energia w kWh',
                         },
                     },
                 },
