@@ -1,23 +1,23 @@
 import { Equals, IsArray, ValidateNested } from 'class-validator'
 import { Type } from 'class-transformer'
-import { EnergyProducedInfo } from './energy-produced-info'
-import { MeterInfo } from './meter-info'
+import { YieldRecord } from './yield-record'
+import { MeterRecord } from './meter-record'
 import { PlantProperties } from './plant-properties'
 import { TariffItem } from './tariff-item'
 
 export class DataFormat {
-    @Equals('v2')
-    version!: 'v2'
+    @Equals('v3')
+    version!: 'v3'
 
     @IsArray()
     @ValidateNested({ each: true })
-    @Type(() => EnergyProducedInfo)
-    energyProduced!: EnergyProducedInfo[]
+    @Type(() => YieldRecord)
+    yieldData!: YieldRecord[]
 
     @IsArray()
     @ValidateNested({ each: true })
-    @Type(() => MeterInfo)
-    meter!: MeterInfo[]
+    @Type(() => MeterRecord)
+    meterData!: MeterRecord[]
 
     @ValidateNested()
     @Type(() => PlantProperties)

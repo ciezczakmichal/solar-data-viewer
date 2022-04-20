@@ -9,8 +9,8 @@
 
     const {
         days,
-        produced,
-        dailyProduction,
+        totalYield,
+        dailyYield,
         kWhTokWp,
         selfConsumed,
         selfConsumedPercent,
@@ -26,8 +26,8 @@
         energyToBuy,
         energyToCharge,
     } = calculateEnergy({
-        producedDb: data.energyProduced,
-        meterDb: data.meter,
+        yieldData: data.yieldData,
+        meterData: data.meterData,
         properties: data.plantProperties,
     })
 
@@ -46,11 +46,8 @@
 
 <div>
     <Item label="Czas pracy instalacji" value={days} unit="dni" />
-    <EnergyCountItem label="Energia wyprodukowana" value={produced} />
-    <EnergyCountItem
-        label="Średnia dzienna produkcja energii"
-        value={dailyProduction}
-    />
+    <EnergyCountItem label="Uzysk" value={totalYield} />
+    <EnergyCountItem label="Średni uzysk na dzień" value={dailyYield} />
     <Item label="kWh/kWp" value={formatNumber(kWhTokWp)} />
 
     <Item

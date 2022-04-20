@@ -1,7 +1,7 @@
 import { IsNumber, IsOptional, IsString } from 'class-validator'
 import { IsISO8601Date } from '../decorators/is-iso8601-date'
 
-export class MeterInfo {
+export class MeterRecord {
     @IsISO8601Date()
     date!: string
 

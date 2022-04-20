@@ -1,4 +1,4 @@
-import type { DataFormat, EnergyProducedInfo } from 'format'
+import type { DataFormat, YieldRecord } from 'format'
 import { parseDate } from 'calculation'
 import { getMonthName } from '../utils/date'
 
@@ -27,16 +27,16 @@ export function getChartData(
     options: ChartOptions
 ): ChartDataItem[] {
     const { type, range } = options
-    let valuesToUse: EnergyProducedInfo[] = []
+    let valuesToUse: YieldRecord[] = []
 
     if (range === DataRange.Week) {
-        valuesToUse = data.energyProduced.filter(item => {
+        valuesToUse = data.yieldData.filter(item => {
             // dane z niedzieli
             const date = parseDate(item.date)
             return date.day() === 0
         })
     } else {
-        valuesToUse = data.energyProduced.filter((item, index, array) => {
+        valuesToUse = data.yieldData.filter((item, index, array) => {
             // dane z ostatniego dnia miesiąca lub ostatni dzień pomiarowy
             const date = parseDate(item.date)
             const lastMonth = index + 1 >= array.length
@@ -45,7 +45,7 @@ export function getChartData(
     }
 
     return valuesToUse.map((item, index) => {
-        const previousItem: EnergyProducedInfo | null =
+        const previousItem: YieldRecord | null =
             index > 0 ? valuesToUse[index - 1] : null
         const date = parseDate(item.date)
         let label, value

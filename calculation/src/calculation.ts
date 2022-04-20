@@ -1,24 +1,19 @@
 import currency from 'currency.js'
-import {
-    EnergyProducedInfo,
-    MeterInfo,
-    PlantProperties,
-    TariffItem,
-} from 'format'
+import { MeterRecord, PlantProperties, TariffItem, YieldRecord } from 'format'
 import { calculateEnergyCost } from './energy-cost'
 import { parseDate } from './utils/parse-date'
 
 export interface EnergyCalculationInput {
-    producedDb: EnergyProducedInfo[]
-    meterDb: MeterInfo[]
+    yieldData: YieldRecord[]
+    meterData: MeterRecord[]
     properties: PlantProperties
 }
 
 export interface EnergyCalculationResult {
     days: number
 
-    produced: number
-    dailyProduction: number
+    totalYield: number
+    dailyYield: number
     kWhTokWp: number
 
     selfConsumed: number
@@ -55,13 +50,13 @@ export interface InvestmentCalculationResult {
 export function calculateEnergy(
     input: EnergyCalculationInput
 ): EnergyCalculationResult {
-    const { producedDb, meterDb, properties } = input
+    const { yieldData, meterData, properties } = input
 
-    const produced = producedDb[producedDb.length - 1].value
-    const kWhTokWp = produced / properties.installationPower
+    const totalYield = yieldData[yieldData.length - 1].value
+    const kWhTokWp = totalYield / properties.installationPower
 
-    const baseMeterValue = meterDb[0]
-    const lastMeterValue = meterDb[meterDb.length - 1]
+    const baseMeterValue = meterData[0]
+    const lastMeterValue = meterData[meterData.length - 1]
 
     const lastDate = parseDate(lastMeterValue.date)
     const baseDate = parseDate(baseMeterValue.date)
@@ -71,10 +66,10 @@ export function calculateEnergy(
     const donated = lastMeterValue.donated - baseMeterValue.donated
     const donatedToUse = donated * properties.energyInWarehouseFactor
 
-    const selfConsumed = produced - donated
-    const selfConsumedPercent = selfConsumed / produced
+    const selfConsumed = totalYield - donated
+    const selfConsumedPercent = selfConsumed / totalYield
 
-    const dailyProduction = produced / days
+    const dailyYield = totalYield / days
 
     const totalConsumption = selfConsumed + charged
     const dailyConsumption = totalConsumption / days
@@ -104,8 +99,8 @@ export function calculateEnergy(
 
     return {
         days,
-        produced,
-        dailyProduction,
+        totalYield,
+        dailyYield,
         kWhTokWp,
         selfConsumed,
         selfConsumedPercent,
