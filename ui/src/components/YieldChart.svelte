@@ -8,7 +8,7 @@
         getChartData,
         type ChartDataItem,
         type ChartOptions,
-    } from './production-chart'
+    } from './yield-chart-data'
 
     export let data: DataFormat
 
@@ -27,7 +27,7 @@
             data: {
                 datasets: [
                     {
-                        label: 'Energia wyprodukowana',
+                        label: 'Uzysk',
                         backgroundColor: '#ffc107',
                         borderColor: '#ffc107',
                         data: chartData,
@@ -101,7 +101,7 @@
 
 <div>
     <div class="chart-header">
-        <h3>Wykres energii wyprodukowanej</h3>
+        <h3>Wykres uzysku</h3>
         <div>
             <button on:click={handleSwitchType}>{switchTypeButtonText}</button>
             <button on:click={handleSwitchRange}>{switchRangeButtonText}</button

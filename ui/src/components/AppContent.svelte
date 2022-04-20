@@ -2,7 +2,7 @@
     import type { DataFormat } from 'format'
     import CalculationResult from './CalculationResult.svelte'
     import Item from './Item.svelte'
-    import ProductionChart from './ProductionChart.svelte'
+    import YieldChart from './YieldChart.svelte'
 
     export let url: string
     export let data: DataFormat
@@ -13,5 +13,5 @@
     <br />
     <CalculationResult {data} />
 
-    <ProductionChart {data} />
+    <YieldChart {data} />
 </div>
