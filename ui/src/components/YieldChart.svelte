@@ -84,10 +84,14 @@
     }
 
     $: switchTypeButtonText =
-        options.type === ChartType.Line ? 'liniowy (narastająco)' : 'kolumnowy'
+        'Wykres ' +
+        (options.type === ChartType.Line
+            ? 'liniowy (narastająco)'
+            : 'kolumnowy')
 
     $: switchRangeButtonText =
-        options.range === DataRange.Week ? 'tygodniowy' : 'miesięczny'
+        'Dane ' +
+        (options.range === DataRange.Week ? 'tygodniowe' : 'miesięczne')
 
     $: if (chart) {
         chartData = getChartData(data, options)
