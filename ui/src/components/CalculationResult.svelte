@@ -63,7 +63,7 @@
     })
 </script>
 
-<div>
+<div class="data">
     <Item
         label="Zakres danych"
         value={`${formatDate(from.date)} - ${formatDate(
@@ -148,6 +148,10 @@
 </div>
 
 <style>
+    .data {
+        line-height: 1.4;
+    }
+
     .beta {
         color: rgb(255, 52, 52);
         font-weight: 700;
