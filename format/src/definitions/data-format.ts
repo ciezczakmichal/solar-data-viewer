@@ -1,26 +1,19 @@
 import { ArrayMinSize, Equals, IsArray, ValidateNested } from 'class-validator'
 import { Type } from 'class-transformer'
-import { YieldRecord } from './yield-record'
-import { MeterRecord } from './meter-record'
+import { ValuesRecord, ValuesRecordValidationClass } from './values-record'
 import { PlantProperties } from './plant-properties'
 import { YieldForecastRecord } from './yield-forecast-record'
 import { TariffItem } from './tariff-item'
 
 export class DataFormat {
-    @Equals('v4')
-    version!: 'v4'
+    @Equals('v5')
+    version!: 'v5'
 
     @IsArray()
     @ArrayMinSize(2)
     @ValidateNested({ each: true })
-    @Type(() => YieldRecord)
-    yieldData!: YieldRecord[]
-
-    @IsArray()
-    @ArrayMinSize(2)
-    @ValidateNested({ each: true })
-    @Type(() => MeterRecord)
-    meterData!: MeterRecord[]
+    @Type(() => ValuesRecordValidationClass)
+    values!: ValuesRecord[]
 
     @ValidateNested()
     @Type(() => PlantProperties)

@@ -1,4 +1,9 @@
-import type { DataFormat, YieldRecord } from 'format'
+import {
+    isYieldRecord,
+    type DataFormat,
+    type ValuesRecord,
+    type YieldValuesRecord,
+} from 'format'
 import { parseDate } from 'calculation'
 import { getMonthName } from '../utils/date'
 
@@ -28,20 +33,22 @@ export interface ChartData {
 }
 
 export function getChartYieldData(
-    data: DataFormat,
+    values: ValuesRecord[],
     options: ChartOptions
 ): ChartDataItem[] {
     const { type, range } = options
-    let valuesToUse: YieldRecord[] = []
+    let records = values.filter(item =>
+        isYieldRecord(item)
+    ) as YieldValuesRecord[]
 
     if (range === DataRange.Week) {
-        valuesToUse = data.yieldData.filter(item => {
+        records = records.filter(item => {
             // dane z niedzieli
             const date = parseDate(item.date)
             return date.day() === 0
         })
     } else {
-        valuesToUse = data.yieldData.filter((item, index, array) => {
+        records = records.filter((item, index, array) => {
             // dane z ostatniego dnia miesiąca lub ostatni dzień pomiarowy
             const date = parseDate(item.date)
             const lastMonth = index + 1 >= array.length
@@ -49,9 +56,9 @@ export function getChartYieldData(
         })
     }
 
-    return valuesToUse.map((item, index) => {
-        const previousItem: YieldRecord | null =
-            index > 0 ? valuesToUse[index - 1] : null
+    return records.map((item, index) => {
+        const previousItem: ValuesRecord | null =
+            index > 0 ? records[index - 1] : null
         const date = parseDate(item.date)
         let label, value
 
@@ -73,9 +80,9 @@ export function getChartYieldData(
         }
 
         if (type === ChartType.Bar) {
-            value = item.value - (previousItem?.value || 0)
+            value = item.totalYield - (previousItem?.totalYield || 0)
         } else {
-            value = item.value
+            value = item.totalYield
         }
 
         return {
@@ -89,7 +96,7 @@ export function getChartData(
     data: DataFormat,
     options: ChartOptions
 ): ChartData {
-    const yieldData = getChartYieldData(data, options)
+    const yieldData = getChartYieldData(data.values, options)
     let yieldForecastData: ChartDataItem[] = []
 
     if (options.type === ChartType.Bar && options.range === DataRange.Month) {

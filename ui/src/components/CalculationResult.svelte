@@ -1,11 +1,30 @@
 <script lang="ts">
-    import type { DataFormat } from 'format'
+    import { isCompleteRecord, type DataFormat } from 'format'
     import { calculateEnergy, calculateInvestment } from 'calculation'
     import Item from './Item.svelte'
     import EnergyCountItem from './EnergyCountItem.svelte'
-    import { formatNumber, formatKwh, formatPercent } from '../utils/format'
+    import {
+        formatNumber,
+        formatKwh,
+        formatPercent,
+        formatDate,
+    } from '../utils/format'
 
     export let data: DataFormat
+    const { values, plantProperties, tariff } = data
+
+    // @todo wydzielić sprawdzanie (walidacja dokonana przez format)
+    if (values.length < 3) {
+        throw new Error('Wymagane minimum 2 rekordy')
+    }
+
+    const from = values[0]
+    const to = values[values.length - 1]
+
+    // @todo automatyczne określanie zakresu dni
+    if (!isCompleteRecord(from) || !isCompleteRecord(to)) {
+        throw new Error('Wybrane rekordy nie zawierają kompletnych danych')
+    }
 
     const {
         days,
@@ -26,9 +45,9 @@
         energyToBuy,
         energyToCharge,
     } = calculateEnergy({
-        yieldData: data.yieldData,
-        meterData: data.meterData,
-        properties: data.plantProperties,
+        from,
+        to,
+        properties: plantProperties,
     })
 
     const {
@@ -39,13 +58,18 @@
     } = calculateInvestment({
         days,
         savedEnergy,
-        investmentCost: data.plantProperties.investmentCost,
-        tariffItems: data.tariff,
+        investmentCost: plantProperties.investmentCost,
+        tariffItems: tariff,
     })
 </script>
 
 <div>
-    <Item label="Czas pracy instalacji" value={days} unit="dni" />
+    <Item
+        label="Zakres danych"
+        value={`${formatDate(from.date)} - ${formatDate(
+            to.date
+        )} (${days} dni)`}
+    />
     <EnergyCountItem label="Uzysk" value={totalYield} />
     <EnergyCountItem label="Średni uzysk na dzień" value={dailyYield} />
     <Item label="kWh/kWp" value={formatNumber(kWhTokWp)} />

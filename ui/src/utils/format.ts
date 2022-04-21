@@ -1,3 +1,5 @@
+import { parseDate } from 'calculation'
+
 const numberFormat = new Intl.NumberFormat('pl-PL', {
     style: 'decimal',
     maximumFractionDigits: 2,
@@ -18,4 +20,9 @@ export function formatKwh(value: number): string {
 
 export function formatPercent(value: number): string {
     return percentFormat.format(value)
+}
+
+export function formatDate(value: string): string {
+    const date = parseDate(value)
+    return date.format('L')
 }

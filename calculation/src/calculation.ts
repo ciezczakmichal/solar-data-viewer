@@ -1,11 +1,11 @@
 import currency from 'currency.js'
-import { MeterRecord, PlantProperties, TariffItem, YieldRecord } from 'format'
+import { CompleteValuesRecord, PlantProperties, TariffItem } from 'format'
 import { calculateEnergyCost } from './energy-cost'
 import { parseDate } from './utils/parse-date'
 
 export interface EnergyCalculationInput {
-    yieldData: YieldRecord[]
-    meterData: MeterRecord[]
+    from: CompleteValuesRecord
+    to: CompleteValuesRecord
     properties: PlantProperties
 }
 
@@ -50,20 +50,17 @@ export interface InvestmentCalculationResult {
 export function calculateEnergy(
     input: EnergyCalculationInput
 ): EnergyCalculationResult {
-    const { yieldData, meterData, properties } = input
+    const { from, to, properties } = input
 
-    const totalYield = yieldData[yieldData.length - 1].value
+    const totalYield = to.totalYield - from.totalYield
     const kWhTokWp = totalYield / properties.installationPower
 
-    const baseMeterValue = meterData[0]
-    const lastMeterValue = meterData[meterData.length - 1]
-
-    const lastDate = parseDate(lastMeterValue.date)
-    const baseDate = parseDate(baseMeterValue.date)
+    const lastDate = parseDate(to.date)
+    const baseDate = parseDate(from.date)
     const days = lastDate.diff(baseDate, 'days')
 
-    const charged = lastMeterValue.charged - baseMeterValue.charged
-    const donated = lastMeterValue.donated - baseMeterValue.donated
+    const charged = to.charged - from.charged
+    const donated = to.donated - from.donated
     const donatedToUse = donated * properties.energyInWarehouseFactor
 
     const selfConsumed = totalYield - donated
