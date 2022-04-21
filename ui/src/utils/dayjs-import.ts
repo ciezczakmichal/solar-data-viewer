@@ -4,5 +4,6 @@ import localeData from 'dayjs/plugin/localeData'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 
 dayjs.locale('pl') // zmiana globalnie
-dayjs.extend(localeData)
-dayjs.extend(localizedFormat)
+
+dayjs.extend(localeData) // wymagane przez dayjs.months()
+dayjs.extend(localizedFormat) // wymagane przez date.format('L')
