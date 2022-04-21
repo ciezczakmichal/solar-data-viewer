@@ -1,4 +1,4 @@
-import { Equals, IsArray, ValidateNested } from 'class-validator'
+import { ArrayMinSize, Equals, IsArray, ValidateNested } from 'class-validator'
 import { Type } from 'class-transformer'
 import { YieldRecord } from './yield-record'
 import { MeterRecord } from './meter-record'
@@ -11,11 +11,13 @@ export class DataFormat {
     version!: 'v4'
 
     @IsArray()
+    @ArrayMinSize(2)
     @ValidateNested({ each: true })
     @Type(() => YieldRecord)
     yieldData!: YieldRecord[]
 
     @IsArray()
+    @ArrayMinSize(2)
     @ValidateNested({ each: true })
     @Type(() => MeterRecord)
     meterData!: MeterRecord[]
