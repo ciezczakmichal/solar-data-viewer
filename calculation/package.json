@@ -13,7 +13,7 @@
     },
     "scripts": {
         "build": "tsc --build",
-        "test": "jest"
+        "test": "yarn node --experimental-vm-modules $(yarn bin jest)"
     },
     "dependencies": {
         "currency.js": "^2.0.4",
