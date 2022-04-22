@@ -9,9 +9,16 @@
 </script>
 
 <div>
-    <Item label="Źródło danych" value={url} />
+    <div>
+        <b>Źródło danych:</b>
+        <a
+            href={url}
+            target="_blank"
+            title="Adres URL źródła danych (otwiera w nowej karcie)">{url}</a
+        >
+    </div>
     <br />
-    <CalculationResult {data} />
 
+    <CalculationResult {data} />
     <YieldChart {data} />
 </div>
