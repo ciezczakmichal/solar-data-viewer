@@ -47,7 +47,7 @@
     } = calculateEnergy({
         from,
         to,
-        properties: plantProperties,
+        plantProperties,
     })
 
     const {

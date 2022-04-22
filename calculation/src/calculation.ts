@@ -3,10 +3,15 @@ import { CompleteValuesRecord, PlantProperties, TariffItem } from 'format'
 import { calculateEnergyCost } from './energy-cost'
 import { parseDate } from './utils/parse-date'
 
+export type EnergyCalculationInputPlantProperties = Pick<
+    PlantProperties,
+    'installationPower' | 'energyInWarehouseFactor'
+>
+
 export interface EnergyCalculationInput {
     from: CompleteValuesRecord
     to: CompleteValuesRecord
-    properties: PlantProperties
+    plantProperties: EnergyCalculationInputPlantProperties
 }
 
 export interface EnergyCalculationResult {
@@ -50,10 +55,10 @@ export interface InvestmentCalculationResult {
 export function calculateEnergy(
     input: EnergyCalculationInput
 ): EnergyCalculationResult {
-    const { from, to, properties } = input
+    const { from, to, plantProperties } = input
 
     const totalYield = to.totalYield - from.totalYield
-    const kWhTokWp = totalYield / properties.installationPower
+    const kWhTokWp = totalYield / plantProperties.installationPower
 
     const lastDate = parseDate(to.date)
     const baseDate = parseDate(from.date)
@@ -61,7 +66,7 @@ export function calculateEnergy(
 
     const charged = to.charged - from.charged
     const donated = to.donated - from.donated
-    const donatedToUse = donated * properties.energyInWarehouseFactor
+    const donatedToUse = donated * plantProperties.energyInWarehouseFactor
 
     const selfConsumed = totalYield - donated
     const selfConsumedPercent = selfConsumed / totalYield
@@ -79,7 +84,8 @@ export function calculateEnergy(
     const fulfillNeeds = donatedToUse >= charged
 
     if (fulfillNeeds) {
-        const chargedWithFactor = charged / properties.energyInWarehouseFactor
+        const chargedWithFactor =
+            charged / plantProperties.energyInWarehouseFactor
 
         savedEnergy = totalConsumption
         needsFulfilmentPercent = 1
