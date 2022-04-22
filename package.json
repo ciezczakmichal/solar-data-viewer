@@ -17,6 +17,7 @@
         "build:ui": "yarn ui build",
         "dev": "yarn build:format && yarn build:calculation && yarn ui dev",
         "start": "yarn ui start",
+        "test": "yarn calculation test",
         "check": "yarn ui check"
     }
 }
