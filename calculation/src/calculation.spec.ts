@@ -23,6 +23,6 @@ describe('calculation', () => {
         }
 
         const result = calculateEnergy(input)
-        expect(result.days).toEqual(7)
+        expect(result.days).toEqual(70)
     })
 })
