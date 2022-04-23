@@ -11,13 +11,14 @@
         "calculation": "yarn workspace calculation",
         "format": "yarn workspace format",
         "ui": "yarn workspace ui",
-        "build": "yarn build:format && yarn build:calculation && yarn build:ui",
+        "build": "yarn build:core && yarn build:ui",
+        "build:core": "yarn build:format && yarn build:calculation",
         "build:calculation": "yarn calculation build",
         "build:format": "yarn format build",
         "build:ui": "yarn ui build",
-        "dev": "yarn build:format && yarn build:calculation && yarn ui dev",
+        "dev": "yarn build:core && yarn ui dev",
         "start": "yarn ui start",
-        "test": "yarn calculation test",
+        "test": "yarn build:core && yarn calculation test",
         "check": "yarn ui check"
     }
 }
