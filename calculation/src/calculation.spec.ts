@@ -4,13 +4,13 @@ describe('calculation', () => {
     it('test obliczania liczby dni', () => {
         const input: EnergyCalculationInput = {
             from: {
-                date: '2022-01-02',
+                date: '2022-01-02', // niedziela
                 totalYield: 0,
                 charged: 0,
                 donated: 0,
             },
             to: {
-                date: '2022-01-09',
+                date: '2022-01-09', // niedziela
                 totalYield: 10,
                 charged: 7,
                 donated: 5,
@@ -23,6 +23,6 @@ describe('calculation', () => {
         }
 
         const result = calculateEnergy(input)
-        expect(result.days).toEqual(70)
+        expect(result.days).toEqual(7)
     })
 })
