@@ -109,12 +109,22 @@
             options.type === ChartType.Line ? ChartType.Bar : ChartType.Line
         chartDataNeedsUpdate = true
 
+        let position = null
+
         if (chart) {
+            position = window.scrollY
             chart.destroy()
             chart = null
         }
 
         createChart()
+
+        // wywołanie destroy() wywołuje niepożądane działanie w postaci zmniejszenia rozmiaru strony
+        // jeśli użytkownik znajduje się w dolnej części aplikacji, powoduje to przesunięcie widoku w górę
+        // konieczne manualne przewinięcie do pozycji sprzed zwolnienia wykresu
+        if (position) {
+            window.scrollTo({ top: position })
+        }
     }
 
     function handleSwitchRange() {
