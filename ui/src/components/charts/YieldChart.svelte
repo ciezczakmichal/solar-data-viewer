@@ -2,6 +2,7 @@
     import { onMount } from 'svelte'
     import { Chart } from 'chart.js'
     import type { DataFormat } from 'format'
+    import { formatKwh } from '../../utils/format'
     import {
         ChartType,
         DataRange,
@@ -52,7 +53,7 @@
                                 }
 
                                 if (context.parsed.y !== null) {
-                                    label += context.parsed.y + ' kWh'
+                                    label += formatKwh(context.parsed.y)
                                 }
 
                                 return label
