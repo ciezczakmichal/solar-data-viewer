@@ -20,6 +20,18 @@
     <br />
 
     <CalculationResult {data} />
-    <YieldChart {data} />
-    <FulfillmentChart {data} />
+
+    <div class="chart-container">
+        <YieldChart {data} />
+    </div>
+
+    <div class="chart-container">
+        <FulfillmentChart {data} />
+    </div>
 </div>
+
+<style>
+    .chart-container {
+        margin: 10px 0;
+    }
+</style>
