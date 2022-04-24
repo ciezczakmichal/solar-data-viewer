@@ -1,8 +1,7 @@
 <script lang="ts">
     import type { DataFormat } from 'format'
     import CalculationResult from './CalculationResult.svelte'
-    import Item from './Item.svelte'
-    import YieldChart from './YieldChart.svelte'
+    import YieldChart from './charts/YieldChart.svelte'
 
     export let url: string
     export let data: DataFormat

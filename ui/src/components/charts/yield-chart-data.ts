@@ -5,7 +5,7 @@ import {
     type YieldValuesRecord,
 } from 'format'
 import { parseDate } from 'calculation'
-import { getMonthName } from '../utils/date'
+import { getMonthName } from '../../utils/date'
 
 export enum ChartType {
     Line,
