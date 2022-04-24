@@ -149,6 +149,7 @@
 <style>
     .chart-header {
         display: flex;
+        align-items: center;
     }
 
     .chart-header h3 {
