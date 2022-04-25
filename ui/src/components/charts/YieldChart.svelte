@@ -3,10 +3,10 @@
     import { Chart } from 'chart.js'
     import type { DataFormat } from 'format'
     import { formatKwh } from '../../utils/format'
+    import { DataRange } from '../../utils/chart-data';
     import {
         ChartType,
-        DataRange,
-        getChartData,
+                getChartData,
         type ChartData,
         type ChartDataItem,
         type ChartOptions,

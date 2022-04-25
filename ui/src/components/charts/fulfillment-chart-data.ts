@@ -5,15 +5,11 @@ import {
 } from 'format'
 import { calculateEnergy, parseDate } from 'calculation'
 import { getMonthName } from '../../utils/date'
+import { DataRange, getCompleteRecordsForRange } from '../../utils/chart-data'
 
 export enum ChartType {
     Line,
     Bar,
-}
-
-export enum DataRange {
-    Week,
-    Month,
 }
 
 export interface ChartOptions {
@@ -33,25 +29,7 @@ export function getChartData(
     options: ChartOptions
 ): ChartDataItem[] {
     const { type, range } = options
-    let records = data.values.filter(item =>
-        isCompleteRecord(item)
-    ) as CompleteValuesRecord[]
-
-    if (range === DataRange.Week) {
-        records = records.filter(item => {
-            // dane z niedzieli
-            const date = parseDate(item.date)
-            return date.day() === 0
-        })
-    } else {
-        records = records.filter((item, index, array) => {
-            // dane z ostatniego dnia miesiąca lub ostatni dzień pomiarowy
-            const date = parseDate(item.date)
-            const lastMonth = index + 1 >= array.length
-            return date.date() === date.daysInMonth() || lastMonth
-        })
-    }
-
+    const records = getCompleteRecordsForRange(data.values, range)
     const first = data.values[0]
 
     if (!isCompleteRecord(first)) {
