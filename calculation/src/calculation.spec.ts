@@ -2,18 +2,20 @@ import { EnergyCalculationInput, calculateEnergy } from './calculation'
 
 describe('calculation', () => {
     it('test obliczania liczby dni', () => {
+        const values = {
+            totalYield: 0,
+            charged: 0,
+            donated: 0,
+        }
+
         const input: EnergyCalculationInput = {
             from: {
                 date: '2022-01-02', // niedziela
-                totalYield: 0,
-                charged: 0,
-                donated: 0,
+                ...values,
             },
             to: {
                 date: '2022-01-09', // niedziela
-                totalYield: 10,
-                charged: 7,
-                donated: 5,
+                ...values,
             },
             plantProperties: {
                 // nieistone
