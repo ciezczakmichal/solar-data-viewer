@@ -3,9 +3,13 @@ import {
     type CompleteValuesRecord,
     type DataFormat,
 } from 'format'
-import { calculateEnergy, parseDate } from 'calculation'
+import { calculateEnergy } from 'calculation'
 import { getMonthName } from '../../utils/date'
-import { DataRange, getCompleteRecordsForRange } from '../../utils/chart-data'
+import {
+    DataRange,
+    getCompleteRecordsForRange,
+    type RangeCompleteValuesRecord,
+} from '../../utils/chart-data'
 
 export enum ChartType {
     Line,
@@ -19,7 +23,7 @@ export interface ChartOptions {
 
 export interface ChartDataItem {
     x: string
-    y: number
+    y: number | null
 }
 
 export type ChartData = ChartDataItem[]
@@ -37,18 +41,17 @@ export function getChartData(
     }
 
     return records.map((item, index) => {
-        const previousItem: CompleteValuesRecord | null =
+        const previousItem: RangeCompleteValuesRecord | null =
             index > 0 ? records[index - 1] : null
-        const date = parseDate(item.date)
         let label
 
         if (range === DataRange.Week) {
-            const currentLabel = date.format('DD.MM')
+            const currentLabel = item.date.format('DD.MM')
 
             if (type === ChartType.Line) {
                 label = currentLabel
             } else if (previousItem) {
-                const previousLabel = parseDate(previousItem.date)
+                const previousLabel = previousItem.date
                     .add(1, 'day')
                     .format('DD.MM')
                 label = `${previousLabel} - ${currentLabel}`
@@ -56,22 +59,33 @@ export function getChartData(
                 label = `do ${currentLabel}`
             }
         } else {
-            label = getMonthName(date.month())
+            label = getMonthName(item.date.month())
         }
 
-        let from = first
+        let value = null
 
-        if (type === ChartType.Bar) {
-            from = previousItem || from
+        if (item.values) {
+            let from: CompleteValuesRecord | null = first
+
+            if (type === ChartType.Bar && previousItem) {
+                if (previousItem.values) {
+                    from = previousItem.values
+                } else {
+                    from = null
+                }
+            }
+
+            if (from) {
+                const { fulfillNeeds, energyToCharge, energyToBuy } =
+                    calculateEnergy({
+                        from,
+                        to: item.values,
+                        plantProperties: data.plantProperties,
+                    })
+
+                value = fulfillNeeds ? energyToCharge : -1 * energyToBuy
+            }
         }
-
-        const { fulfillNeeds, energyToCharge, energyToBuy } = calculateEnergy({
-            from,
-            to: item,
-            plantProperties: data.plantProperties,
-        })
-
-        const value = fulfillNeeds ? energyToCharge : -1 * energyToBuy
 
         return {
             x: label,

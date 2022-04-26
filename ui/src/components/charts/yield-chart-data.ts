@@ -1,7 +1,10 @@
 import type { DataFormat, ValuesRecord } from 'format'
-import { parseDate } from 'calculation'
 import { getMonthName } from '../../utils/date'
-import { DataRange, getYieldRecordsForRange } from '../../utils/chart-data'
+import {
+    DataRange,
+    getYieldRecordsForRange,
+    type RangeYieldValuesRecord,
+} from '../../utils/chart-data'
 
 export enum ChartType {
     Line,
@@ -15,7 +18,7 @@ export interface ChartOptions {
 
 export interface ChartDataItem {
     x: string
-    y: number
+    y: number | null
 }
 
 export interface ChartData {
@@ -31,18 +34,17 @@ export function getChartYieldData(
     const records = getYieldRecordsForRange(values, range)
 
     return records.map((item, index) => {
-        const previousItem: ValuesRecord | null =
+        const previousItem: RangeYieldValuesRecord | null =
             index > 0 ? records[index - 1] : null
-        const date = parseDate(item.date)
-        let label, value
+        let label
 
         if (range === DataRange.Week) {
-            const currentLabel = date.format('DD.MM')
+            const currentLabel = item.date.format('DD.MM')
 
             if (type === ChartType.Line) {
                 label = currentLabel
             } else if (previousItem) {
-                const previousLabel = parseDate(previousItem.date)
+                const previousLabel = previousItem.date
                     .add(1, 'day')
                     .format('DD.MM')
                 label = `${previousLabel} - ${currentLabel}`
@@ -50,13 +52,22 @@ export function getChartYieldData(
                 label = `do ${currentLabel}`
             }
         } else {
-            label = getMonthName(date.month())
+            label = getMonthName(item.date.month())
         }
 
-        if (type === ChartType.Bar) {
-            value = item.totalYield - (previousItem?.totalYield || 0)
-        } else {
-            value = item.totalYield
+        let value = null
+
+        if (item.values) {
+            if (type === ChartType.Bar) {
+                if (previousItem && previousItem.values) {
+                    value =
+                        item.values.totalYield - previousItem.values.totalYield
+                } else if (!previousItem) {
+                    value = item.values.totalYield
+                }
+            } else {
+                value = item.values.totalYield
+            }
         }
 
         return {
