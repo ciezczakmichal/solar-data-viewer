@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { DataFormat } from 'format'
+    import PlantProperties from './PlantProperties.svelte'
     import CalculationResult from './CalculationResult.svelte'
     import YieldChart from './charts/YieldChart.svelte'
     import FulfillmentChart from './charts/FulfillmentChart.svelte'
@@ -19,6 +20,8 @@
     </div>
     <br />
 
+    <PlantProperties {data} />
+    <br />
     <CalculationResult {data} />
 
     <div class="chart-container">
