@@ -6,8 +6,8 @@ import { YieldForecastRecord } from './yield-forecast-record'
 import { TariffItem } from './tariff-item'
 
 export class DataFormat {
-    @Equals('v5')
-    version!: 'v5'
+    @Equals('v6')
+    version!: 'v6'
 
     @IsArray()
     @ArrayMinSize(2)
