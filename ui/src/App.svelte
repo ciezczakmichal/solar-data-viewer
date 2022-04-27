@@ -8,6 +8,8 @@
     import './utils/chartjs-import'
     import './utils/dayjs-import'
 
+    const baseAppTitle = document.title
+
     enum Status {
         Loading,
         DataDisplay,
@@ -60,6 +62,22 @@
                 errorMessage = error.message
             }
         }
+
+        updateApplicationTitle()
+    }
+
+    function updateApplicationTitle() {
+        let title = baseAppTitle
+
+        if (data) {
+            const { location } = data.plantProperties
+
+            if (location) {
+                title = `${location} | ${title}`
+            }
+        }
+
+        document.title = title
     }
 
     onMount(() => {
