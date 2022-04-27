@@ -3,10 +3,10 @@
     import { Chart } from 'chart.js'
     import type { DataFormat } from 'format'
     import { formatKwh } from '../../utils/format'
-    import { DataRange } from '../../utils/chart-data';
+    import { DataRange } from '../../utils/chart-data'
     import {
         ChartType,
-                getChartData,
+        getChartData,
         type ChartData,
         type ChartDataItem,
         type ChartOptions,
@@ -144,9 +144,14 @@
     onMount(createChart)
 </script>
 
-<div>
+<div class="chart">
     <div class="chart-header">
-        <h3>Wykres uzysku</h3>
+        <div class="chart-names">
+            <h3>Wykres uzysku</h3>
+            <div class="chart-desc">
+                Ilość energii wyprodukowanej przez instalację.
+            </div>
+        </div>
         <div>
             <button on:click={handleSwitchType}>{switchTypeButtonText}</button>
             <button on:click={handleSwitchRange}>{switchRangeButtonText}</button
@@ -157,12 +162,26 @@
 </div>
 
 <style>
+    .chart {
+        padding-top: 10px;
+    }
+
     .chart-header {
         display: flex;
         align-items: center;
     }
 
-    .chart-header h3 {
+    .chart-names {
         flex-grow: 1;
+    }
+
+    h3 {
+        margin: 0;
+        margin-bottom: 6px;
+    }
+
+    .chart-desc {
+        font-size: 14px;
+        color: #666;
     }
 </style>

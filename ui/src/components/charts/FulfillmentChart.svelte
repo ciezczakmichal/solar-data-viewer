@@ -150,9 +150,15 @@
     onMount(createChart)
 </script>
 
-<div>
+<div class="chart">
     <div class="chart-header">
-        <h3>Wykres spełnienia zapotrzebowania</h3>
+        <div class="chart-names">
+            <h3>Wykres spełnienia zapotrzebowania</h3>
+            <div class="chart-desc">
+                Ilość energii koniecznej do zakupu lub dostępnej do pobrania z
+                magazynu.
+            </div>
+        </div>
         <div>
             <button on:click={handleSwitchType}>{switchTypeButtonText}</button>
             <button on:click={handleSwitchRange}>{switchRangeButtonText}</button
@@ -163,12 +169,26 @@
 </div>
 
 <style>
+    .chart {
+        padding-top: 10px;
+    }
+
     .chart-header {
         display: flex;
         align-items: center;
     }
 
-    .chart-header h3 {
+    .chart-names {
         flex-grow: 1;
+    }
+
+    h3 {
+        margin: 0;
+        margin-bottom: 6px;
+    }
+
+    .chart-desc {
+        font-size: 14px;
+        color: #666;
     }
 </style>
