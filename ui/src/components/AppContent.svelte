@@ -3,6 +3,7 @@
     import PlantProperties from './PlantProperties.svelte'
     import CalculationResult from './CalculationResult.svelte'
     import YieldChart from './charts/YieldChart.svelte'
+    import ConsumptionChart from './charts/ConsumptionChart.svelte'
     import FulfillmentChart from './charts/FulfillmentChart.svelte'
 
     export let url: string
@@ -26,6 +27,10 @@
 
     <div class="chart-container">
         <YieldChart {data} />
+    </div>
+
+    <div class="chart-container">
+        <ConsumptionChart {data} />
     </div>
 
     <div class="chart-container">
