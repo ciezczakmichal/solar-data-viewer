@@ -116,15 +116,14 @@
             )}`}
         />
         <EnergyCountItem
-            label="Ilość energii pozostała do rozliczenia (zapłaty)"
+            label="Ilość energii pozostała do rozliczenia (zakupu)"
             value={energyToBuy}
         />
     {/if}
 
     <Item
-        value={`Gdyby nie panele, trzeba by zapłacić za ${formatKwh(
-            savedEnergy
-        )} energii`}
+        label="Ilość energii, której zakupu zdołano uniknąć"
+        value={formatKwh(savedEnergy)}
     />
 
     <br />
