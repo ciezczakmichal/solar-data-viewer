@@ -1,4 +1,9 @@
-import type { DataFormat, ValuesRecord } from 'format'
+import {
+    isYieldRecord,
+    type DataFormat,
+    type ValuesRecord,
+    type YieldValuesRecord,
+} from 'format'
 import { getMonthName } from '../../utils/date'
 import {
     DataRange,
@@ -33,10 +38,20 @@ export function getChartYieldData(
     const { type, range } = options
     const records = getYieldRecordsForRange(values, range)
 
-    return records.map((item, index) => {
+    if (records.length === 0) {
+        return []
+    }
+
+    const first = values[0]
+
+    if (!isYieldRecord(first)) {
+        throw new Error('Oczekiwano danych o uzysku w pierwszym rekordzie')
+    }
+
+    const result = records.map((item, index) => {
         const previousItem: RangeYieldValuesRecord | null =
             index > 0 ? records[index - 1] : null
-        let label
+        let label = ''
 
         if (range === DataRange.Week) {
             const currentLabel = item.date.format('DD.MM')
@@ -48,8 +63,6 @@ export function getChartYieldData(
                     .add(1, 'day')
                     .format('DD.MM')
                 label = `${previousLabel} - ${currentLabel}`
-            } else {
-                label = `do ${currentLabel}`
             }
         } else {
             label = getMonthName(item.date.month())
@@ -58,15 +71,18 @@ export function getChartYieldData(
         let value = null
 
         if (item.values) {
+            let from: YieldValuesRecord | null = null
+
             if (type === ChartType.Bar) {
                 if (previousItem && previousItem.values) {
-                    value =
-                        item.values.totalYield - previousItem.values.totalYield
-                } else if (!previousItem) {
-                    value = item.values.totalYield
+                    from = previousItem.values
                 }
             } else {
-                value = item.values.totalYield
+                from = first
+            }
+
+            if (from) {
+                value = item.values.totalYield - from.totalYield
             }
         }
 
@@ -75,6 +91,13 @@ export function getChartYieldData(
             y: value,
         }
     })
+
+    // dla wykresu kolumnowego pierwszy rekord nie zawiera danych, usuń go
+    if (type === ChartType.Bar) {
+        result.shift()
+    }
+
+    return result
 }
 
 export function getChartData(
