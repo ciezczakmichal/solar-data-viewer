@@ -133,7 +133,8 @@
     </div>
 
     <Item
-        value={`Gdyby nie panele, trzeba by zapłacić ${savedCost.format()}`}
+        label="Oszczędność na rachunkach dzięki instalacji"
+        value={savedCost.format()}
     />
     <Item
         label="Średnia kwota oszczędności na dzień"
