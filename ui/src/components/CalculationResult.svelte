@@ -8,6 +8,8 @@
         formatKwh,
         formatPercent,
         formatDate,
+        formatDuration,
+        DurationFormatFlag,
     } from '../utils/format'
 
     export let data: DataFormat
@@ -50,17 +52,13 @@
         plantProperties,
     })
 
-    const {
-        savedCost,
-        dailySaving,
-        investmentReturnYears,
-        investmentReturnMonths,
-    } = calculateInvestment({
-        days,
-        savedEnergy,
-        investmentCost: plantProperties.investmentCost,
-        tariffItems: tariff,
-    })
+    const { savedCost, dailySaving, daysToReturnInvestment } =
+        calculateInvestment({
+            days,
+            savedEnergy,
+            investmentCost: plantProperties.investmentCost,
+            tariffItems: tariff,
+        })
 </script>
 
 <div class="data">
@@ -143,7 +141,11 @@
     />
     <!-- @todo dodać wersję relatywną (za ile od teraz) -->
     <Item
-        value={`Inwestycja zwróci się po ${investmentReturnYears} latach, ${investmentReturnMonths} miesiącach`}
+        label="Okres zwrotu inwestycji"
+        value={formatDuration(
+            daysToReturnInvestment,
+            DurationFormatFlag.OmitDays
+        )}
     />
 </div>
 

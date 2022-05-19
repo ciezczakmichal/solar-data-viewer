@@ -48,8 +48,7 @@ export interface InvestmentCalculationInput {
 export interface InvestmentCalculationResult {
     savedCost: currency
     dailySaving: currency
-    investmentReturnYears: number
-    investmentReturnMonths: number
+    daysToReturnInvestment: number
 }
 
 export function calculateEnergy(
@@ -128,17 +127,11 @@ export function calculateInvestment(
 
     const savedCost = calculateEnergyCost(savedEnergy, tariffItems)
     const dailySaving = savedCost.divide(days)
-
     const daysToReturnInvestment = investmentCost / dailySaving.value
-    const investmentReturnYears = Math.floor(daysToReturnInvestment / 365)
-    const investmentReturnMonths = Math.floor(
-        (daysToReturnInvestment - investmentReturnYears * 365) / 30
-    )
 
     return {
         savedCost,
         dailySaving,
-        investmentReturnYears,
-        investmentReturnMonths,
+        daysToReturnInvestment,
     }
 }
