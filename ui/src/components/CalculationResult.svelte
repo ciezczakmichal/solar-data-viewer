@@ -66,7 +66,7 @@
         label="Zakres danych"
         value={`${formatDate(from.date)} - ${formatDate(
             to.date
-        )} (${days} dni)`}
+        )} (${formatDuration(days)})`}
     />
     <EnergyCountItem label="Uzysk" value={totalYield} />
     <EnergyCountItem label="Średni uzysk na dzień" value={dailyYield} />
