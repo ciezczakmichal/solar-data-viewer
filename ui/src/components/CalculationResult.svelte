@@ -76,7 +76,7 @@
         label="Autokonsumpcja"
         value={`${formatKwh(selfConsumed)} (${formatPercent(
             selfConsumedPercent
-        )} produkcji)`}
+        )} uzysku)`}
     />
     <Item
         label="Oddano do sieci"
