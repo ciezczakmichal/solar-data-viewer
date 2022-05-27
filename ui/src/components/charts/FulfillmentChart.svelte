@@ -46,7 +46,7 @@
             data: {
                 datasets: [
                     {
-                        label: 'Nadwyżka / niedobór',
+                        label: 'Nadwyżka / niedobór energii z instalacji',
                         backgroundColor: getColor,
                         borderColor: getColor,
                         data: chartData,
@@ -153,10 +153,10 @@
 <div class="chart">
     <div class="chart-header">
         <div class="chart-names">
-            <h3>Wykres spełnienia zapotrzebowania</h3>
+            <h3>Wykres bilansowania</h3>
             <div class="chart-desc">
-                Ilość energii koniecznej do zakupu lub dostępnej do pobrania z
-                magazynu.
+                Różnica pomiędzy ilością energii pobranej a przesłanej do sieci
+                - przy uwzględnieniu współczynnika bilansowania.
             </div>
         </div>
         <div>

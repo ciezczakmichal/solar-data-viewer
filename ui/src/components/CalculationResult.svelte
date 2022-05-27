@@ -102,7 +102,7 @@
             value="Ilość wyprodukowanej energii pokrywa zapotrzebowanie, posiadana nadwyżka."
         />
         <EnergyCountItem
-            label="Ilość energii pozostała w magazynie do pobrania"
+            label="Ilość energii do pobrania (uwzględniając współczynnik)"
             value={energyToCharge}
         />
     {:else}
