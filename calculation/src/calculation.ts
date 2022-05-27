@@ -30,12 +30,20 @@ export interface EnergyCalculationResult {
     totalConsumption: number
     dailyConsumption: number
 
+    // informacja, czy produkcja instalacji spełnia zapotrzebowanie (tj. energyToBuy == 0)
     fulfillNeeds: boolean
+
     // ilość energii, która musiała by być dodatkowo pobrana z sieci, gdyby nie istniały panele (i bilansowanie)
     savedEnergy: number
+
+    // procent spełnienia zapotrzebowania przez energię wyprodukowaną (wartości 0-1)
     needsFulfilmentPercent: number
-    energyToBuy: number // ilość energii do zakupu
-    energyToCharge: number // ilość energii do pobrania (nadwyżka) @todo ze współczynnikiem, czy nie?
+
+    // ilość energii, którą pomimo bilansowania należy zakupić
+    energyToBuy: number
+
+    // ilość energii, którą można pobrać z sieci, tj. nadwyżka (uwzględnia współczynnik - czyli tyle można pobrać)
+    energyToCharge: number
 }
 
 export interface InvestmentCalculationInput {
@@ -83,13 +91,10 @@ export function calculateEnergy(
     const fulfillNeeds = donatedToUse >= charged
 
     if (fulfillNeeds) {
-        const chargedWithFactor =
-            charged / plantProperties.energyInWarehouseFactor
-
         savedEnergy = totalConsumption
         needsFulfilmentPercent = 1
         energyToBuy = 0
-        energyToCharge = donated - chargedWithFactor
+        energyToCharge = donatedToUse - charged
     } else {
         energyToBuy = charged - donatedToUse
         energyToCharge = 0
