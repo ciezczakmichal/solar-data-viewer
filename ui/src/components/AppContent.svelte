@@ -4,7 +4,7 @@
     import CalculationResult from './CalculationResult.svelte'
     import YieldChart from './charts/YieldChart.svelte'
     import ConsumptionChart from './charts/ConsumptionChart.svelte'
-    import FulfillmentChart from './charts/FulfillmentChart.svelte'
+    import BalanceChart from './charts/BalanceChart.svelte'
 
     export let url: string
     export let data: DataFormat
@@ -34,7 +34,7 @@
     </div>
 
     <div class="chart-container">
-        <FulfillmentChart {data} />
+        <BalanceChart {data} />
     </div>
 </div>
 

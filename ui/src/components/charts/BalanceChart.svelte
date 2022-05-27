@@ -10,7 +10,7 @@
         type ChartData,
         type ChartDataItem,
         type ChartOptions,
-    } from './fulfillment-chart-data'
+    } from './balance-chart-data'
 
     export let data: DataFormat
 
