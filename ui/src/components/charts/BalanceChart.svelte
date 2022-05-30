@@ -46,7 +46,7 @@
             data: {
                 datasets: [
                     {
-                        label: 'Nadwyżka / niedobór energii z instalacji',
+                        label: 'Nadwyżka / niedobór energii',
                         backgroundColor: getColor,
                         borderColor: getColor,
                         data: chartData,
