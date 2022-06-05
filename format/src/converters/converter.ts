@@ -1,7 +1,7 @@
 import { DataFormat } from '../definitions/data-format'
 import { convertPlainObjectToInstance } from './generics'
 
-export function convertObjectToDataFormat(data: object): Promise<DataFormat> {
+export function convertObjectToDataFormat(data: any): Promise<DataFormat> {
     return convertPlainObjectToInstance(
         DataFormat,
         data,

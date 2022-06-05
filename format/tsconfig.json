@@ -5,7 +5,10 @@
         "rootDir": "src",
         "composite": true,
         "declaration": true,
-        "declarationMap": true
+        "declarationMap": true,
+
+        // ukrycie warningu Jest
+        "esModuleInterop": true
     },
     "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
 }
