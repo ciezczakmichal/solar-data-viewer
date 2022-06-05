@@ -92,8 +92,9 @@ export function getChartYieldData(
         }
     })
 
-    // dla wykresu kolumnowego pierwszy rekord nie zawiera danych, usuń go
-    if (type === ChartType.Bar) {
+    // usuń pierwszy rekord dla wykresu kolumnowego, gdyż nie zawiera danych (nie było z czym porównać)
+    // w przypadku zakresu miesięcznego wyniki zawierają pierwszy rekord danych i wartość wynosi 0
+    if (type === ChartType.Bar || range === DataRange.Month) {
         result.shift()
     }
 

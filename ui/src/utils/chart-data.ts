@@ -9,6 +9,7 @@ import {
     type YieldValuesRecord,
 } from 'format'
 import { parseDate } from 'calculation'
+import { isLastDayOfMonth, getLastDayOfMonth } from './date'
 
 export enum DataRange {
     Week,
@@ -42,13 +43,20 @@ export function getRecordsForRange(
         getNextDateCallback = date => date.add(7, 'day')
     } else {
         presentValues = presentValues.filter((item, index, array) => {
-            // dane z ostatniego dnia miesiąca lub ostatni dzień pomiarowy
-            const lastMonth = index + 1 >= array.length
-            return item.date.date() === item.date.daysInMonth() || lastMonth
+            // dane z ostatniego dnia miesiąca, pierwszy lub ostatni dzień pomiarowy
+            const first = index === 0
+            const last = index + 1 >= array.length
+
+            return first || last || isLastDayOfMonth(item.date)
         })
-        getNextDateCallback = date => {
-            const value = date.date(1).add(1, 'month') // 1. dzień następnego msc
-            return value.date(value.daysInMonth()) // zmiana na ostatni dzień
+        getNextDateCallback = current => {
+            // obecna data może być początkiem danych (być w środku miesiąca)
+            if (!isLastDayOfMonth(current)) {
+                return getLastDayOfMonth(current)
+            }
+
+            const value = current.date(1).add(1, 'month') // 1. dzień następnego miesiąca
+            return getLastDayOfMonth(value)
         }
     }
 

@@ -112,6 +112,13 @@ describe('chart-data', () => {
             const actual = getRecordsForRange(values, DataRange.Month)
             expect(actual).toEqual([
                 {
+                    date: dayJsInstanceWithExtraProperty(2022, 3, 18),
+                    values: {
+                        date: '2022-03-18', // piątek
+                        totalYield: 100,
+                    },
+                },
+                {
                     date: dayJsInstanceWithExtraProperty(2022, 3, 31),
                     values: {
                         date: '2022-03-31', // czwartek
@@ -206,6 +213,15 @@ describe('chart-data', () => {
             const actual = getYieldRecordsForRange(values, DataRange.Month)
             expect(actual).toEqual([
                 {
+                    date: dayJsInstanceWithExtraProperty(2022, 1, 30),
+                    values: {
+                        date: '2022-01-30', // niedziela
+                        totalYield: 50,
+                        charged: 1000,
+                        donated: 500,
+                    },
+                },
+                {
                     date: dayJsInstanceWithExtraProperty(2022, 1, 31),
                     values: {
                         date: '2022-01-31', // poniedziałek
@@ -259,6 +275,19 @@ describe('chart-data', () => {
         it('getCompleteRecordsForRange - miesięczny zakres danych', () => {
             const actual = getCompleteRecordsForRange(values, DataRange.Month)
             expect(actual).toEqual([
+                {
+                    date: dayJsInstanceWithExtraProperty(2022, 1, 30),
+                    values: {
+                        date: '2022-01-30', // niedziela
+                        totalYield: 50,
+                        charged: 1000,
+                        donated: 500,
+                    },
+                },
+                {
+                    date: dayJsInstance(2022, 1, 31),
+                    values: null,
+                },
                 {
                     date: dayJsInstanceWithExtraProperty(2022, 2, 20),
                     values: {
