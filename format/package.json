@@ -13,7 +13,7 @@
     },
     "scripts": {
         "build": "tsc --build",
-        "test": "yarn node --experimental-vm-modules --no-warnings $(yarn bin jest)"
+        "test": "yarn node --experimental-vm-modules --no-warnings $(yarn bin jest) --no-cache"
     },
     "dependencies": {
         "class-transformer": "^0.5.1",
