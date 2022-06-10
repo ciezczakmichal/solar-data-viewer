@@ -4,10 +4,11 @@ import { ValuesRecord, ValuesRecordValidationClass } from './values-record'
 import { PlantProperties } from './plant-properties'
 import { YieldForecastRecord } from './yield-forecast-record'
 import { TariffItem } from './tariff-item'
+import { VatRateItem } from './vat-rate-item'
 
 export class DataFormat {
-    @Equals('v6')
-    version!: 'v6'
+    @Equals(7)
+    version!: 7
 
     @IsArray()
     @ArrayMinSize(2)
@@ -28,4 +29,9 @@ export class DataFormat {
     @ValidateNested({ each: true })
     @Type(() => TariffItem)
     tariff!: TariffItem[]
+
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => VatRateItem)
+    vatRate!: VatRateItem[]
 }

@@ -13,7 +13,7 @@
     } from '../utils/format'
 
     export let data: DataFormat
-    const { values, plantProperties, tariff } = data
+    const { values, plantProperties, tariff, vatRate } = data
 
     // @todo wydzielić sprawdzanie (walidacja dokonana przez format)
     if (values.length < 3) {
@@ -54,10 +54,11 @@
 
     const { savedCost, dailySaving, daysToReturnInvestment } =
         calculateInvestment({
+            values: values.filter(isCompleteRecord),
+            tariff,
+            vatRate,
             days,
-            savedEnergy,
-            investmentCost: plantProperties.investmentCost,
-            tariffItems: tariff,
+            plantProperties,
         })
 </script>
 
@@ -127,9 +128,6 @@
     />
 
     <br />
-    <div class="beta">
-        Poniżej wartości eksperymentalne, nie uwzględniające zmian w 2022 r.
-    </div>
 
     <Item
         label="Oszczędność na rachunkach dzięki instalacji"
@@ -152,10 +150,5 @@
 <style>
     .data {
         line-height: 1.4;
-    }
-
-    .beta {
-        color: rgb(255, 52, 52);
-        font-weight: 700;
     }
 </style>

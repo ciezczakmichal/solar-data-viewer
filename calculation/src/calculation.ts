@@ -1,7 +1,5 @@
-import currency from 'currency.js'
-import { CompleteValuesRecord, PlantProperties, TariffItem } from 'format'
-import { calculateEnergyCost } from './energy-cost'
-import { parseDate } from './utils/parse-date'
+import { CompleteValuesRecord, PlantProperties } from 'format'
+import { parseDate } from './utils/date'
 
 export type EnergyCalculationInputPlantProperties = Pick<
     PlantProperties,
@@ -44,19 +42,6 @@ export interface EnergyCalculationResult {
 
     // ilość energii, którą można pobrać z sieci, tj. nadwyżka (uwzględnia współczynnik - czyli tyle można pobrać)
     energyToCharge: number
-}
-
-export interface InvestmentCalculationInput {
-    days: number
-    savedEnergy: number
-    investmentCost: number
-    tariffItems: TariffItem[]
-}
-
-export interface InvestmentCalculationResult {
-    savedCost: currency
-    dailySaving: currency
-    daysToReturnInvestment: number
 }
 
 export function calculateEnergy(
@@ -122,21 +107,5 @@ export function calculateEnergy(
         needsFulfilmentPercent,
         energyToBuy,
         energyToCharge,
-    }
-}
-
-export function calculateInvestment(
-    input: InvestmentCalculationInput
-): InvestmentCalculationResult {
-    const { days, savedEnergy, investmentCost, tariffItems } = input
-
-    const savedCost = calculateEnergyCost(savedEnergy, tariffItems)
-    const dailySaving = savedCost.divide(days)
-    const daysToReturnInvestment = investmentCost / dailySaving.value
-
-    return {
-        savedCost,
-        dailySaving,
-        daysToReturnInvestment,
     }
 }
