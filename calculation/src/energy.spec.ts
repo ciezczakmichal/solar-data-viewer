@@ -1,4 +1,4 @@
-import { EnergyCalculationInput, calculateEnergy } from './calculation'
+import { EnergyCalculationInput, calculateEnergy } from './energy'
 
 describe('calculation', () => {
     it('test obliczania liczby dni', () => {

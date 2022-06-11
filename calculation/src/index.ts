@@ -1,6 +1,6 @@
-export * from './calculation'
 export * from './currency-options'
 export * from './energy-cost'
+export * from './energy'
 export * from './error'
 export * from './investment'
 export * from './savings'

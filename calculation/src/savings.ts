@@ -5,10 +5,10 @@ import { CalculationError } from './error'
 import {
     calculateEnergy,
     EnergyCalculationInputPlantProperties,
-} from './calculation'
+} from './energy'
+import { calculateEnergyCost } from './energy-cost'
 import { CurrencyOptions } from './currency-options'
 import { parseDate } from './utils/date'
-import { calculateEnergyCost } from './energy-cost'
 
 export interface SavingsCalculationInput {
     values: CompleteValuesRecord[]
