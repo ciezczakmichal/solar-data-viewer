@@ -157,7 +157,7 @@
         unit="/ 1 kWh"
     />
     <Item
-        label="Pozostały czas do zwrotu inwestycji"
+        label="Przybliżony pozostały czas do zwrotu inwestycji"
         value={formatDuration(
             daysToInvestmentReturn,
             DurationFormatFlag.OmitDays
