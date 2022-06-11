@@ -56,8 +56,7 @@
         plantProperties,
     })
 
-    // @todo użyć accurate
-    const { savings } = calculateSavings({
+    const { accurate, savings } = calculateSavings({
         values: values.filter(isCompleteRecord),
         tariff,
         vatRate,
@@ -146,6 +145,7 @@
     <Item
         label="Oszczędność na rachunkach dzięki instalacji"
         value={savings.format()}
+        unit={!accurate ? '(dane przybliżone)' : undefined}
     />
     <Item
         label="Średnia kwota oszczędności na dzień"
