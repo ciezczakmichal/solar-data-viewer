@@ -1,6 +1,10 @@
 <script lang="ts">
     import { isCompleteRecord, type DataFormat } from 'format'
-    import { calculateEnergy, calculateInvestment } from 'calculation'
+    import {
+        calculateEnergy,
+        calculateInvestment,
+        calculateSavings,
+    } from 'calculation'
     import Item from './Item.svelte'
     import EnergyCountItem from './EnergyCountItem.svelte'
     import {
@@ -52,13 +56,23 @@
         plantProperties,
     })
 
-    const { savedCost, dailySaving, daysToReturnInvestment } =
+    // @todo użyć accurate
+    const { savings } = calculateSavings({
+        values: values.filter(isCompleteRecord),
+        tariff,
+        vatRate,
+        plantProperties,
+    })
+
+    const { dailySaving, currentSavingsPerKwh, daysToInvestmentReturn } =
         calculateInvestment({
-            values: values.filter(isCompleteRecord),
+            lastValueDate: values[values.length - 1].date,
             tariff,
             vatRate,
-            days,
             plantProperties,
+            days,
+            savings,
+            savedEnergy,
         })
 </script>
 
@@ -131,17 +145,21 @@
 
     <Item
         label="Oszczędność na rachunkach dzięki instalacji"
-        value={savedCost.format()}
+        value={savings.format()}
     />
     <Item
         label="Średnia kwota oszczędności na dzień"
         value={dailySaving.format()}
     />
-    <!-- @todo dodać wersję relatywną (za ile od teraz) -->
     <Item
-        label="Okres zwrotu inwestycji"
+        label="Oszczędność wg bieżących cen energii"
+        value={currentSavingsPerKwh.format()}
+        unit="/ 1 kWh"
+    />
+    <Item
+        label="Pozostały czas do zwrotu inwestycji"
         value={formatDuration(
-            daysToReturnInvestment,
+            daysToInvestmentReturn,
             DurationFormatFlag.OmitDays
         )}
     />

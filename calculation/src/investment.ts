@@ -1,36 +1,64 @@
 import currency from 'currency.js'
-import { PlantProperties } from 'format'
-import { EnergyCalculationInputPlantProperties } from './calculation'
-import { calculateSavings, SavingsCalculationInput } from './savings'
+import { PlantProperties, TariffItem, VatRateItem } from 'format'
+import { calculateEnergyCost } from './energy-cost'
 
-type InvestmentCalculationInputPlantProperties =
-    EnergyCalculationInputPlantProperties &
-        Pick<PlantProperties, 'investmentCost'>
+type InvestmentCalculationInputPlantProperties = Pick<
+    PlantProperties,
+    'investmentCost'
+>
 
-export interface InvestmentCalculationInput extends SavingsCalculationInput {
-    days: number
+export interface InvestmentCalculationInput {
+    lastValueDate: string
+    tariff: TariffItem[]
+    vatRate: VatRateItem[]
     plantProperties: InvestmentCalculationInputPlantProperties
+
+    days: number
+    savings: currency
+    savedEnergy: number
 }
 
 export interface InvestmentCalculationResult {
-    savedCost: currency
+    // średnia oszczędność na dzień
     dailySaving: currency
-    daysToReturnInvestment: number
+
+    // bieżąca oszczędność na 1 kWh (obecna cena prądu - koszty zmienne)
+    currentSavingsPerKwh: currency
+
+    // liczba dni pozostałych do zwrotu inwestycji (relatywnie, licząc od dnia ostatniego pomiaru)
+    daysToInvestmentReturn: number
 }
 
 export function calculateInvestment(
     input: InvestmentCalculationInput
 ): InvestmentCalculationResult {
-    const { days, plantProperties } = input
+    const {
+        lastValueDate,
+        tariff,
+        vatRate,
+        plantProperties,
+        days,
+        savings,
+        savedEnergy,
+    } = input
 
-    const savingsData = calculateSavings(input)
-    const dailySaving = savingsData.savings.divide(days)
-    const daysToReturnInvestment =
-        plantProperties.investmentCost / dailySaving.value
+    const dailySaving = savings.divide(days)
+    const currentSavingsPerKwh = calculateEnergyCost({
+        tariff,
+        vatRate,
+        from: lastValueDate,
+        to: lastValueDate,
+        energy: 1,
+    })
+
+    const remainingCost = plantProperties.investmentCost - savings.value
+    const dailyEnergySavings = savedEnergy / days
+    const daysToInvestmentReturn =
+        remainingCost / (currentSavingsPerKwh.value * dailyEnergySavings)
 
     return {
-        savedCost: savingsData.savings,
         dailySaving,
-        daysToReturnInvestment,
+        currentSavingsPerKwh,
+        daysToInvestmentReturn,
     }
 }
