@@ -4,6 +4,7 @@
     import AppHeader from './components/AppHeader.svelte'
     import AppContent from './components/AppContent.svelte'
     import AppFooter from './components/AppFooter.svelte'
+    import { formatNumber } from './utils/format'
     import { getHashValue } from './utils/get-hash-value'
     import './utils/chartjs-import'
     import './utils/dayjs-import'
@@ -70,10 +71,11 @@
         let title = baseAppTitle
 
         if (data) {
-            const { location } = data.plantProperties
+            const { location, installationPower } = data.plantProperties
+            const powerString = formatNumber(installationPower) + ' kWp'
 
             if (location) {
-                title = `${location} | ${title}`
+                title = `${location} ${powerString} | ${title}`
             }
         }
 
