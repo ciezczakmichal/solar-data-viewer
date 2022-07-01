@@ -4,10 +4,22 @@
     import AppHeader from './components/AppHeader.svelte'
     import AppContent from './components/AppContent.svelte'
     import AppFooter from './components/AppFooter.svelte'
+    import { setAppContext } from './app-context'
     import { formatNumber } from './utils/formatters/format-numbers'
     import { getHashValue } from './utils/get-hash-value'
     import './utils/chartjs-import'
     import './utils/dayjs-import'
+
+    setAppContext({
+        getUrl: () => url,
+        getData: () => {
+            if (!data) {
+                throw new Error('Dane nie są dostępne')
+            }
+
+            return data
+        },
+    })
 
     const baseAppTitle = document.title
 
@@ -96,7 +108,7 @@
     {:else if status === Status.Error}
         <p>⚠ Pobranie danych nie powiodło się.<br />{errorMessage}.</p>
     {:else if data !== null}
-        <AppContent {url} {data} />
+        <AppContent />
     {/if}
 
     <AppFooter />

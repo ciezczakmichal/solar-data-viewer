@@ -1,10 +1,11 @@
 <script lang="ts">
-    import { isCompleteRecord, type DataFormat } from 'format'
+    import { isCompleteRecord } from 'format'
     import {
         calculateEnergy,
         calculateInvestment,
         calculateSavings,
     } from 'calculation'
+    import { getAppContext } from '../app-context'
     import Item from './Item.svelte'
     import EnergyCountItem from './EnergyCountItem.svelte'
     import {
@@ -18,7 +19,7 @@
         formatDuration,
     } from '../utils/formatters/format-time'
 
-    export let data: DataFormat
+    const { data } = getAppContext()
     const { values, plantProperties, tariff, vatRate } = data
 
     // @todo wydzielić sprawdzanie (walidacja dokonana przez format)

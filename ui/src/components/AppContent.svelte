@@ -1,13 +1,12 @@
 <script lang="ts">
-    import type { DataFormat } from 'format'
+    import { getAppContext } from '../app-context'
     import PlantProperties from './PlantProperties.svelte'
     import CalculationResult from './CalculationResult.svelte'
     import YieldChart from './charts/YieldChart.svelte'
     import ConsumptionChart from './charts/ConsumptionChart.svelte'
     import BalanceChart from './charts/BalanceChart.svelte'
 
-    export let url: string
-    export let data: DataFormat
+    const { url } = getAppContext()
 </script>
 
 <div>
@@ -21,20 +20,20 @@
     </div>
     <br />
 
-    <PlantProperties {data} />
+    <PlantProperties />
     <br />
-    <CalculationResult {data} />
+    <CalculationResult />
 
     <div class="chart-container">
-        <YieldChart {data} />
+        <YieldChart />
     </div>
 
     <div class="chart-container">
-        <ConsumptionChart {data} />
+        <ConsumptionChart />
     </div>
 
     <div class="chart-container">
-        <BalanceChart {data} />
+        <BalanceChart />
     </div>
 </div>
 

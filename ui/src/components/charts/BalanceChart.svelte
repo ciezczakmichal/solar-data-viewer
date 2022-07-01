@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte'
     import { Chart } from 'chart.js'
-    import type { DataFormat } from 'format'
+    import { getAppContext } from '../../app-context'
     import { formatKwh } from '../../utils/formatters/format-numbers'
     import { DataRange } from '../../utils/chart-data'
     import {
@@ -12,7 +12,7 @@
         type ChartOptions,
     } from './balance-chart-data'
 
-    export let data: DataFormat
+    const { data } = getAppContext()
 
     let chart: Chart<'bar' | 'line', ChartDataItem[]> | null = null
     let canvas: HTMLCanvasElement

@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { DataFormat } from 'format'
+    import { getAppContext } from '../app-context'
     import Item from './Item.svelte'
 
-    export let data: DataFormat
+    const { data } = getAppContext()
     const { plantProperties: props } = data
 </script>
 
