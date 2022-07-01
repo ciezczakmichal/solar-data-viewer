@@ -14,11 +14,23 @@
     <Item label="Moc instalacji" value={props.installationPower} unit="kWp" />
 
     {#if props.pitch}
-        <Item label="Nachylenie paneli" value={props.pitch} unit="°" />
+        <Item
+            label="Nachylenie paneli"
+            value={props.pitch}
+            unit="°"
+            noSpaceBeforeUnit
+        />
     {/if}
+
     {#if props.orientation}
-        <Item label="Orientacja" value={props.orientation} unit="°" />
+        <Item
+            label="Orientacja"
+            value={props.orientation}
+            unit="°"
+            noSpaceBeforeUnit
+        />
     {/if}
+
     {#if props.panelsArea}
         <Item label="Powierzchnia paneli" value={props.panelsArea} unit="m²" />
     {/if}
