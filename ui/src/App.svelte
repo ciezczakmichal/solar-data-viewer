@@ -4,7 +4,7 @@
     import AppHeader from './components/AppHeader.svelte'
     import AppContent from './components/AppContent.svelte'
     import AppFooter from './components/AppFooter.svelte'
-    import { formatNumber } from './utils/format'
+    import { formatNumber } from './utils/formatters/format-numbers'
     import { getHashValue } from './utils/get-hash-value'
     import './utils/chartjs-import'
     import './utils/dayjs-import'

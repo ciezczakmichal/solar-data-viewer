@@ -2,7 +2,7 @@
     import { onMount } from 'svelte'
     import { Chart } from 'chart.js'
     import type { DataFormat } from 'format'
-    import { formatKwh } from '../../utils/format'
+    import { formatKwh } from '../../utils/formatters/format-numbers'
     import { DataRange } from '../../utils/chart-data'
     import {
         ChartType,

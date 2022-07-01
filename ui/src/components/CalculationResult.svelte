@@ -11,10 +11,12 @@
         formatNumber,
         formatKwh,
         formatPercent,
+    } from '../utils/formatters/format-numbers'
+    import {
+        DurationFormatFlag,
         formatDate,
         formatDuration,
-        DurationFormatFlag,
-    } from '../utils/format'
+    } from '../utils/formatters/format-time'
 
     export let data: DataFormat
     const { values, plantProperties, tariff, vatRate } = data
@@ -56,6 +58,10 @@
         plantProperties,
     })
 
+    const rangeString = `${formatDate(from.date)} - ${formatDate(to.date)}`
+    const durationString = formatDuration({ from: from.date, to: to.date })
+    const daysRangeString = `${rangeString} (${durationString})`
+
     const { accurate, savings } = calculateSavings({
         values: values.filter(isCompleteRecord),
         tariff,
@@ -76,12 +82,7 @@
 </script>
 
 <div class="data">
-    <Item
-        label="Zakres danych"
-        value={`${formatDate(from.date)} - ${formatDate(
-            to.date
-        )} (${formatDuration(days)})`}
-    />
+    <Item label="Zakres danych" value={daysRangeString} />
     <EnergyCountItem label="Uzysk" value={totalYield} />
     <EnergyCountItem label="Średni uzysk na dzień" value={dailyYield} />
     <Item label="kWh/kWp" value={formatNumber(kWhTokWp)} />

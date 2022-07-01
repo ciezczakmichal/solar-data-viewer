@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { formatNumber } from '../utils/format'
+    import { formatNumber } from '../utils/formatters/format-numbers'
 
     export let label: string = ''
     export let value: string | number
