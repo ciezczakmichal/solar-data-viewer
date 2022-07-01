@@ -75,28 +75,26 @@
                 errorMessage = error.message
             }
         }
-
-        updateApplicationTitle()
     }
 
-    function updateApplicationTitle() {
+    function generateApplicationTitle(data: DataFormat): string {
         let title = baseAppTitle
 
-        if (data) {
-            const { location, installationPower } = data.plantProperties
-            const powerString = formatNumber(installationPower) + ' kWp'
+        const { location, installationPower } = data.plantProperties
+        const powerString = formatNumber(installationPower) + ' kWp'
 
-            if (location) {
-                title = `${location} ${powerString} | ${title}`
-            }
+        if (location) {
+            title = `${location} ${powerString} | ${title}`
         }
 
-        document.title = title
+        return title
     }
 
+    $: document.title = data ? generateApplicationTitle(data) : baseAppTitle
+
     onMount(() => {
-        updateDataSource()
         addEventListener('hashchange', updateDataSource)
+        updateDataSource()
     })
 </script>
 
