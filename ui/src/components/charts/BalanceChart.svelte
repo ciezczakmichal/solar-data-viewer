@@ -64,6 +64,15 @@
                             display: true,
                             text: 'Energia w kWh',
                         },
+                        grid: {
+                            color: function (context) {
+                                if (context.tick.value === 0) {
+                                    return 'rgba(0, 0, 0, 0.5)'
+                                }
+
+                                return 'rgba(0, 0, 0, 0.1)'
+                            },
+                        },
                     },
                 },
                 plugins: {
