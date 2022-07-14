@@ -27,6 +27,7 @@ export interface EnergyCalculationResult {
     charged: number
     totalConsumption: number
     dailyConsumption: number
+    monthlyConsumption: number
 
     // informacja, czy produkcja instalacji spełnia zapotrzebowanie (tj. energyToBuy == 0)
     fulfillNeeds: boolean
@@ -67,6 +68,7 @@ export function calculateEnergy(
 
     const totalConsumption = selfConsumed + charged
     const dailyConsumption = totalConsumption / days
+    const monthlyConsumption = dailyConsumption * (365 / 12)
 
     let savedEnergy: number,
         needsFulfilmentPercent: number,
@@ -101,6 +103,7 @@ export function calculateEnergy(
         charged,
         totalConsumption,
         dailyConsumption,
+        monthlyConsumption,
 
         fulfillNeeds,
         savedEnergy,

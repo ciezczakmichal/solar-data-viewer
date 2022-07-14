@@ -47,6 +47,7 @@
         charged,
         totalConsumption,
         dailyConsumption,
+        monthlyConsumption,
 
         fulfillNeeds,
         savedEnergy,
@@ -106,9 +107,11 @@
         label="Całkowite zużycie energii"
         value={totalConsumption}
     />
-    <EnergyCountItem
-        label="Średnie dzienne zużycie energii"
-        value={dailyConsumption}
+    <Item
+        label="Średnie zużycie energii"
+        value={`${formatKwh(dailyConsumption)} / dzień, ${formatKwh(
+            monthlyConsumption
+        )} / miesiąc`}
     />
     <br />
 
