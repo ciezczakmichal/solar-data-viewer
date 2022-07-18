@@ -1,6 +1,13 @@
 <footer>
-    Logo aplikacji z
-    <a href="https://github.com/twitter/twemoji">Twitter Emoji</a>, CC-BY 4.0
+    Kod źródłowy:
+    <a
+        href="https://github.com/ciezczakmichal/solar-data-viewer"
+        target="_blank">GitHub</a
+    >
+    | Logo aplikacji z
+    <a href="https://github.com/twitter/twemoji" target="_blank"
+        >Twitter Emoji</a
+    >, CC-BY 4.0
 </footer>
 
 <style>
