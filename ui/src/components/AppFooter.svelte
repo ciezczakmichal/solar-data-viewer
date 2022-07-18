@@ -1,6 +1,6 @@
 <footer>
-    App logo from <a href="https://github.com/twitter/twemoji">Twitter Emoji</a
-    >, CC-BY 4.0
+    Logo aplikacji z
+    <a href="https://github.com/twitter/twemoji">Twitter Emoji</a>, CC-BY 4.0
 </footer>
 
 <style>
