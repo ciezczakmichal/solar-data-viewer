@@ -79,17 +79,20 @@
                     tooltip: {
                         callbacks: {
                             label: function (context) {
-                                let label = context.dataset.label || ''
+                                const value = context.parsed.y
 
-                                if (label) {
-                                    label += ': '
+                                if (value === null) {
+                                    return ''
                                 }
 
-                                if (context.parsed.y !== null) {
-                                    label += formatKwh(context.parsed.y)
-                                }
+                                const label =
+                                    value > 0
+                                        ? 'Nadwyżka energii'
+                                        : value < 0
+                                        ? 'Niedobór energii'
+                                        : context.dataset.label || ''
 
-                                return label
+                                return label + ': ' + formatKwh(Math.abs(value))
                             },
                         },
                     },
