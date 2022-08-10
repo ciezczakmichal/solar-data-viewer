@@ -33,6 +33,46 @@ describe('calculateEnergy', () => {
         expect(result.days).toEqual(7)
     })
 
+    it('test obliczania liczby dni - gdy zdefiniowano licznik', () => {
+        const meters: MeterRecord[] = [
+            {
+                id: 1,
+                installationDate: '2022-05-13',
+                initialValues: {
+                    totalYield: 0,
+                    charged: 0,
+                    donated: 0,
+                },
+            },
+        ]
+
+        const values: CompleteValuesRecord[] = [
+            {
+                meterId: 1,
+                date: '2022-05-15',
+                totalYield: 0,
+                charged: 0,
+                donated: 0,
+            },
+        ]
+
+        const metersHelper = new MetersDataHelper({ meters, values })
+
+        const input: EnergyCalculationInput = {
+            from: metersHelper.getMeterInitialValuesAsCompleteRecord(1),
+            to: values[0],
+            plantProperties: {
+                // nieistone
+                installationPower: 1,
+                energyInWarehouseFactor: 1,
+            },
+            metersHelper,
+        }
+
+        const result = calculateEnergy(input)
+        expect(result.days).toEqual(2)
+    })
+
     it('test pełnego bilansowania - wersja z 0% autokonsumpcji', () => {
         const input: EnergyCalculationInput = {
             from: {
