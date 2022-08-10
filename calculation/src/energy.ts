@@ -1,14 +1,33 @@
-import { CompleteValuesRecord, PlantProperties } from 'format'
+import {
+    CompleteValuesRecord,
+    PlantProperties,
+    ValuesRecordNumberProps,
+} from 'format'
+import { CalculationError } from './error'
+import { MetersDataHelper } from './meters-data-helper'
 import { parseDate } from './utils/date'
+
+export interface BaseEnergyParamsCalculationInput {
+    from: CompleteValuesRecord
+    to: CompleteValuesRecord
+
+    // jeśli podano, wspiera przy obliczaniu zmianę liczników
+    // wymagane, jeśli wartości liczbowe są dla różnych liczników (rzuca wyjątkiem)
+    metersHelper?: MetersDataHelper
+}
+
+export type BaseEnergyParamsCalculationResult = Pick<
+    EnergyCalculationResult,
+    ValuesRecordNumberProps
+>
 
 export type EnergyCalculationInputPlantProperties = Pick<
     PlantProperties,
     'installationPower' | 'energyInWarehouseFactor'
 >
 
-export interface EnergyCalculationInput {
-    from: CompleteValuesRecord
-    to: CompleteValuesRecord
+export interface EnergyCalculationInput
+    extends BaseEnergyParamsCalculationInput {
     plantProperties: EnergyCalculationInputPlantProperties
 }
 
@@ -45,20 +64,61 @@ export interface EnergyCalculationResult {
     energyToCharge: number
 }
 
+export function calculateBaseEnergyParams(
+    input: EnergyCalculationInput
+): BaseEnergyParamsCalculationResult {
+    const { from, to, metersHelper } = input
+    let totalYield: number = 0,
+        charged: number = 0,
+        donated: number = 0
+
+    if (!metersHelper && from.meterId !== to.meterId) {
+        throw new CalculationError(
+            `Nie przekazano obiektu ${MetersDataHelper.name}, a wartości liczbowe pochodzą z różnych liczników`
+        )
+    }
+
+    const metersId = metersHelper
+        ? metersHelper.getMetersIdForPeriod(from, to)
+        : []
+
+    if (metersHelper && metersId.length >= 2) {
+        while (metersId.length >= 2) {
+            const currentMeterId = metersId.shift() as number
+            const nextMeterId = metersId[0]
+
+            const lastValue = metersHelper.getLastMeterValue(currentMeterId)
+            const initialValue =
+                metersHelper.getMeterInitialValuesAsCompleteRecord(nextMeterId)
+
+            const getValue = (field: ValuesRecordNumberProps): number =>
+                lastValue[field] - from[field] + to[field] - initialValue[field]
+
+            totalYield += getValue('totalYield')
+            charged += getValue('charged')
+            donated += getValue('donated')
+        }
+    } else {
+        totalYield = to.totalYield - from.totalYield
+        charged = to.charged - from.charged
+        donated = to.donated - from.donated
+    }
+
+    return { totalYield, charged, donated }
+}
+
 export function calculateEnergy(
     input: EnergyCalculationInput
 ): EnergyCalculationResult {
     const { from, to, plantProperties } = input
+    const { totalYield, charged, donated } = calculateBaseEnergyParams(input)
 
-    const totalYield = to.totalYield - from.totalYield
     const kWhTokWp = totalYield / plantProperties.installationPower
 
     const lastDate = parseDate(to.date)
     const baseDate = parseDate(from.date)
     const days = lastDate.diff(baseDate, 'days')
 
-    const charged = to.charged - from.charged
-    const donated = to.donated - from.donated
     const donatedToUse = donated * plantProperties.energyInWarehouseFactor
 
     const selfConsumed = totalYield - donated

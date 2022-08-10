@@ -3,7 +3,7 @@ import {
     type CompleteValuesRecord,
     type DataFormat,
 } from 'format'
-import { calculateEnergy } from 'calculation'
+import { calculateEnergy, MetersDataHelper } from 'calculation'
 import { getMonthName } from '../../utils/date'
 import {
     DataRange,
@@ -30,6 +30,7 @@ export type ChartData = ChartDataItem[]
 
 export function getChartData(
     data: DataFormat,
+    metersHelper: MetersDataHelper,
     options: ChartOptions
 ): ChartDataItem[] {
     const { type, range } = options
@@ -84,6 +85,7 @@ export function getChartData(
                         from,
                         to: item.values,
                         plantProperties: data.plantProperties,
+                        metersHelper,
                     })
 
                 value = fulfillNeeds ? energyToCharge : -1 * energyToBuy

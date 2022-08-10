@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte'
     import { convertObjectToDataFormat, DataFormat } from 'format'
+    import { MetersDataHelper } from 'calculation'
     import AppHeader from './components/AppHeader.svelte'
     import AppContent from './components/AppContent.svelte'
     import AppFooter from './components/AppFooter.svelte'
@@ -19,6 +20,13 @@
 
             return data
         },
+        getMetersHelper: () => {
+            if (!metersHelper) {
+                throw new Error('Obiekt nie jest dostępny')
+            }
+
+            return metersHelper
+        },
     })
 
     const baseAppTitle = document.title
@@ -34,6 +42,9 @@
 
     let url: string = ''
     let data: DataFormat | null = null
+
+    // @todo przenieść - zależy tylko od danych - osobny kontekst?
+    let metersHelper: MetersDataHelper | null = null
 
     async function fetchData(): Promise<DataFormat> {
         if (!url) {
@@ -65,9 +76,11 @@
         errorMessage = ''
         url = getHashValue('data-source')
         data = null
+        metersHelper = null
 
         try {
             data = await fetchData()
+            metersHelper = new MetersDataHelper(data)
             status = Status.DataDisplay
         } catch (error) {
             if (error instanceof Error) {

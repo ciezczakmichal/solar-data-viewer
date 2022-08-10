@@ -8,6 +8,7 @@ import {
 } from './energy'
 import { calculateEnergyCost } from './energy-cost'
 import { CurrencyOptions } from './currency-options'
+import { MetersDataHelper } from './meters-data-helper'
 import { parseDate } from './utils/date'
 
 export interface SavingsCalculationInput {
@@ -15,6 +16,9 @@ export interface SavingsCalculationInput {
     tariff: TariffItem[]
     vatRate: VatRateItem[]
     plantProperties: EnergyCalculationInputPlantProperties
+
+    // wymagany, gdyż pozwala uwzględnić dane początkowe licznika
+    metersHelper: MetersDataHelper
 }
 
 export interface SavingsCalculationResult {
@@ -34,7 +38,12 @@ export interface SavingsCalculationResult {
 export function calculateSavings(
     input: SavingsCalculationInput
 ): SavingsCalculationResult {
-    const { values, tariff, vatRate, plantProperties } = input
+    const { tariff, vatRate, plantProperties, metersHelper } = input
+
+    const initialValue = metersHelper.getMeterInitialValuesAsCompleteRecord(
+        metersHelper.getFirstMeterId()
+    )
+    let values = [initialValue, ...input.values]
 
     const daysOfChange = getDaysOfChange(tariff, vatRate)
     let accurate = true
@@ -71,6 +80,7 @@ export function calculateSavings(
             from: firstValue,
             to,
             plantProperties,
+            metersHelper,
         })
 
         const savedEnergyAtRange = savedEnergy - countedSavedEnergy

@@ -3,6 +3,9 @@ import { IsISO8601Date } from '../decorators/is-iso8601-date'
 
 // @todo walidacja: totalYield i/lub (charged i donated)
 export class ValuesRecordValidationClass {
+    @IsNumber()
+    meterId!: number
+
     @IsISO8601Date()
     date!: string
 
@@ -32,25 +35,30 @@ export class ValuesRecordValidationClass {
 }
 
 export interface BaseValuesRecord {
+    meterId: number
     date: string
     comment?: string
 }
 
-export interface YieldValuesRecord extends BaseValuesRecord {
+export interface BaseYieldValuesRecord {
     totalYield: number
 }
 
-export interface MeterValuesRecord extends BaseValuesRecord {
+export interface BaseMeterValuesRecord {
     charged: number
     donated: number
 }
 
+export type YieldValuesRecord = BaseValuesRecord & BaseYieldValuesRecord
+export type MeterValuesRecord = BaseValuesRecord & BaseMeterValuesRecord
 export type CompleteValuesRecord = YieldValuesRecord & MeterValuesRecord
 
 export type ValuesRecord =
     | YieldValuesRecord
     | MeterValuesRecord
     | CompleteValuesRecord
+
+export type ValuesRecordNumberProps = 'totalYield' | 'charged' | 'donated'
 
 export function isYieldRecord(
     data: BaseValuesRecord

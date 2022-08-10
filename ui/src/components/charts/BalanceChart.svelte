@@ -12,7 +12,7 @@
         type ChartOptions,
     } from './balance-chart-data'
 
-    const { data } = getAppContext()
+    const { data, metersHelper } = getAppContext()
 
     let chart: Chart<'bar' | 'line', ChartDataItem[]> | null = null
     let canvas: HTMLCanvasElement
@@ -105,7 +105,7 @@
             return
         }
 
-        chartData = getChartData(data, options)
+        chartData = getChartData(data, metersHelper, options)
 
         chart.data.datasets[0].data = chartData
         chart.update()

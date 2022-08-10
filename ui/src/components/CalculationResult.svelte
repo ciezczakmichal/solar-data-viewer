@@ -19,7 +19,7 @@
         formatDuration,
     } from '../utils/formatters/format-time'
 
-    const { data } = getAppContext()
+    const { data, metersHelper } = getAppContext()
     const { values, plantProperties, tariff, vatRate } = data
 
     // @todo wydzielić sprawdzanie (walidacja dokonana przez format)
@@ -27,11 +27,14 @@
         throw new Error('Wymagane minimum 2 rekordy')
     }
 
-    const from = values[0]
+    // @todo uwspólnić from / to
+    const from = metersHelper.getMeterInitialValuesAsCompleteRecord(
+        metersHelper.getFirstMeterId()
+    )
     const to = values[values.length - 1]
 
     // @todo automatyczne określanie zakresu dni
-    if (!isCompleteRecord(from) || !isCompleteRecord(to)) {
+    if (!isCompleteRecord(to)) {
         throw new Error('Wybrane rekordy nie zawierają kompletnych danych')
     }
 
@@ -58,6 +61,7 @@
         from,
         to,
         plantProperties,
+        metersHelper,
     })
 
     const rangeString = `${formatDate(from.date)} - ${formatDate(to.date)}`
@@ -69,6 +73,7 @@
         tariff,
         vatRate,
         plantProperties,
+        metersHelper,
     })
 
     const { dailySaving, currentSavingsPerKwh, daysToInvestmentReturn } =

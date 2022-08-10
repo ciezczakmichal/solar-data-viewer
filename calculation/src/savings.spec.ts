@@ -1,44 +1,57 @@
+import { CompleteValuesRecord, MeterRecord } from 'format'
 import { calculateSavings, SavingsCalculationInput } from './savings'
+import { MetersDataHelper } from './meters-data-helper'
 
 describe('calculateSavings', () => {
     it('test obliczania oszczędności przy kilku zmiennych parametrach z danymi o pełni pasujących datach', () => {
-        const baseInput: SavingsCalculationInput = {
-            values: [
-                {
-                    date: '2020-05-17',
+        const meters: MeterRecord[] = [
+            {
+                id: 1,
+                installationDate: '2020-05-17',
+                initialValues: {
                     totalYield: 0,
                     charged: 0,
                     donated: 0,
                     // całkowite zużycie: 0
                 },
-                {
-                    date: '2020-09-30',
-                    totalYield: 800,
-                    charged: 300,
-                    donated: 700,
-                    // całkowite zużycie: 800 - 700 + 300 = 400
-                    // = tyle zakupu zdołano uniknąć
-                    // wartość zaoszczędzona w okresie: 400
-                },
-                {
-                    date: '2020-12-31',
-                    totalYield: 1000,
-                    charged: 500,
-                    donated: 800, // 640 do pobrania; pobrano mniej
-                    // całkowite zużycie: 1000 - 800 + 500 = 700
-                    // = tyle zakupu zdołano uniknąć
-                    // wartość zaoszczędzona w okresie: 700 - 400 = 300
-                },
-                {
-                    date: '2021-03-12', // dowolna data w 2021
-                    totalYield: 1250,
-                    charged: 800,
-                    donated: 900, // 720 do pobrania; pobrano więcej
-                    // całkowite zużycie: 1250 - 900 + 800 = 1150
-                    // uniknięto zakupu na ilość: 1250 - 900 + (800 - (800 - 720)) = 1070
-                    // wartość zaoszczędzona w okresie: 1070 - 700 = 370
-                },
-            ],
+            },
+        ]
+
+        const values: CompleteValuesRecord[] = [
+            {
+                meterId: 1,
+                date: '2020-09-30',
+                totalYield: 800,
+                charged: 300,
+                donated: 700,
+                // całkowite zużycie: 800 - 700 + 300 = 400
+                // = tyle zakupu zdołano uniknąć
+                // wartość zaoszczędzona w okresie: 400
+            },
+            {
+                meterId: 1,
+                date: '2020-12-31',
+                totalYield: 1000,
+                charged: 500,
+                donated: 800, // 640 do pobrania; pobrano mniej
+                // całkowite zużycie: 1000 - 800 + 500 = 700
+                // = tyle zakupu zdołano uniknąć
+                // wartość zaoszczędzona w okresie: 700 - 400 = 300
+            },
+            {
+                meterId: 1,
+                date: '2021-03-12', // dowolna data w 2021
+                totalYield: 1250,
+                charged: 800,
+                donated: 900, // 720 do pobrania; pobrano więcej
+                // całkowite zużycie: 1250 - 900 + 800 = 1150
+                // uniknięto zakupu na ilość: 1250 - 900 + (800 - (800 - 720)) = 1070
+                // wartość zaoszczędzona w okresie: 1070 - 700 = 370
+            },
+        ]
+
+        const baseInput: SavingsCalculationInput = {
+            values,
             tariff: [
                 {
                     name: 'Parametr #1',
@@ -77,24 +90,29 @@ describe('calculateSavings', () => {
                 installationPower: 1, // bez znaczenia dla testów
                 energyInWarehouseFactor: 0.8,
             },
+            metersHelper: new MetersDataHelper({ meters, values }),
         }
 
-        // test dla 2 pierwszych rekordów
-        // oczekiwany wynik: 400 * 0,3 * 1,05 = 126
-        let input: SavingsCalculationInput = {
-            ...baseInput,
-            values: baseInput.values.slice(0, 2),
+        const prepareInput = (recordCount: number): SavingsCalculationInput => {
+            const values = baseInput.values.slice(0, recordCount)
+
+            return {
+                ...baseInput,
+                values,
+                metersHelper: new MetersDataHelper({ meters, values }),
+            }
         }
+
+        // test dla pierwszego rekordu
+        // oczekiwany wynik: 400 * 0,3 * 1,05 = 126
+        let input = prepareInput(1)
         let result = calculateSavings(input)
         expect(result.accurate).toEqual(true)
         expect(result.savings.value).toEqual(126)
 
-        // test dla 3 pierwszych rekordów
+        // test dla 2 pierwszych rekordów
         // oczekiwany wynik: 126 + (300 * 0,3 + 300 * 0,15) * 1,05 = 267,75
-        input = {
-            ...baseInput,
-            values: baseInput.values.slice(0, 3),
-        }
+        input = prepareInput(2)
         result = calculateSavings(input)
         expect(result.accurate).toEqual(true)
         expect(result.savings.value).toEqual(267.75)

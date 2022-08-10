@@ -3,6 +3,7 @@ import 'reflect-metadata'
 
 export * from './definitions/data-format'
 export * from './definitions/date-format'
+export * from './definitions/meter-record'
 export * from './definitions/plant-properties'
 export * from './definitions/tariff-item'
 export * from './definitions/values-record'
