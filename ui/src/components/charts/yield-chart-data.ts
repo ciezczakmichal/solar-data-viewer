@@ -1,9 +1,5 @@
-import {
-    isYieldRecord,
-    type DataFormat,
-    type ValuesRecord,
-    type YieldValuesRecord,
-} from 'format'
+import type { DataFormat, ValuesRecord, YieldValuesRecord } from 'format'
+import type { MetersDataHelper } from 'calculation'
 import { getMonthName } from '../../utils/date'
 import {
     DataRange,
@@ -33,6 +29,7 @@ export interface ChartData {
 
 export function getChartYieldData(
     values: ValuesRecord[],
+    metersHelper: MetersDataHelper,
     options: ChartOptions
 ): ChartDataItem[] {
     const { type, range } = options
@@ -42,11 +39,9 @@ export function getChartYieldData(
         return []
     }
 
-    const first = values[0]
-
-    if (!isYieldRecord(first)) {
-        throw new Error('Oczekiwano danych o uzysku w pierwszym rekordzie')
-    }
+    const first = metersHelper.getMeterInitialValuesAsCompleteRecord(
+        metersHelper.getFirstMeterId()
+    )
 
     const result = records.map((item, index) => {
         const previousItem: RangeYieldValuesRecord | null =
@@ -103,9 +98,10 @@ export function getChartYieldData(
 
 export function getChartData(
     data: DataFormat,
+    metersHelper: MetersDataHelper,
     options: ChartOptions
 ): ChartData {
-    const yieldData = getChartYieldData(data.values, options)
+    const yieldData = getChartYieldData(data.values, metersHelper, options)
     let yieldForecastData: ChartDataItem[] = []
 
     if (options.type === ChartType.Bar && options.range === DataRange.Month) {

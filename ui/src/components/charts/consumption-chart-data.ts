@@ -1,8 +1,4 @@
-import {
-    isCompleteRecord,
-    type CompleteValuesRecord,
-    type DataFormat,
-} from 'format'
+import type { CompleteValuesRecord, DataFormat } from 'format'
 import { calculateEnergy, MetersDataHelper } from 'calculation'
 import { getMonthName } from '../../utils/date'
 import {
@@ -40,11 +36,9 @@ export function getChartData(
         return []
     }
 
-    const first = data.values[0]
-
-    if (!isCompleteRecord(first)) {
-        throw new Error('Oczekiwano pełnych danych w pierwszym rekordzie')
-    }
+    const first = metersHelper.getMeterInitialValuesAsCompleteRecord(
+        metersHelper.getFirstMeterId()
+    )
 
     const result = records.map((item, index) => {
         const previousItem: RangeCompleteValuesRecord | null =
