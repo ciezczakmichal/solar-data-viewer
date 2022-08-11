@@ -1,4 +1,4 @@
-# Solar Data Viewer
+# ☀️ Solar Data Viewer
 
 Aplikacja do prezentacji danych z instalacji fotowoltaicznej.
 
@@ -7,6 +7,6 @@ Oblicza wartości takie jak produkcja, zużycie, poziom spełnienia zapotrzebowa
 
 **UWAGA**: aplikacja wspiera tylko system rozliczeń o nazwie **net-metering** (system opustów).
 
-## Demo
+## 💻 Demo
 
 Aplikacja wraz z przykładowymi danymi znajduje się [tutaj](https://solardataviewer.tk/#data-source=demo-data.json).
