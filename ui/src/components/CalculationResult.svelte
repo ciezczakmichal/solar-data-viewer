@@ -22,11 +22,6 @@
     const { data, metersHelper } = getAppContext()
     const { values, plantProperties, tariff, vatRate } = data
 
-    // @todo wydzielić sprawdzanie (walidacja dokonana przez format)
-    if (values.length < 3) {
-        throw new Error('Wymagane minimum 2 rekordy')
-    }
-
     // @todo uwspólnić from / to
     const from = metersHelper.getMeterInitialValuesAsCompleteRecord(
         metersHelper.getFirstMeterId()
