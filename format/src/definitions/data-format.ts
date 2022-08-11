@@ -18,7 +18,7 @@ export class DataFormat {
     meters!: MeterRecord[]
 
     @IsArray()
-    @ArrayMinSize(2)
+    @ArrayMinSize(1)
     @ValidateNested({ each: true })
     @Type(() => ValuesRecordValidationClass)
     values!: ValuesRecord[]
