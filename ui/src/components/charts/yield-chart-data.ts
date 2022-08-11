@@ -106,7 +106,7 @@ export function getChartData(
 
     if (options.type === ChartType.Bar && options.range === DataRange.Month) {
         // pokaż dane dla miesięcy, dla których dostępne są dane produkcji
-        yieldForecastData = data.yieldForecastData
+        yieldForecastData = (data.yieldForecastData || [])
             .map(item => ({
                 x: getMonthName(item.month - 1),
                 y: item.value,

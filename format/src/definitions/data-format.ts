@@ -1,4 +1,10 @@
-import { ArrayMinSize, Equals, IsArray, ValidateNested } from 'class-validator'
+import {
+    ArrayMinSize,
+    Equals,
+    IsArray,
+    IsOptional,
+    ValidateNested,
+} from 'class-validator'
 import { Type } from 'class-transformer'
 import { MeterRecord } from './meter-record'
 import { ValuesRecord, ValuesRecordValidationClass } from './values-record'
@@ -8,8 +14,8 @@ import { TariffItem } from './tariff-item'
 import { VatRateItem } from './vat-rate-item'
 
 export class DataFormat {
-    @Equals(8)
-    version!: 8
+    @Equals(9)
+    version!: 9
 
     @IsArray()
     @ArrayMinSize(1)
@@ -27,10 +33,11 @@ export class DataFormat {
     @Type(() => PlantProperties)
     plantProperties!: PlantProperties
 
+    @IsOptional()
     @IsArray()
     @ValidateNested({ each: true })
     @Type(() => YieldForecastRecord)
-    yieldForecastData!: YieldForecastRecord[]
+    yieldForecastData?: YieldForecastRecord[]
 
     @IsArray()
     @ValidateNested({ each: true })
