@@ -1,17 +1,17 @@
-import type { DataFormat } from 'format'
+import type { SolarDataFormat } from 'format'
 import type { MetersDataHelper } from 'calculation'
 import { getContext, setContext } from 'svelte'
 
 export interface AppContext {
     getUrl(): string
-    getData(): DataFormat
+    getData(): SolarDataFormat
 
     getMetersHelper(): MetersDataHelper
 }
 
 export interface AppContextValues {
     url: string
-    data: DataFormat
+    data: SolarDataFormat
 
     metersHelper: MetersDataHelper
 }

@@ -14,7 +14,7 @@ import { YieldForecastRecord } from './yield-forecast-record'
 import { TariffItem } from './tariff-item'
 import { VatRateItem } from './vat-rate-item'
 
-export class DataFormat {
+export class SolarDataFormat {
     @Equals(9)
     version!: 9
 

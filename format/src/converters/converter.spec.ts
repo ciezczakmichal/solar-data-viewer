@@ -2,8 +2,8 @@
 import 'reflect-metadata'
 
 import { readFile } from 'fs/promises'
-import { DataFormat } from '../definitions/data-format'
-import { convertObjectToDataFormat } from './converter'
+import { SolarDataFormat } from '../definitions/solar-data-format'
+import { convertObjectToSolarDataFormat } from './converter'
 
 async function getExampleSmallestData(): Promise<Record<string, any>> {
     const json = await readFile(
@@ -13,10 +13,10 @@ async function getExampleSmallestData(): Promise<Record<string, any>> {
     return JSON.parse(json)
 }
 
-describe('convertObjectToDataFormat', () => {
+describe('convertObjectToSolarDataFormat', () => {
     function testThrowsErrorWithValue(value: any): Promise<void> {
         return expect(() =>
-            convertObjectToDataFormat(value)
+            convertObjectToSolarDataFormat(value)
         ).rejects.toThrowError()
     }
 
@@ -62,8 +62,8 @@ describe('convertObjectToDataFormat', () => {
         })
 
         it('przykładowy plik z minimalną liczbą danych jest traktowany jako poprawny', async () => {
-            const result = await convertObjectToDataFormat(data)
-            expect(result).toBeInstanceOf(DataFormat)
+            const result = await convertObjectToSolarDataFormat(data)
+            expect(result).toBeInstanceOf(SolarDataFormat)
         })
 
         it('usunięcie dowolnej właściwości z minimalnych danych skutkuje odrzuceniem danych', async () => {

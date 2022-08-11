@@ -1,4 +1,4 @@
-import type { CompleteValuesRecord, DataFormat } from 'format'
+import type { CompleteValuesRecord, SolarDataFormat } from 'format'
 import { calculateEnergy, MetersDataHelper } from 'calculation'
 import { getMonthName } from '../../utils/date'
 import {
@@ -25,7 +25,7 @@ export interface ChartDataItem {
 export type ChartData = ChartDataItem[]
 
 export function getChartData(
-    data: DataFormat,
+    data: SolarDataFormat,
     metersHelper: MetersDataHelper,
     options: ChartOptions
 ): ChartDataItem[] {

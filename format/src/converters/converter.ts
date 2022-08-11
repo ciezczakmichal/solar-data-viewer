@@ -1,9 +1,11 @@
-import { DataFormat } from '../definitions/data-format'
+import { SolarDataFormat } from '../definitions/solar-data-format'
 import { convertPlainObjectToInstance } from './generics'
 
-export function convertObjectToDataFormat(data: any): Promise<DataFormat> {
+export function convertObjectToSolarDataFormat(
+    data: any
+): Promise<SolarDataFormat> {
     return convertPlainObjectToInstance(
-        DataFormat,
+        SolarDataFormat,
         data,
         error =>
             new Error(

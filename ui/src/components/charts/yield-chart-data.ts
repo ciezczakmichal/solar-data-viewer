@@ -1,4 +1,4 @@
-import type { DataFormat, ValuesRecord, YieldValuesRecord } from 'format'
+import type { SolarDataFormat, ValuesRecord, YieldValuesRecord } from 'format'
 import type { MetersDataHelper } from 'calculation'
 import { getMonthName } from '../../utils/date'
 import {
@@ -97,7 +97,7 @@ export function getChartYieldData(
 }
 
 export function getChartData(
-    data: DataFormat,
+    data: SolarDataFormat,
     metersHelper: MetersDataHelper,
     options: ChartOptions
 ): ChartData {
