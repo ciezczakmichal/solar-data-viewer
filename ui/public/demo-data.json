@@ -1,0 +1,375 @@
+{
+    "version": 9,
+    "meters": [
+        {
+            "id": 1,
+            "installationDate": "2021-12-31",
+            "initialValues": {
+                "totalYield": 320,
+                "charged": 80519,
+                "donated": 260
+            }
+        }
+    ],
+    "values": [
+        {
+            "meterId": 1,
+            "date": "2022-01-02",
+            "totalYield": 322,
+            "charged": 80533,
+            "donated": 261
+        },
+        {
+            "meterId": 1,
+            "date": "2022-01-09",
+            "totalYield": 345,
+            "charged": 80584,
+            "donated": 276
+        },
+        {
+            "meterId": 1,
+            "date": "2022-01-16",
+            "totalYield": 370,
+            "charged": 80629,
+            "donated": 294
+        },
+        {
+            "meterId": 1,
+            "date": "2022-01-23",
+            "totalYield": 411,
+            "charged": 80675,
+            "donated": 323
+        },
+        {
+            "meterId": 1,
+            "date": "2022-01-30",
+            "totalYield": 416,
+            "charged": 80727,
+            "donated": 326
+        },
+        {
+            "meterId": 1,
+            "date": "2022-01-31",
+            "totalYield": 417,
+            "charged": 80733,
+            "donated": 326
+        },
+        {
+            "meterId": 1,
+            "date": "2022-02-06",
+            "totalYield": 438,
+            "charged": 80776,
+            "donated": 339
+        },
+        {
+            "meterId": 1,
+            "date": "2022-02-13",
+            "totalYield": 486,
+            "charged": 80814,
+            "donated": 379
+        },
+        {
+            "meterId": 1,
+            "date": "2022-02-20",
+            "totalYield": 533,
+            "charged": 80857,
+            "donated": 415
+        },
+        {
+            "meterId": 1,
+            "date": "2022-02-27",
+            "totalYield": 587,
+            "charged": 80897,
+            "donated": 457
+        },
+        {
+            "meterId": 1,
+            "date": "2022-02-28",
+            "totalYield": 608,
+            "charged": 80901,
+            "donated": 474
+        },
+        {
+            "meterId": 1,
+            "date": "2022-03-06",
+            "totalYield": 671,
+            "charged": 80934,
+            "donated": 525
+        },
+        {
+            "meterId": 1,
+            "date": "2022-03-13",
+            "totalYield": 817,
+            "charged": 80961,
+            "donated": 638,
+            "comment": "charged, donated - oszacowane"
+        },
+        {
+            "meterId": 1,
+            "date": "2022-03-20",
+            "totalYield": 930,
+            "charged": 80985,
+            "donated": 754
+        },
+        {
+            "meterId": 1,
+            "date": "2022-03-27",
+            "totalYield": 1070,
+            "charged": 81022,
+            "donated": 875
+        },
+        {
+            "meterId": 1,
+            "date": "2022-03-31",
+            "totalYield": 1126,
+            "charged": 81041,
+            "donated": 921
+        },
+        {
+            "meterId": 1,
+            "date": "2022-04-03",
+            "totalYield": 1165,
+            "charged": 81057,
+            "donated": 951
+        },
+        {
+            "meterId": 1,
+            "date": "2022-04-10",
+            "totalYield": 1244,
+            "charged": 81098,
+            "donated": 1010
+        },
+        {
+            "meterId": 1,
+            "date": "2022-04-12",
+            "totalYield": 1280,
+            "charged": 81107,
+            "donated": 1040
+        },
+        {
+            "meterId": 1,
+            "date": "2022-04-17",
+            "totalYield": 1367,
+            "charged": 81134,
+            "donated": 1114
+        },
+        {
+            "meterId": 1,
+            "date": "2022-04-24",
+            "totalYield": 1457,
+            "charged": 81167,
+            "donated": 1188
+        },
+        {
+            "meterId": 1,
+            "date": "2022-04-30",
+            "totalYield": 1554,
+            "charged": 81205,
+            "donated": 1268
+        },
+        {
+            "meterId": 1,
+            "date": "2022-05-01",
+            "totalYield": 1578,
+            "charged": 81211,
+            "donated": 1289
+        },
+        {
+            "meterId": 1,
+            "date": "2022-05-08",
+            "totalYield": 1713,
+            "charged": 81247,
+            "donated": 1402
+        },
+        {
+            "meterId": 1,
+            "date": "2022-05-15",
+            "totalYield": 1855,
+            "charged": 81277,
+            "donated": 1525
+        },
+        {
+            "meterId": 1,
+            "date": "2022-05-22",
+            "totalYield": 1991,
+            "charged": 81307,
+            "donated": 1642
+        },
+        {
+            "meterId": 1,
+            "date": "2022-05-29",
+            "totalYield": 2096,
+            "charged": 81341,
+            "donated": 1727
+        },
+        {
+            "meterId": 1,
+            "date": "2022-05-31",
+            "totalYield": 2137,
+            "charged": 81350,
+            "donated": 1761
+        },
+        {
+            "meterId": 1,
+            "date": "2022-06-05",
+            "totalYield": 2241,
+            "charged": 81375,
+            "donated": 1849
+        },
+        {
+            "meterId": 1,
+            "date": "2022-06-12",
+            "totalYield": 2359,
+            "charged": 81406,
+            "donated": 1947
+        },
+        {
+            "meterId": 1,
+            "date": "2022-06-19",
+            "totalYield": 2506,
+            "charged": 81434,
+            "donated": 2072
+        },
+        {
+            "meterId": 1,
+            "date": "2022-06-26",
+            "totalYield": 2647,
+            "charged": 81464,
+            "donated": 2191
+        },
+        {
+            "meterId": 1,
+            "date": "2022-06-30",
+            "totalYield": 2713,
+            "charged": 81482,
+            "donated": 2245
+        },
+        {
+            "meterId": 1,
+            "date": "2022-07-03",
+            "totalYield": 2767,
+            "charged": 81496,
+            "donated": 2289
+        },
+        {
+            "meterId": 1,
+            "date": "2022-07-10",
+            "totalYield": 2878,
+            "charged": 81523,
+            "donated": 2382
+        },
+        {
+            "meterId": 1,
+            "date": "2022-07-17",
+            "totalYield": 3007,
+            "charged": 81557,
+            "donated": 2492
+        },
+        {
+            "meterId": 1,
+            "date": "2022-07-24",
+            "totalYield": 3151,
+            "charged": 81593,
+            "donated": 2612
+        },
+        {
+            "meterId": 1,
+            "date": "2022-07-31",
+            "totalYield": 3280,
+            "charged": 81628,
+            "donated": 2719
+        }
+    ],
+    "plantProperties": {
+        "location": "Demo instalacja",
+        "installationPower": 3.5,
+        "pitch": 35,
+        "orientation": 190,
+        "panelsArea": 18,
+        "investmentCost": 18000,
+        "energyInWarehouseFactor": 0.8
+    },
+    "yieldForecastData": [
+        {
+            "month": 1,
+            "value": 141
+        },
+        {
+            "month": 2,
+            "value": 168
+        },
+        {
+            "month": 3,
+            "value": 340
+        },
+        {
+            "month": 4,
+            "value": 520
+        },
+        {
+            "month": 5,
+            "value": 505
+        },
+        {
+            "month": 6,
+            "value": 518
+        },
+        {
+            "month": 7,
+            "value": 518
+        }
+    ],
+    "tariff": [
+        {
+            "name": "Energia czynna",
+            "values": [
+                {
+                    "from": "2022-01-01",
+                    "value": 0.4092
+                }
+            ]
+        },
+        {
+            "name": "Opłata jakościowa",
+            "values": [
+                {
+                    "from": "2022-01-01",
+                    "value": 0.0095
+                }
+            ]
+        },
+        {
+            "name": "Opłata zmienna sieciowa",
+            "values": [
+                {
+                    "from": "2022-01-01",
+                    "value": 0.1745
+                }
+            ]
+        },
+        {
+            "name": "Opłata OZE",
+            "values": [
+                {
+                    "from": "2022-01-01",
+                    "value": 0.0009
+                }
+            ]
+        },
+        {
+            "name": "Opłata kogeneracyjna",
+            "values": [
+                {
+                    "from": "2022-01-01",
+                    "value": 0.00406
+                }
+            ]
+        }
+    ],
+    "vatRate": [
+        {
+            "from": "2022-01-01",
+            "value": 5
+        }
+    ]
+}
