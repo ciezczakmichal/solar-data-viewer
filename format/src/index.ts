@@ -1,6 +1,8 @@
 // wymagane przez class-transformer
 import 'reflect-metadata'
 
+export * from './error'
+
 export * from './definitions/date-format'
 export * from './definitions/meter-record'
 export * from './definitions/plant-properties'

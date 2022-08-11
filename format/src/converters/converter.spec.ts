@@ -3,6 +3,7 @@ import 'reflect-metadata'
 
 import { readFile } from 'fs/promises'
 import { SolarDataFormat } from '../definitions/solar-data-format'
+import { InvalidSolarDataSchemaError } from '../error'
 import { convertObjectToSolarDataFormat } from './converter'
 
 async function getExampleSmallestData(): Promise<Record<string, any>> {
@@ -17,7 +18,7 @@ describe('convertObjectToSolarDataFormat', () => {
     function testThrowsErrorWithValue(value: any): Promise<void> {
         return expect(() =>
             convertObjectToSolarDataFormat(value)
-        ).rejects.toThrowError()
+        ).rejects.toThrow(InvalidSolarDataSchemaError)
     }
 
     describe('testy błędnych, prostych wartości', () => {
