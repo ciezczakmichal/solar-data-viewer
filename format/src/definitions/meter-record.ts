@@ -1,4 +1,5 @@
 import {
+    IsInstance,
     IsInt,
     IsNumber,
     IsOptional,
@@ -9,22 +10,6 @@ import {
 import { Type } from 'class-transformer'
 import { IsISO8601Date } from '../decorators/is-iso8601-date'
 import { BaseMeterValuesRecord, BaseYieldValuesRecord } from './values-record'
-
-export class MeterRecord {
-    @IsInt()
-    id!: number
-
-    @IsISO8601Date()
-    installationDate!: string
-
-    @ValidateNested()
-    @Type(() => MeterRecordInitialValuesValidationClass)
-    initialValues!: BaseYieldValuesRecord | BaseMeterValuesRecord
-
-    @IsOptional()
-    @IsString()
-    comment?: string
-}
 
 // @todo walidacja: totalYield i/lub (charged i donated)
 class MeterRecordInitialValuesValidationClass {
@@ -47,4 +32,21 @@ class MeterRecordInitialValuesValidationClass {
     @IsOptional()
     @IsNumber()
     donated?: number
+}
+
+export class MeterRecord {
+    @IsInt()
+    id!: number
+
+    @IsISO8601Date()
+    installationDate!: string
+
+    @IsInstance(MeterRecordInitialValuesValidationClass)
+    @ValidateNested()
+    @Type(() => MeterRecordInitialValuesValidationClass)
+    initialValues!: BaseYieldValuesRecord | BaseMeterValuesRecord
+
+    @IsOptional()
+    @IsString()
+    comment?: string
 }

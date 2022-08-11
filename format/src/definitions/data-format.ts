@@ -2,6 +2,7 @@ import {
     ArrayMinSize,
     Equals,
     IsArray,
+    IsInstance,
     IsOptional,
     ValidateNested,
 } from 'class-validator'
@@ -29,6 +30,7 @@ export class DataFormat {
     @Type(() => ValuesRecordValidationClass)
     values!: ValuesRecord[]
 
+    @IsInstance(PlantProperties)
     @ValidateNested()
     @Type(() => PlantProperties)
     plantProperties!: PlantProperties
