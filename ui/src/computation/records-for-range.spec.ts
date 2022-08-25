@@ -6,7 +6,7 @@ import {
     getCompleteRecordsForRange,
     getRecordsForRange,
     getYieldRecordsForRange,
-} from './chart-data'
+} from './records-for-range'
 
 // miesiąc tak jak wyświetlany (czyli 1 = styczeń)
 function dayJsInstance(year: number, month: number, day: number): Dayjs {
@@ -25,7 +25,7 @@ function dayJsInstanceWithExtraProperty(
     return parseDate(instance.format(DateFormat))
 }
 
-describe('chart-data', () => {
+describe('records-for-range', () => {
     describe('getRecordsForRange - podstawowy test zwracania rekordów', () => {
         const values: ValuesRecord[] = [
             {
@@ -121,14 +121,6 @@ describe('chart-data', () => {
         it('miesięczny zakres danych', () => {
             const actual = getRecordsForRange(values, DataRange.Month)
             expect(actual).toEqual([
-                {
-                    date: dayJsInstanceWithExtraProperty(2022, 3, 18),
-                    values: {
-                        meterId: 1,
-                        date: '2022-03-18', // piątek
-                        totalYield: 100,
-                    },
-                },
                 {
                     date: dayJsInstanceWithExtraProperty(2022, 3, 31),
                     values: {
@@ -235,16 +227,6 @@ describe('chart-data', () => {
             const actual = getYieldRecordsForRange(values, DataRange.Month)
             expect(actual).toEqual([
                 {
-                    date: dayJsInstanceWithExtraProperty(2022, 1, 30),
-                    values: {
-                        meterId: 1,
-                        date: '2022-01-30', // niedziela
-                        totalYield: 50,
-                        charged: 1000,
-                        donated: 500,
-                    },
-                },
-                {
                     date: dayJsInstanceWithExtraProperty(2022, 1, 31),
                     values: {
                         meterId: 1,
@@ -302,20 +284,8 @@ describe('chart-data', () => {
         it('getCompleteRecordsForRange - miesięczny zakres danych', () => {
             const actual = getCompleteRecordsForRange(values, DataRange.Month)
             expect(actual).toEqual([
-                {
-                    date: dayJsInstanceWithExtraProperty(2022, 1, 30),
-                    values: {
-                        meterId: 1,
-                        date: '2022-01-30', // niedziela
-                        totalYield: 50,
-                        charged: 1000,
-                        donated: 500,
-                    },
-                },
-                {
-                    date: dayJsInstance(2022, 1, 31),
-                    values: null,
-                },
+                // nie zawiera w ogóle danych dla stycznia, gdyż rekord dla 31.01 nie jest typu Complete
+                // @todo czy wsparcie potrzebne?
                 {
                     date: dayJsInstanceWithExtraProperty(2022, 2, 20),
                     values: {

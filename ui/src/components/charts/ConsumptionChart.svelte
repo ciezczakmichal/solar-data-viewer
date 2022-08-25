@@ -2,17 +2,23 @@
     import { onMount } from 'svelte'
     import { Chart } from 'chart.js'
     import { getAppContext } from '../../app-context'
-    import { formatKwh } from '../../utils/formatters/format-numbers'
-    import { DataRange } from '../../utils/chart-data'
+    import { DataRange } from '../../computation/records-for-range'
     import {
         ChartType,
-        getChartData,
-        type ChartData,
         type ChartDataItem,
         type ChartOptions,
+    } from '../../computation/chart-data'
+    import { formatKwh } from '../../utils/formatters/format-numbers'
+    import {
+        getConsumptionChartData,
+        type ConsumptionChartData,
     } from './consumption-chart-data'
 
     const { data, metersHelper } = getAppContext()
+
+    const from = metersHelper.getMeterInitialValuesAsCompleteRecord(
+        metersHelper.getFirstMeterId()
+    )
 
     let chart: Chart<'bar' | 'line', ChartDataItem[]> | null = null
     let canvas: HTMLCanvasElement
@@ -21,7 +27,7 @@
         range: DataRange.Week,
     }
 
-    let chartData: ChartData = []
+    let chartData: ConsumptionChartData = []
     let chartDataNeedsUpdate = true
 
     function createChart() {
@@ -76,7 +82,12 @@
             return
         }
 
-        chartData = getChartData(data, metersHelper, options)
+        chartData = getConsumptionChartData({
+            from,
+            data,
+            metersHelper,
+            options,
+        })
 
         chart.data.datasets[0].data = chartData
         chart.update()
