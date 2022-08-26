@@ -1,4 +1,4 @@
-import type { CompleteValuesRecord, SolarDataFormat } from 'schema'
+import type { CompleteValuesRecord, SolarData } from 'schema'
 import { calculateEnergy, MetersDataHelper } from 'calculation'
 import { getCompleteRecordsForRange } from '../../computation/records-for-range'
 import {
@@ -9,7 +9,7 @@ import {
 
 export interface BalanceChartInput {
     from: CompleteValuesRecord
-    data: SolarDataFormat
+    data: SolarData
     metersHelper: MetersDataHelper
     options: ChartOptions
 }

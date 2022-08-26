@@ -3,7 +3,7 @@ import {
     CompleteValuesRecord,
     isCompleteRecord,
     MeterRecord,
-    SolarDataFormat,
+    SolarData,
     ValuesRecord,
     ValuesRecordNumberProps,
 } from 'schema'
@@ -15,7 +15,7 @@ interface MeterInternalData {
     previousMeterId: number | null
 }
 
-export type MetersDataHelperInput = Pick<SolarDataFormat, 'meters' | 'values'>
+export type MetersDataHelperInput = Pick<SolarData, 'meters' | 'values'>
 
 export class MetersDataHelper {
     private data: Map<number, MeterInternalData> = new Map()

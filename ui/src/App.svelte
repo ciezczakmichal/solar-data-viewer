@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte'
-    import { convertObjectToSolarDataFormat, SolarDataFormat } from 'schema'
+    import { convertObjectToSolarData, SolarData } from 'schema'
     import { MetersDataHelper } from 'calculation'
     import AppHeader from './components/AppHeader.svelte'
     import AppContent from './components/AppContent.svelte'
@@ -41,12 +41,12 @@
     let errorMessage = ''
 
     let url: string = ''
-    let data: SolarDataFormat | null = null
+    let data: SolarData | null = null
 
     // @todo przenieść - zależy tylko od danych - osobny kontekst?
     let metersHelper: MetersDataHelper | null = null
 
-    async function fetchData(): Promise<SolarDataFormat> {
+    async function fetchData(): Promise<SolarData> {
         if (!url) {
             throw new Error(
                 'URL nie zawiera parametru "data-source", wskazującego na źródło danych dla aplikacji'
@@ -68,7 +68,7 @@
             throw new Error('Dane nie są w formacie JSON')
         }
 
-        return convertObjectToSolarDataFormat(data)
+        return convertObjectToSolarData(data)
     }
 
     async function updateDataSource(): Promise<void> {
@@ -90,7 +90,7 @@
         }
     }
 
-    function generateApplicationTitle(data: SolarDataFormat): string {
+    function generateApplicationTitle(data: SolarData): string {
         let title = baseAppTitle
 
         const { location, installationPower } = data.plantProperties

@@ -1,12 +1,10 @@
-import { SolarDataFormat } from '../definitions/solar-data-format'
+import { SolarData } from '../definitions/solar-data'
 import { InvalidSolarDataSchemaError } from '../error'
 import { convertPlainObjectToInstance } from './generics'
 
-export function convertObjectToSolarDataFormat(
-    data: any
-): Promise<SolarDataFormat> {
+export function convertObjectToSolarData(data: any): Promise<SolarData> {
     return convertPlainObjectToInstance(
-        SolarDataFormat,
+        SolarData,
         data,
         error =>
             new InvalidSolarDataSchemaError(

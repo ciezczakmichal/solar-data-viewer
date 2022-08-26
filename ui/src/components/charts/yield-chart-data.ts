@@ -1,4 +1,4 @@
-import type { SolarDataFormat, ValuesRecord, YieldValuesRecord } from 'schema'
+import type { SolarData, ValuesRecord, YieldValuesRecord } from 'schema'
 import { type MetersDataHelper, calculateBaseEnergyParams } from 'calculation'
 import {
     DataRange,
@@ -14,7 +14,7 @@ import { getMonthName } from '../../utils/date'
 
 export interface YieldChartInput {
     from: YieldValuesRecord
-    data: SolarDataFormat
+    data: SolarData
     metersHelper: MetersDataHelper
     options: ChartOptions
 }

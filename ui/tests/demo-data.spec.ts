@@ -1,5 +1,5 @@
 import { readFile } from 'fs/promises'
-import { convertObjectToSolarDataFormat, SolarDataFormat } from 'schema'
+import { convertObjectToSolarData, SolarData } from 'schema'
 
 async function getData(): Promise<Record<string, any>> {
     const json = await readFile(
@@ -10,6 +10,6 @@ async function getData(): Promise<Record<string, any>> {
 }
 
 it('plik demo-data.json zawiera dane zgodne z formatem', async () => {
-    const result = await convertObjectToSolarDataFormat(await getData())
-    expect(result).toBeInstanceOf(SolarDataFormat)
+    const result = await convertObjectToSolarData(await getData())
+    expect(result).toBeInstanceOf(SolarData)
 })

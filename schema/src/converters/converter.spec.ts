@@ -2,9 +2,9 @@
 import 'reflect-metadata'
 
 import { readFile } from 'fs/promises'
-import { SolarDataFormat } from '../definitions/solar-data-format'
+import { SolarData } from '../definitions/solar-data'
 import { InvalidSolarDataSchemaError } from '../error'
-import { convertObjectToSolarDataFormat } from './converter'
+import { convertObjectToSolarData } from './converter'
 
 async function getExampleSmallestData(): Promise<Record<string, any>> {
     const json = await readFile(
@@ -14,11 +14,11 @@ async function getExampleSmallestData(): Promise<Record<string, any>> {
     return JSON.parse(json)
 }
 
-describe('convertObjectToSolarDataFormat', () => {
+describe('convertObjectToSolarData', () => {
     function testThrowsErrorWithValue(value: any): Promise<void> {
-        return expect(() =>
-            convertObjectToSolarDataFormat(value)
-        ).rejects.toThrow(InvalidSolarDataSchemaError)
+        return expect(() => convertObjectToSolarData(value)).rejects.toThrow(
+            InvalidSolarDataSchemaError
+        )
     }
 
     describe('testy błędnych, prostych wartości', () => {
@@ -63,8 +63,8 @@ describe('convertObjectToSolarDataFormat', () => {
         })
 
         it('przykładowy plik z minimalną liczbą danych jest traktowany jako poprawny', async () => {
-            const result = await convertObjectToSolarDataFormat(data)
-            expect(result).toBeInstanceOf(SolarDataFormat)
+            const result = await convertObjectToSolarData(data)
+            expect(result).toBeInstanceOf(SolarData)
         })
 
         it('usunięcie dowolnej właściwości z minimalnych danych skutkuje odrzuceniem danych', async () => {
