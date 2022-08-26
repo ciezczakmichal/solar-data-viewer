@@ -75,7 +75,7 @@
             return
         }
 
-        chartData = getYieldChartData({ from, data, options })
+        chartData = getYieldChartData({ from, data, metersHelper, options })
 
         const datasets = [
             {

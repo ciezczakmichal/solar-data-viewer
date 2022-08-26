@@ -1,20 +1,30 @@
 import {
+    BaseValuesRecord,
     CompleteValuesRecord,
+    isCompleteRecord,
     PlantProperties,
     ValuesRecordNumberProps,
+    YieldValuesRecord,
 } from 'format'
 import { CalculationError } from './error'
 import { MetersDataHelper } from './meters-data-helper'
 import { parseDate } from './utils/date'
 
-export interface BaseEnergyParamsCalculationInput {
-    from: CompleteValuesRecord
-    to: CompleteValuesRecord
+export interface BaseEnergyParamsCalculationInputGeneric<
+    T extends BaseValuesRecord
+> {
+    from: T
+    to: T
 
     // jeśli podano, wspiera przy obliczaniu zmianę liczników
     // wymagane, jeśli wartości liczbowe są dla różnych liczników (rzuca wyjątkiem)
     metersHelper?: MetersDataHelper
 }
+
+export type BaseEnergyParamsCalculationInput =
+    BaseEnergyParamsCalculationInputGeneric<CompleteValuesRecord>
+export type BaseEnergyParamsCalculationInputYieldVersion =
+    BaseEnergyParamsCalculationInputGeneric<YieldValuesRecord>
 
 export type BaseEnergyParamsCalculationResult = Pick<
     EnergyCalculationResult,
@@ -65,7 +75,47 @@ export interface EnergyCalculationResult {
 }
 
 export function calculateBaseEnergyParams(
-    input: EnergyCalculationInput
+    input: BaseEnergyParamsCalculationInput
+): BaseEnergyParamsCalculationResult
+export function calculateBaseEnergyParams(
+    input: BaseEnergyParamsCalculationInputYieldVersion
+): Pick<BaseEnergyParamsCalculationResult, 'totalYield'>
+export function calculateBaseEnergyParams(
+    input:
+        | BaseEnergyParamsCalculationInput
+        | BaseEnergyParamsCalculationInputYieldVersion
+):
+    | BaseEnergyParamsCalculationResult
+    | Pick<BaseEnergyParamsCalculationResult, 'totalYield'> {
+    let finalInput: BaseEnergyParamsCalculationInput
+
+    if (isCompleteRecord(input.from) && isCompleteRecord(input.to)) {
+        return calculateBaseEnergyParamsImpl(
+            input as BaseEnergyParamsCalculationInput
+        )
+    } else {
+        // uzupełnij pozostałe dane wartościami 0, a potem usuń ze zwracanego obiektu
+        finalInput = {
+            ...input,
+            from: {
+                ...input.from,
+                charged: 0,
+                donated: 0,
+            },
+            to: {
+                ...input.to,
+                charged: 0,
+                donated: 0,
+            },
+        }
+
+        const { totalYield } = calculateBaseEnergyParamsImpl(finalInput)
+        return { totalYield }
+    }
+}
+
+function calculateBaseEnergyParamsImpl(
+    input: BaseEnergyParamsCalculationInput
 ): BaseEnergyParamsCalculationResult {
     const { from, to, metersHelper } = input
     let totalYield: number = 0,

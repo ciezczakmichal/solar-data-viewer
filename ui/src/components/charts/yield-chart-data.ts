@@ -1,4 +1,5 @@
 import type { SolarDataFormat, ValuesRecord, YieldValuesRecord } from 'format'
+import { type MetersDataHelper, calculateBaseEnergyParams } from 'calculation'
 import {
     DataRange,
     getYieldRecordsForRange,
@@ -14,6 +15,7 @@ import { getMonthName } from '../../utils/date'
 export interface YieldChartInput {
     from: YieldValuesRecord
     data: SolarDataFormat
+    metersHelper: MetersDataHelper
     options: ChartOptions
 }
 
@@ -25,6 +27,7 @@ export interface YieldChartData {
 function getYieldData(
     from: YieldValuesRecord,
     values: ValuesRecord[],
+    metersHelper: MetersDataHelper,
     options: ChartOptions
 ): ChartDataItem[] {
     const records = getYieldRecordsForRange(values, options.range)
@@ -33,15 +36,22 @@ function getYieldData(
         from,
         records,
         options,
-        (from: YieldValuesRecord, to: YieldValuesRecord) =>
-            to.totalYield - from.totalYield
+        (from: YieldValuesRecord, to: YieldValuesRecord) => {
+            const result = calculateBaseEnergyParams({
+                from,
+                to,
+                metersHelper,
+            })
+
+            return result.totalYield
+        }
     )
 }
 
 export function getYieldChartData(input: YieldChartInput): YieldChartData {
-    const { from, data, options } = input
+    const { from, data, metersHelper, options } = input
 
-    const yieldData = getYieldData(from, data.values, options)
+    const yieldData = getYieldData(from, data.values, metersHelper, options)
     let yieldForecastData: ChartDataItem[] = []
 
     if (options.type === ChartType.Bar && options.range === DataRange.Month) {
