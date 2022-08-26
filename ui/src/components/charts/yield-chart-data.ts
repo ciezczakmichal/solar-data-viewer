@@ -1,4 +1,4 @@
-import type { SolarDataFormat, ValuesRecord, YieldValuesRecord } from 'format'
+import type { SolarDataFormat, ValuesRecord, YieldValuesRecord } from 'schema'
 import { type MetersDataHelper, calculateBaseEnergyParams } from 'calculation'
 import {
     DataRange,

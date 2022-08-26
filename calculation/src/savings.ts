@@ -1,6 +1,6 @@
 import currency from 'currency.js'
 import { Dayjs } from 'dayjs'
-import { TariffItem, VatRateItem, CompleteValuesRecord } from 'format'
+import { TariffItem, VatRateItem, CompleteValuesRecord } from 'schema'
 import { CalculationError } from './error'
 import {
     calculateEnergy,

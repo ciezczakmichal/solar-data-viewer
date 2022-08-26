@@ -1,4 +1,4 @@
-import { CompleteValuesRecord, MeterRecord } from 'format'
+import { CompleteValuesRecord, MeterRecord } from 'schema'
 import { calculateSavings, SavingsCalculationInput } from './savings'
 import { MetersDataHelper } from './meters-data-helper'
 

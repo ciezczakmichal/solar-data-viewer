@@ -1,4 +1,4 @@
-import type { CompleteValuesRecord, SolarDataFormat } from 'format'
+import type { CompleteValuesRecord, SolarDataFormat } from 'schema'
 import { calculateEnergy, MetersDataHelper } from 'calculation'
 import { getCompleteRecordsForRange } from '../../computation/records-for-range'
 import {

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte'
-    import { convertObjectToSolarDataFormat, SolarDataFormat } from 'format'
+    import { convertObjectToSolarDataFormat, SolarDataFormat } from 'schema'
     import { MetersDataHelper } from 'calculation'
     import AppHeader from './components/AppHeader.svelte'
     import AppContent from './components/AppContent.svelte'

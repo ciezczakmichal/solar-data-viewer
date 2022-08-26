@@ -1,4 +1,4 @@
-import { CompleteValuesRecord, MeterRecord } from 'format'
+import { CompleteValuesRecord, MeterRecord } from 'schema'
 import { CalculationError } from './error'
 import { EnergyCalculationInput, calculateEnergy } from './energy'
 import { MetersDataHelper } from './meters-data-helper'

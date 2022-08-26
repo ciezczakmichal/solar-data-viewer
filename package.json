@@ -4,21 +4,21 @@
     "private": true,
     "workspaces": [
         "calculation",
-        "format",
+        "schema",
         "ui"
     ],
     "scripts": {
         "calculation": "yarn workspace calculation",
-        "format": "yarn workspace format",
+        "schema": "yarn workspace schema",
         "ui": "yarn workspace ui",
         "build": "yarn build:core && yarn build:ui",
-        "build:core": "yarn build:format && yarn build:calculation",
+        "build:core": "yarn build:schema && yarn build:calculation",
         "build:calculation": "yarn calculation build",
-        "build:format": "yarn format build",
+        "build:schema": "yarn schema build",
         "build:ui": "yarn ui build",
         "dev": "yarn build:core && yarn ui dev",
         "start": "yarn ui start",
-        "test": "yarn build:core && yarn format test && yarn calculation test && yarn ui test",
+        "test": "yarn build:core && yarn schema test && yarn calculation test && yarn ui test",
         "check": "yarn ui check"
     }
 }

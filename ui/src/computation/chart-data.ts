@@ -1,4 +1,4 @@
-import type { BaseValuesRecord, ValuesRecord } from 'format'
+import type { BaseValuesRecord, ValuesRecord } from 'schema'
 import { parseDate } from 'calculation'
 import { DataRange, type RangeValuesRecord } from './records-for-range'
 import { getMonthName } from '../utils/date'

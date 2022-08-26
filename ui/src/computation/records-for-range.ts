@@ -7,7 +7,7 @@ import {
     type MeterValuesRecord,
     type ValuesRecord,
     type YieldValuesRecord,
-} from 'format'
+} from 'schema'
 import { parseDate } from 'calculation'
 import { isLastDayOfMonth, getLastDayOfMonth } from '../utils/date'
 

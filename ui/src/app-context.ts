@@ -1,4 +1,4 @@
-import type { SolarDataFormat } from 'format'
+import type { SolarDataFormat } from 'schema'
 import type { MetersDataHelper } from 'calculation'
 import { getContext, setContext } from 'svelte'
 

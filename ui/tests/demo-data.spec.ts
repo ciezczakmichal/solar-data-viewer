@@ -1,5 +1,5 @@
 import { readFile } from 'fs/promises'
-import { convertObjectToSolarDataFormat, SolarDataFormat } from 'format'
+import { convertObjectToSolarDataFormat, SolarDataFormat } from 'schema'
 
 async function getData(): Promise<Record<string, any>> {
     const json = await readFile(

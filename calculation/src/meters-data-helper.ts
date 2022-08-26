@@ -6,7 +6,7 @@ import {
     SolarDataFormat,
     ValuesRecord,
     ValuesRecordNumberProps,
-} from 'format'
+} from 'schema'
 import { CalculationError } from './error'
 
 interface MeterInternalData {

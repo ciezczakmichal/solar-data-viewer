@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { isCompleteRecord } from 'format'
+    import { isCompleteRecord } from 'schema'
     import {
         calculateEnergy,
         calculateInvestment,

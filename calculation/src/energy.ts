@@ -5,7 +5,7 @@ import {
     PlantProperties,
     ValuesRecordNumberProps,
     YieldValuesRecord,
-} from 'format'
+} from 'schema'
 import { CalculationError } from './error'
 import { MetersDataHelper } from './meters-data-helper'
 import { parseDate } from './utils/date'

@@ -1,6 +1,6 @@
 import dayjs, { type Dayjs } from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import { DateFormat } from 'format'
+import { DateFormat } from 'schema'
 
 dayjs.extend(customParseFormat)
 

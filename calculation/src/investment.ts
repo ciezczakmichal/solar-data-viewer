@@ -1,5 +1,5 @@
 import currency from 'currency.js'
-import { PlantProperties, TariffItem, VatRateItem } from 'format'
+import { PlantProperties, TariffItem, VatRateItem } from 'schema'
 import { calculateEnergyCost } from './energy-cost'
 
 type InvestmentCalculationInputPlantProperties = Pick<

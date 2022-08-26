@@ -12,5 +12,5 @@
     },
     "exclude": ["node_modules", "test", "dist", "**/*spec.ts"],
 
-    "references": [{ "path": "../format" }]
+    "references": [{ "path": "../schema" }]
 }
