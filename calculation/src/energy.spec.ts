@@ -101,6 +101,7 @@ describe('calculateEnergy', () => {
         expect(result.needsFulfilmentPercent).toEqual(1)
         expect(result.energyToBuy).toEqual(0)
         expect(result.energyToCharge).toEqual(0)
+        expect(result.energyToChargeOrBuy).toEqual(0)
     })
 
     it('test pełnego bilansowania - wersja z 100% autokonsumpcji', () => {
@@ -131,6 +132,7 @@ describe('calculateEnergy', () => {
         expect(result.needsFulfilmentPercent).toEqual(1)
         expect(result.energyToBuy).toEqual(0)
         expect(result.energyToCharge).toEqual(0)
+        expect(result.energyToChargeOrBuy).toEqual(0)
     })
 
     it('test liczenia nadwyżki', () => {
@@ -161,6 +163,7 @@ describe('calculateEnergy', () => {
         expect(result.needsFulfilmentPercent).toEqual(1)
         expect(result.energyToBuy).toEqual(0)
         expect(result.energyToCharge).toEqual(20)
+        expect(result.energyToChargeOrBuy).toEqual(20)
     })
 
     describe('obsługa liczników', () => {

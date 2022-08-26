@@ -72,6 +72,9 @@ export interface EnergyCalculationResult {
 
     // ilość energii, którą można pobrać z sieci, tj. nadwyżka (uwzględnia współczynnik - czyli tyle można pobrać)
     energyToCharge: number
+
+    // równe energyToCharge, jeśli jest ono większe od 0, w przeciwnym wypadku równe energyToBuy * -1
+    energyToChargeOrBuy: number
 }
 
 export function calculateBaseEnergyParams(
@@ -183,7 +186,8 @@ export function calculateEnergy(
     let savedEnergy: number,
         needsFulfilmentPercent: number,
         energyToBuy: number,
-        energyToCharge: number
+        energyToCharge: number,
+        energyToChargeOrBuy: number
 
     const fulfillNeeds = donatedToUse >= charged
 
@@ -192,9 +196,11 @@ export function calculateEnergy(
         needsFulfilmentPercent = 1
         energyToBuy = 0
         energyToCharge = donatedToUse - charged
+        energyToChargeOrBuy = energyToCharge
     } else {
         energyToBuy = charged - donatedToUse
         energyToCharge = 0
+        energyToChargeOrBuy = -energyToBuy
 
         savedEnergy = charged - energyToBuy + selfConsumed
         needsFulfilmentPercent =
@@ -220,5 +226,6 @@ export function calculateEnergy(
         needsFulfilmentPercent,
         energyToBuy,
         energyToCharge,
+        energyToChargeOrBuy,
     }
 }

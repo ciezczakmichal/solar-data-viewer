@@ -27,15 +27,14 @@ export function getBalanceChartData(
         records,
         options,
         (from: CompleteValuesRecord, to: CompleteValuesRecord) => {
-            const { fulfillNeeds, energyToCharge, energyToBuy } =
-                calculateEnergy({
-                    from,
-                    to,
-                    plantProperties: data.plantProperties,
-                    metersHelper,
-                })
+            const result = calculateEnergy({
+                from,
+                to,
+                plantProperties: data.plantProperties,
+                metersHelper,
+            })
 
-            return fulfillNeeds ? energyToCharge : -1 * energyToBuy
+            return result.energyToChargeOrBuy
         }
     )
 }
