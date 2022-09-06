@@ -2,8 +2,8 @@
 
 Aplikacja do prezentacji danych z instalacji fotowoltaicznej.
 
-Na podstawie danych źródłowych zapisanych w pliku JSON wylicza różnorakie parametry oraz prezentuje dane na wykresach.
-Oblicza wartości takie jak produkcja, zużycie, poziom spełnienia zapotrzebowania na prąd, oszczędności na rachunkach i czasu zwrotu inwestycji.
+Na podstawie danych źródłowych zapisanych w pliku JSON oblicza wielorakie parametry oraz prezentuje dane na wykresach.
+Wylicza wartości takie jak uzysk, zużycie, autokonsumpcja, poziom spełnienia zapotrzebowania na prąd, oszczędności na rachunkach i czas zwrotu inwestycji.
 
 **UWAGA**: aplikacja wspiera wyłącznie system rozliczeń o nazwie **net-metering** (system opustów), stosowany dla instalacji uruchomionych przed 01.04.2022 r.
 
