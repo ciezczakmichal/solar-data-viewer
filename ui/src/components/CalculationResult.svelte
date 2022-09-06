@@ -96,13 +96,13 @@
         )} uzysku)`}
     />
     <Item
-        label="Oddano do sieci"
+        label="Energia oddana do sieci"
         value={`${formatKwh(donated)} (= do pobrania ${formatKwh(
             donatedToUse
         )})`}
     />
 
-    <EnergyCountItem label="Pobrano energii z sieci" value={charged} />
+    <EnergyCountItem label="Energia pobrana z sieci" value={charged} />
     <EnergyCountItem
         label="Całkowite zużycie energii"
         value={totalConsumption}
