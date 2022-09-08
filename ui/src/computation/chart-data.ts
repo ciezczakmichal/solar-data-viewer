@@ -1,4 +1,4 @@
-import type { BaseValuesRecord, ValuesRecord } from 'schema'
+import type { ValuesRecord, ValuesRecordProperties } from 'schema'
 import { parseDate } from 'calculation'
 import { DataRange, type RangeValuesRecord } from './records-for-range'
 import { getMonthName } from '../utils/date'
@@ -24,10 +24,10 @@ interface InternalChartDataItem {
 }
 
 export type ChartValueCalculationFunction<
-    T extends BaseValuesRecord = ValuesRecord
+    T extends ValuesRecordProperties = ValuesRecord
 > = (from: T, to: T) => number | null
 
-function getLineChartData<T extends BaseValuesRecord = ValuesRecord>(
+function getLineChartData<T extends ValuesRecordProperties = ValuesRecord>(
     from: T,
     records: RangeValuesRecord<T>[],
     range: DataRange,
@@ -52,7 +52,7 @@ function getLineChartData<T extends BaseValuesRecord = ValuesRecord>(
     })
 }
 
-function getBarChartData<T extends BaseValuesRecord = ValuesRecord>(
+function getBarChartData<T extends ValuesRecordProperties = ValuesRecord>(
     from: T,
     records: RangeValuesRecord<T>[],
     range: DataRange,
@@ -95,7 +95,7 @@ function getBarChartData<T extends BaseValuesRecord = ValuesRecord>(
     return result
 }
 
-export function getChartData<T extends BaseValuesRecord = ValuesRecord>(
+export function getChartData<T extends ValuesRecordProperties = ValuesRecord>(
     from: T,
     records: RangeValuesRecord<T>[],
     options: ChartOptions,

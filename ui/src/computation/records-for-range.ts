@@ -2,10 +2,10 @@ import type { Dayjs } from 'dayjs'
 import {
     isCompleteRecord,
     isYieldRecord,
-    type BaseValuesRecord,
     type CompleteValuesRecord,
     type MeterValuesRecord,
     type ValuesRecord,
+    type ValuesRecordProperties,
     type YieldValuesRecord,
 } from 'schema'
 import { parseDate } from 'calculation'
@@ -16,7 +16,9 @@ export enum DataRange {
     Month,
 }
 
-export interface RangeValuesRecord<T extends BaseValuesRecord = ValuesRecord> {
+export interface RangeValuesRecord<
+    T extends ValuesRecordProperties = ValuesRecord
+> {
     date: Dayjs
     values: T | null
 }
