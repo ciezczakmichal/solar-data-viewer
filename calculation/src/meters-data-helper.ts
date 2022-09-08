@@ -1,5 +1,4 @@
 import {
-    BaseValuesRecord,
     CompleteValuesRecord,
     isCompleteRecord,
     MeterRecord,
@@ -85,10 +84,7 @@ export class MetersDataHelper {
         return this.getMeterInternalData(meterId).lastValue
     }
 
-    getMetersIdForPeriod(
-        from: BaseValuesRecord,
-        to: BaseValuesRecord
-    ): number[] {
+    getMetersIdForPeriod(from: ValuesRecord, to: ValuesRecord): number[] {
         if (from.meterId === to.meterId) {
             return [from.meterId]
         }
