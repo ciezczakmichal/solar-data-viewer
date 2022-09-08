@@ -14,9 +14,11 @@ import { YieldForecastRecord } from './yield-forecast-record'
 import { TariffItem } from './tariff-item'
 import { VatRateItem } from './vat-rate-item'
 
+export const SolarDataVersion = 9
+
 export class SolarData {
-    @Equals(9)
-    version!: 9
+    @Equals(SolarDataVersion)
+    version!: typeof SolarDataVersion
 
     @IsArray()
     @ArrayMinSize(1)
