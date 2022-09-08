@@ -1,10 +1,6 @@
-// wymagane przez class-transformer
-import 'reflect-metadata'
-
 import { readFile } from 'fs/promises'
-import { SolarData } from '../definitions/solar-data'
 import { InvalidSolarDataSchemaError } from '../error'
-import { convertObjectToSolarData } from './converter'
+import { validateSolarData } from './validator'
 
 async function getExampleSmallestData(): Promise<Record<string, any>> {
     const json = await readFile(
@@ -14,9 +10,9 @@ async function getExampleSmallestData(): Promise<Record<string, any>> {
     return JSON.parse(json)
 }
 
-describe('convertObjectToSolarData', () => {
+describe('validateSolarData', () => {
     function testThrowsErrorWithValue(value: any): Promise<void> {
-        return expect(() => convertObjectToSolarData(value)).rejects.toThrow(
+        return expect(() => validateSolarData(value)).rejects.toThrow(
             InvalidSolarDataSchemaError
         )
     }
@@ -63,8 +59,7 @@ describe('convertObjectToSolarData', () => {
         })
 
         it('przykładowy plik z minimalną liczbą danych jest traktowany jako poprawny', async () => {
-            const result = await convertObjectToSolarData(data)
-            expect(result).toBeInstanceOf(SolarData)
+            await validateSolarData(data)
         })
 
         it('usunięcie dowolnej właściwości z minimalnych danych skutkuje odrzuceniem danych', async () => {

@@ -1,6 +1,10 @@
 <script lang="ts">
     import { onMount } from 'svelte'
-    import { convertObjectToSolarData, SolarData } from 'schema'
+    import {
+        InvalidSolarDataSchemaError,
+        validateSolarData,
+        type SolarData,
+    } from 'schema'
     import { MetersDataHelper } from 'calculation'
     import AppHeader from './components/AppHeader.svelte'
     import AppContent from './components/AppContent.svelte'
@@ -68,7 +72,7 @@
             throw new Error('Dane nie są w formacie JSON')
         }
 
-        return convertObjectToSolarData(data)
+        return validateSolarData(data)
     }
 
     async function updateDataSource(): Promise<void> {
@@ -86,6 +90,13 @@
             if (error instanceof Error) {
                 status = Status.Error
                 errorMessage = error.message
+            }
+
+            // loguj błędy walidacji do konsoli @todo obsługa w UI
+            if (error instanceof InvalidSolarDataSchemaError) {
+                errorMessage =
+                    error.message + '. Szczegóły w konsoli przeglądarki'
+                console.error(error.schemaErrors)
             }
         }
     }

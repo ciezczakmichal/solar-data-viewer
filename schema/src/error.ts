@@ -1,3 +1,5 @@
+import { DefinedError } from 'ajv'
+
 export class InvalidSolarDataError extends Error {
     constructor(message?: string) {
         super(message)
@@ -6,9 +8,12 @@ export class InvalidSolarDataError extends Error {
 }
 
 export class InvalidSolarDataSchemaError extends InvalidSolarDataError {
-    constructor(message?: string) {
-        super(message)
+    schemaErrors: DefinedError[]
+
+    constructor(schemaErrors: DefinedError[]) {
+        super('Dane nie są zgodne ze strukturą wymaganą przez aplikację')
         this.name = this.constructor.name
+        this.schemaErrors = schemaErrors
     }
 }
 

@@ -1,39 +1,3 @@
-import { IsNumber, IsOptional, IsString, ValidateIf } from 'class-validator'
-import { IsISO8601Date } from '../decorators/is-iso8601-date'
-
-// @todo walidacja: totalYield i/lub (charged i donated)
-export class ValuesRecordValidationClass {
-    @IsNumber()
-    meterId!: number
-
-    @IsISO8601Date()
-    date!: string
-
-    // uzysk - energia wyprodukowana
-    @ValidateIf(
-        data => data.charged === undefined || data.donated === undefined
-    )
-    @IsOptional()
-    @IsNumber()
-    totalYield?: number
-
-    // energia pobrana z sieci
-    @ValidateIf(data => data.totalYield === undefined)
-    @IsOptional()
-    @IsNumber()
-    charged?: number
-
-    // energia oddana do sieci
-    @ValidateIf(data => data.totalYield === undefined)
-    @IsOptional()
-    @IsNumber()
-    donated?: number
-
-    @IsOptional()
-    @IsString()
-    comment?: string
-}
-
 export interface BaseYieldValuesRecord {
     // uzysk - energia wyprodukowana
     totalYield: number

@@ -1,6 +1,3 @@
-// wymagane przez class-transformer
-import 'reflect-metadata'
-
 export * from './error'
 
 export * from './definitions/date-format'
@@ -12,6 +9,6 @@ export * from './definitions/values-record'
 export * from './definitions/vat-rate-item'
 export * from './definitions/yield-forecast-record'
 
-export * from './converters/converter'
+export * from './validators/validator'
 
 // pozostałe pliki prywatne
