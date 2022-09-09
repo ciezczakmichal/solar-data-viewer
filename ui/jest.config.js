@@ -8,9 +8,9 @@ export default {
     setupFilesAfterEnv: ['jest-extended'],
     testPathIgnorePatterns: ['public'], // zmienione (z dist)
 
-    globals: {
-        'ts-jest': {
-            useESM: true,
-        },
+    transform: {
+        '^.+\\.tsx?$': ['ts-jest', { useESM: true }],
     },
+    testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
+    moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
 }
