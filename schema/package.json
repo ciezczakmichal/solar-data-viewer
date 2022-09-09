@@ -13,8 +13,8 @@
     },
     "scripts": {
         "build": "yarn generate-validator && tsc --build",
-        "generate-validator": "yarn node --experimental-specifier-resolution=node --no-warnings --loader ts-node/esm scripts/generate-standalone-validator.ts",
-        "test": "yarn generate-validator && yarn node --experimental-vm-modules --no-warnings $(yarn bin jest) --no-cache"
+        "generate-validator": "node --experimental-specifier-resolution=node --no-warnings --loader ts-node/esm scripts/generate-standalone-validator.ts",
+        "test": "yarn generate-validator && node --experimental-vm-modules --no-warnings $(yarn bin jest) --no-cache"
     },
     "devDependencies": {
         "@types/jest": "^27.5.1",
