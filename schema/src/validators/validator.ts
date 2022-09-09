@@ -1,10 +1,15 @@
-import Ajv, { DefinedError } from 'ajv'
+import { DefinedError, ValidateFunction } from 'ajv'
 import { SolarData } from '../definitions/solar-data'
-import { SolarDataSchema } from '../definitions/solar-data-schema'
 import { InvalidSolarDataSchemaError } from '../error'
+import { validate as validate_ } from './validator-standalone'
 
-const ajv = new Ajv()
-const validate = ajv.compile(SolarDataSchema)
+/* Wersja wymagająca kompilacji schemy w runtime */
+// const ajv = new Ajv()
+// const validate = ajv.compile(SolarDataSchema)
+
+/* Wersja używająca skompilowaną wersję funkcji walidującej w runtime */
+
+const validate = validate_ as ValidateFunction<SolarData>
 
 export async function validateSolarData(data: any): Promise<SolarData> {
     if (!validate(data)) {
