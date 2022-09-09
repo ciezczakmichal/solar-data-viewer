@@ -3,9 +3,9 @@
     "version": "1.0.0",
     "private": true,
     "type": "module",
-    "types": "dist/index.d.ts",
+    "types": "dist/src/index.d.ts",
     "exports": {
-        ".": "./dist/index.js",
+        ".": "./dist/src/index.js",
         "./package.json": "./package.json"
     },
     "engines": {
