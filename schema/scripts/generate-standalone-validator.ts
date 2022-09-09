@@ -4,6 +4,7 @@ import { SolarDataSchema } from '../src/definitions/solar-data-schema'
 import { writeFileSync } from 'fs'
 
 const ajv = new Ajv({
+    messages: false, // ze względu na użycie ajv-i18n
     code: {
         source: true,
         esm: true, // niewspierane przez Ajv CLI https://github.com/ajv-validator/ajv-cli/pull/200

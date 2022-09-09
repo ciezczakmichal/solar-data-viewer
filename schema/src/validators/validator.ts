@@ -1,4 +1,5 @@
 import { DefinedError, ValidateFunction } from 'ajv'
+import localize_pl from 'ajv-i18n/localize/pl'
 import { SolarData } from '../definitions/solar-data'
 import { InvalidSolarDataSchemaError } from '../error'
 import { validate as validate_ } from './validator-standalone'
@@ -13,7 +14,9 @@ const validate = validate_ as ValidateFunction<SolarData>
 
 export async function validateSolarData(data: any): Promise<SolarData> {
     if (!validate(data)) {
-        throw new InvalidSolarDataSchemaError(validate.errors as DefinedError[])
+        const errors = validate.errors as DefinedError[]
+        localize_pl(errors)
+        throw new InvalidSolarDataSchemaError(errors)
     }
 
     return data
