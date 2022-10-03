@@ -15,21 +15,15 @@ export interface ChartOptions {
 }
 
 export interface ChartDataItem {
+    // label, opis wartości (na osi X)
     x: string
+
+    // value, wartość (na osi Y)
     y: number | null
 }
 
-export interface ChartDataItemWithDate {
-    x: string
-    y: number | null
-
-    date: Dayjs
-}
-
-interface InternalChartDataItem {
-    label: string
-    value: number | null
-
+export interface ChartDataItemWithDate extends ChartDataItem {
+    // wskazanie daty, z której wygenerowano opis wartości (label)
     date: Dayjs
 }
 
@@ -42,23 +36,23 @@ function getLineChartData<T extends ValuesRecordProperties = ValuesRecord>(
     records: RangeValuesRecord<T>[],
     range: DataRange,
     calculationFn: ChartValueCalculationFunction<T>
-): InternalChartDataItem[] {
+): ChartDataItemWithDate[] {
     return records.map(item => {
-        let label = ''
+        let x = ''
 
         if (range === DataRange.Week) {
-            label = item.date.format('DD.MM')
+            x = item.date.format('DD.MM')
         } else {
-            label = getMonthDisplayText(item.date)
+            x = getMonthDisplayText(item.date)
         }
 
-        let value = null
+        let y = null
 
         if (item.values) {
-            value = calculationFn(from, item.values)
+            y = calculationFn(from, item.values)
         }
 
-        return { label, value, date: item.date }
+        return { x, y, date: item.date }
     })
 }
 
@@ -67,7 +61,7 @@ function getBarChartData<T extends ValuesRecordProperties = ValuesRecord>(
     records: RangeValuesRecord<T>[],
     range: DataRange,
     calculationFn: ChartValueCalculationFunction<T>
-): InternalChartDataItem[] {
+): ChartDataItemWithDate[] {
     const firstItem: RangeValuesRecord<T> = {
         date: parseDate(from.date),
         values: from,
@@ -76,25 +70,25 @@ function getBarChartData<T extends ValuesRecordProperties = ValuesRecord>(
     const result = records.map((item, index) => {
         const previousItem: RangeValuesRecord<T> =
             index > 0 ? records[index - 1] : firstItem
-        let label = ''
+        let x = ''
 
         if (range === DataRange.Week) {
             const currentLabel = item.date.format('DD.MM')
             const previousLabel = previousItem.date
                 .add(1, 'day')
                 .format('DD.MM')
-            label = `${previousLabel} - ${currentLabel}`
+            x = `${previousLabel} - ${currentLabel}`
         } else {
-            label = getMonthDisplayText(item.date)
+            x = getMonthDisplayText(item.date)
         }
 
-        let value = null
+        let y = null
 
         if (item.values && previousItem.values) {
-            value = calculationFn(previousItem.values, item.values)
+            y = calculationFn(previousItem.values, item.values)
         }
 
-        return { label, value, date: item.date }
+        return { x, y, date: item.date }
     })
 
     // nie wyświetlaj danych dla okresu from - records[0]
@@ -113,17 +107,9 @@ export function getChartData<T extends ValuesRecordProperties = ValuesRecord>(
 ): ChartDataItemWithDate[] {
     const { type, range } = options
 
-    let result: InternalChartDataItem[]
-
     if (type === ChartType.Line) {
-        result = getLineChartData(from, records, range, calculationFn)
-    } else {
-        result = getBarChartData(from, records, range, calculationFn)
+        return getLineChartData(from, records, range, calculationFn)
     }
 
-    return result.map(({ label, value, date }) => ({
-        x: label,
-        y: value,
-        date,
-    }))
+    return getBarChartData(from, records, range, calculationFn)
 }
