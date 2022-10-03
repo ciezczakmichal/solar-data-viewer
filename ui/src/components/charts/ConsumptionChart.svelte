@@ -5,7 +5,7 @@
     import { DataRange } from '../../computation/records-for-range'
     import {
         ChartType,
-        type ChartDataItem,
+        type ChartDataItemWithDate,
         type ChartOptions,
     } from '../../computation/chart-data'
     import { formatKwh } from '../../utils/formatters/format-numbers'
@@ -20,7 +20,7 @@
         metersHelper.getFirstMeterId()
     )
 
-    let chart: Chart<'bar' | 'line', ChartDataItem[]> | null = null
+    let chart: Chart<'bar' | 'line', ChartDataItemWithDate[]> | null = null
     let canvas: HTMLCanvasElement
     let options: ChartOptions = {
         type: ChartType.Bar,

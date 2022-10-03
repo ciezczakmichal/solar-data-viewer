@@ -4,6 +4,10 @@ export function getMonthName(month: number): string {
     return dayjs.months()[month]
 }
 
+export function getMonthDisplayText(date: Dayjs): string {
+    return `${getMonthName(date.month())} ’${date.year() - 2000}`
+}
+
 export function isLastDayOfMonth(date: Dayjs): boolean {
     return date.date() === date.daysInMonth()
 }

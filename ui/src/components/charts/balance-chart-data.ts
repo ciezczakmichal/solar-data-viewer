@@ -3,7 +3,7 @@ import { calculateEnergy, MetersDataHelper } from 'calculation'
 import { getCompleteRecordsForRange } from '../../computation/records-for-range'
 import {
     getChartData,
-    type ChartDataItem,
+    type ChartDataItemWithDate,
     type ChartOptions,
 } from '../../computation/chart-data'
 
@@ -14,7 +14,7 @@ export interface BalanceChartInput {
     options: ChartOptions
 }
 
-export type BalanceChartData = ChartDataItem[]
+export type BalanceChartData = ChartDataItemWithDate[]
 
 export function getBalanceChartData(
     input: BalanceChartInput

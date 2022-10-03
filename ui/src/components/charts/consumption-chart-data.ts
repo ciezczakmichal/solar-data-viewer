@@ -3,7 +3,7 @@ import { calculateEnergy, MetersDataHelper } from 'calculation'
 import { getCompleteRecordsForRange } from '../../computation/records-for-range'
 import {
     getChartData,
-    type ChartDataItem,
+    type ChartDataItemWithDate,
     type ChartOptions,
 } from '../../computation/chart-data'
 
@@ -14,7 +14,7 @@ export interface ConsumptionChartInput {
     options: ChartOptions
 }
 
-export type ConsumptionChartData = ChartDataItem[]
+export type ConsumptionChartData = ChartDataItemWithDate[]
 
 export function getConsumptionChartData(
     input: ConsumptionChartInput

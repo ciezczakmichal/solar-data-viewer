@@ -8,9 +8,9 @@ import {
     ChartType,
     getChartData,
     type ChartDataItem,
+    type ChartDataItemWithDate,
     type ChartOptions,
 } from '../../computation/chart-data'
-import { getMonthName } from '../../utils/date'
 
 export interface YieldChartInput {
     from: YieldValuesRecord
@@ -20,7 +20,7 @@ export interface YieldChartInput {
 }
 
 export interface YieldChartData {
-    yieldData: ChartDataItem[]
+    yieldData: ChartDataItemWithDate[]
     yieldForecastData: ChartDataItem[]
 }
 
@@ -29,7 +29,7 @@ function getYieldData(
     values: ValuesRecord[],
     metersHelper: MetersDataHelper,
     options: ChartOptions
-): ChartDataItem[] {
+): ChartDataItemWithDate[] {
     const records = getYieldRecordsForRange(values, options.range)
 
     return getChartData(
@@ -54,14 +54,25 @@ export function getYieldChartData(input: YieldChartInput): YieldChartData {
     const yieldData = getYieldData(from, data.values, metersHelper, options)
     let yieldForecastData: ChartDataItem[] = []
 
-    if (options.type === ChartType.Bar && options.range === DataRange.Month) {
-        // pokaż dane dla miesięcy, dla których dostępne są dane produkcji
-        yieldForecastData = (data.yieldForecastData || [])
-            .map(item => ({
-                x: getMonthName(item.month - 1),
-                y: item.value,
-            }))
-            .filter(item => yieldData.some(yieldItem => yieldItem.x === item.x))
+    if (
+        options.type === ChartType.Bar &&
+        options.range === DataRange.Month &&
+        data.yieldForecastData
+    ) {
+        // znajdź odpowiadające wartości prognozy dla danych produkcji
+        for (const yieldItem of yieldData) {
+            const item = data.yieldForecastData.find(
+                forecastItem =>
+                    forecastItem.month === yieldItem.date.month() + 1
+            )
+
+            if (item) {
+                yieldForecastData.push({
+                    x: yieldItem.x,
+                    y: item.value,
+                })
+            }
+        }
     }
 
     return { yieldData, yieldForecastData }

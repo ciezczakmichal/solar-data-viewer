@@ -1,7 +1,8 @@
+import type { Dayjs } from 'dayjs'
 import type { ValuesRecord, ValuesRecordProperties } from 'schema'
 import { parseDate } from 'calculation'
 import { DataRange, type RangeValuesRecord } from './records-for-range'
-import { getMonthName } from '../utils/date'
+import { getMonthDisplayText } from '../utils/date'
 
 export enum ChartType {
     Line,
@@ -18,9 +19,18 @@ export interface ChartDataItem {
     y: number | null
 }
 
+export interface ChartDataItemWithDate {
+    x: string
+    y: number | null
+
+    date: Dayjs
+}
+
 interface InternalChartDataItem {
     label: string
     value: number | null
+
+    date: Dayjs
 }
 
 export type ChartValueCalculationFunction<
@@ -39,7 +49,7 @@ function getLineChartData<T extends ValuesRecordProperties = ValuesRecord>(
         if (range === DataRange.Week) {
             label = item.date.format('DD.MM')
         } else {
-            label = getMonthName(item.date.month())
+            label = getMonthDisplayText(item.date)
         }
 
         let value = null
@@ -48,7 +58,7 @@ function getLineChartData<T extends ValuesRecordProperties = ValuesRecord>(
             value = calculationFn(from, item.values)
         }
 
-        return { label, value }
+        return { label, value, date: item.date }
     })
 }
 
@@ -75,7 +85,7 @@ function getBarChartData<T extends ValuesRecordProperties = ValuesRecord>(
                 .format('DD.MM')
             label = `${previousLabel} - ${currentLabel}`
         } else {
-            label = getMonthName(item.date.month())
+            label = getMonthDisplayText(item.date)
         }
 
         let value = null
@@ -84,7 +94,7 @@ function getBarChartData<T extends ValuesRecordProperties = ValuesRecord>(
             value = calculationFn(previousItem.values, item.values)
         }
 
-        return { label, value }
+        return { label, value, date: item.date }
     })
 
     // nie wyświetlaj danych dla okresu from - records[0]
@@ -100,7 +110,7 @@ export function getChartData<T extends ValuesRecordProperties = ValuesRecord>(
     records: RangeValuesRecord<T>[],
     options: ChartOptions,
     calculationFn: ChartValueCalculationFunction<T>
-): ChartDataItem[] {
+): ChartDataItemWithDate[] {
     const { type, range } = options
 
     let result: InternalChartDataItem[]
@@ -111,5 +121,9 @@ export function getChartData<T extends ValuesRecordProperties = ValuesRecord>(
         result = getBarChartData(from, records, range, calculationFn)
     }
 
-    return result.map(({ label, value }) => ({ x: label, y: value }))
+    return result.map(({ label, value, date }) => ({
+        x: label,
+        y: value,
+        date,
+    }))
 }
