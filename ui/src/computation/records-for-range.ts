@@ -27,11 +27,11 @@ export type RangeYieldValuesRecord = RangeValuesRecord<YieldValuesRecord>
 export type RangeMeterValuesRecord = RangeValuesRecord<MeterValuesRecord>
 export type RangeCompleteValuesRecord = RangeValuesRecord<CompleteValuesRecord>
 
-export function getRecordsForRange(
-    values: ValuesRecord[],
+export function getRecordsForRange<T extends ValuesRecordProperties>(
+    values: T[],
     range: DataRange
-): RangeValuesRecord[] {
-    let presentValues: RangeValuesRecord[] = values.map(item => ({
+): RangeValuesRecord<T>[] {
+    let presentValues: RangeValuesRecord<T>[] = values.map(item => ({
         date: parseDate(item.date),
         values: item,
     }))
@@ -60,7 +60,7 @@ export function getRecordsForRange(
         }
     }
 
-    let result: RangeValuesRecord[] = []
+    let result: RangeValuesRecord<T>[] = []
     let nextDate: Dayjs | null = null
 
     for (const value of presentValues) {
@@ -86,7 +86,7 @@ export function getYieldRecordsForRange(
     range: DataRange
 ): RangeYieldValuesRecord[] {
     const records = values.filter(isYieldRecord)
-    return getRecordsForRange(records, range) as RangeYieldValuesRecord[]
+    return getRecordsForRange(records, range) 
 }
 
 export function getCompleteRecordsForRange(
@@ -94,5 +94,5 @@ export function getCompleteRecordsForRange(
     range: DataRange
 ): RangeCompleteValuesRecord[] {
     const records = values.filter(isCompleteRecord)
-    return getRecordsForRange(records, range) as RangeCompleteValuesRecord[]
+    return getRecordsForRange(records, range) 
 }
