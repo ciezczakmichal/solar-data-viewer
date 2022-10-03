@@ -78,6 +78,11 @@ function getValuesForDuration(duration: Duration): number[] {
         months--
     }
 
+    // ten sam miesiąc, ale niepełny = tylko kilka dni do pełnego roku
+    if (months < 0) {
+        months = 11
+    }
+
     let days = to.date() - from.date()
 
     if (days < 0) {

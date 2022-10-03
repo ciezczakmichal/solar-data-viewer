@@ -33,6 +33,14 @@ describe('formatDuration - wersja z obiektem Duration (from / to)', () => {
         expect(formatDuration(data)).toEqual('11 miesięcy')
     })
 
+    it('zwraca poprawną wartość, gdy brakuje kilku dni do pełnego roku', () => {
+        let data = { from: '2021-06-15', to: '2022-06-10' }
+        expect(formatDuration(data)).toEqual('11 miesięcy, 25 dni')
+
+        data = { from: '2020-04-01', to: '2021-03-31' }
+        expect(formatDuration(data)).toEqual('11 miesięcy, 30 dni')
+    })
+
     // @todo test gdy brakuje dnia do pełnej liczby miesięcy (sprawdzić liczenie w zależności od długości miesiąca)
 
     it('zwraca wyłącznie liczbę lat dla identycznych dat poza numerem roku', () => {
