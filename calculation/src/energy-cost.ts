@@ -60,28 +60,12 @@ export function calculateEnergyCost(
         )
     }
 
-    const vatRateItem = findAppropriateItemForRange(
-        'stawka VAT',
-        vatRate,
-        from,
-        to
-    )
-
-    if (!vatRateItem) {
-        throw new CalculationError(
-            'Brak stawki VAT dla zadanego zakresu czasowego'
-        )
-    }
-
-    const vatRateValue = vatRateItem.value
-
     for (const itemValue of tariffValues) {
         // biblioteka zastosuje zaokrąglenie do pełnych groszy
         result = result.add(itemValue.value * energy)
     }
 
-    // dolicz podatek
-    return result.multiply(1 + vatRateValue / 100)
+    return addVatTax(result, vatRate, from, to)
 }
 
 interface BasicItem {
@@ -126,4 +110,26 @@ function findAppropriateItemForRange<T extends BasicItem>(
     }
 
     return items[nextIndex - 1]
+}
+
+function addVatTax(
+    value: currency,
+    vatRates: VatRateItem[],
+    from: Dayjs,
+    to: Dayjs
+): currency {
+    const vatRateItem = findAppropriateItemForRange(
+        'stawka VAT',
+        vatRates,
+        from,
+        to
+    )
+
+    if (!vatRateItem) {
+        throw new CalculationError(
+            'Brak stawki VAT dla zadanego zakresu czasowego'
+        )
+    }
+
+    return value.multiply(1 + vatRateItem.value / 100)
 }
