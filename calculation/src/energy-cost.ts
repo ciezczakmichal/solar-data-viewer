@@ -1,6 +1,6 @@
 import currency from 'currency.js'
 import { Dayjs } from 'dayjs'
-import { TariffItem, TariffItemValue, VatRateItem } from 'schema'
+import { TariffItem, TariffItemValue, UnitOfMeasure, VatRateItem } from 'schema'
 import { CurrencyOptions } from './currency-options'
 import { CalculationError } from './error'
 import { parseDate } from './utils/date'
@@ -30,11 +30,21 @@ export interface EnergyCostCalculationInput {
 export function calculateEnergyCost(
     input: EnergyCostCalculationInput
 ): currency {
-    const { tariff, vatRate, from: fromAny, to: toAny, energy } = input
-    const from = parseDate(fromAny)
-    const to = parseDate(toAny)
+    const {
+        tariff: inputTariff,
+        vatRate,
+        from: inputFrom,
+        to: inputTo,
+        energy,
+    } = input
+    const from = parseDate(inputFrom)
+    const to = parseDate(inputTo)
 
     let result = currency(0, CurrencyOptions)
+
+    const tariff = inputTariff.filter(
+        item => item.unitOfMeasure === UnitOfMeasure.kWh
+    )
     const tariffValues: TariffItemValue[] = []
 
     if (tariff.length === 0) {

@@ -1,3 +1,8 @@
+export enum UnitOfMeasure {
+    kWh = 'kWh',
+    zlMies = 'zlMies',
+}
+
 export interface TariffItemValue {
     from: string
 
@@ -9,5 +14,6 @@ export interface TariffItemValue {
 
 export interface TariffItem {
     name: string
+    unitOfMeasure: UnitOfMeasure
     values: TariffItemValue[]
 }

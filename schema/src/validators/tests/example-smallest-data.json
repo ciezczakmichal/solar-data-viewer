@@ -1,5 +1,5 @@
 {
-    "version": 9,
+    "version": 10,
     "meters": [
         {
             "id": 1,
@@ -28,6 +28,7 @@
     "tariff": [
         {
             "name": "Energia czynna",
+            "unitOfMeasure": "kWh",
             "values": [
                 {
                     "from": "2020-01-01",

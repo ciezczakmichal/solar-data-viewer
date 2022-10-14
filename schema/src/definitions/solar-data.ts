@@ -5,7 +5,7 @@ import { YieldForecastRecord } from './yield-forecast-record'
 import { TariffItem } from './tariff-item'
 import { VatRateItem } from './vat-rate-item'
 
-export const SolarDataVersion = 9
+export const SolarDataVersion = 10
 
 export interface SolarData {
     version: typeof SolarDataVersion

@@ -9,6 +9,6 @@ async function getData(): Promise<Record<string, any>> {
     return JSON.parse(json)
 }
 
-it('plik demo-data.json zawiera dane zgodne z formatem', async () => {
+it('plik demo-data.json zawiera dane zgodne ze schemą', async () => {
     await validateSolarData(await getData())
 })

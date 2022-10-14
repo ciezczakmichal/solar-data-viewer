@@ -1,5 +1,5 @@
 {
-    "version": 9,
+    "version": 10,
     "meters": [
         {
             "id": 1,
@@ -322,6 +322,7 @@
     "tariff": [
         {
             "name": "Energia czynna",
+            "unitOfMeasure": "kWh",
             "values": [
                 {
                     "from": "2022-01-01",
@@ -331,6 +332,7 @@
         },
         {
             "name": "Opłata jakościowa",
+            "unitOfMeasure": "kWh",
             "values": [
                 {
                     "from": "2022-01-01",
@@ -340,6 +342,7 @@
         },
         {
             "name": "Opłata zmienna sieciowa",
+            "unitOfMeasure": "kWh",
             "values": [
                 {
                     "from": "2022-01-01",
@@ -349,6 +352,7 @@
         },
         {
             "name": "Opłata OZE",
+            "unitOfMeasure": "kWh",
             "values": [
                 {
                     "from": "2022-01-01",
@@ -358,6 +362,7 @@
         },
         {
             "name": "Opłata kogeneracyjna",
+            "unitOfMeasure": "kWh",
             "values": [
                 {
                     "from": "2022-01-01",

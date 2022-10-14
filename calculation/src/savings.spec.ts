@@ -1,4 +1,4 @@
-import { CompleteValuesRecord, MeterRecord } from 'schema'
+import { CompleteValuesRecord, MeterRecord, UnitOfMeasure } from 'schema'
 import { calculateSavings, SavingsCalculationInput } from './savings'
 import { MetersDataHelper } from './meters-data-helper'
 
@@ -55,6 +55,7 @@ describe('calculateSavings', () => {
             tariff: [
                 {
                     name: 'Parametr #1',
+                    unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
                             from: '2020-01-01',
@@ -68,6 +69,7 @@ describe('calculateSavings', () => {
                 },
                 {
                     name: 'Parametr #2',
+                    unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
                             from: '2020-10-01',

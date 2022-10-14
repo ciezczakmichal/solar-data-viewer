@@ -1,5 +1,6 @@
 import { JSONSchemaType } from 'ajv'
 import { SolarData, SolarDataVersion } from './solar-data'
+import { UnitOfMeasure } from './tariff-item'
 
 // JSON Schema draft-07
 export const SolarDataSchema: JSONSchemaType<SolarData> = {
@@ -200,6 +201,10 @@ export const SolarDataSchema: JSONSchemaType<SolarData> = {
                         type: 'string',
                         minLength: 1,
                     },
+                    unitOfMeasure: {
+                        type: 'string',
+                        enum: Object.values(UnitOfMeasure),
+                    },
                     values: {
                         type: 'array',
                         items: {
@@ -220,7 +225,7 @@ export const SolarDataSchema: JSONSchemaType<SolarData> = {
                         },
                     },
                 },
-                required: ['name', 'values'],
+                required: ['name', 'unitOfMeasure', 'values'],
             },
         },
         vatRate: {

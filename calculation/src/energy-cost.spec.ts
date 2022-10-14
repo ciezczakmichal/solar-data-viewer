@@ -1,35 +1,59 @@
+import { UnitOfMeasure } from 'schema'
 import { calculateEnergyCost, EnergyCostCalculationInput } from './energy-cost'
 import { CalculationError } from './error'
 
 // @todo test gdy daty "od" i "do" są na odwrót
 
 describe('calculateEnergyCost', () => {
-    it('test obliczania dla jednego parametru w każdej z grup', () => {
-        const input: EnergyCostCalculationInput = {
-            tariff: [
-                {
-                    name: 'Parametr #1',
-                    values: [
-                        {
-                            from: '2020-01-01',
-                            value: 0.5,
-                        },
-                    ], // netto 50
-                },
-            ],
-            vatRate: [
-                {
-                    from: '2020-01-01',
-                    value: 25,
-                },
-            ],
-            from: '2020-02-01',
-            to: '2020-02-01',
-            energy: 100,
-        }
+    describe('testy na minimalnej liczbie danych', () => {
+        let input: EnergyCostCalculationInput
 
-        const cost = calculateEnergyCost(input)
-        expect(cost.value).toEqual(62.5)
+        beforeEach(() => {
+            input = {
+                tariff: [
+                    {
+                        name: 'Parametr #1',
+                        unitOfMeasure: UnitOfMeasure.kWh,
+                        values: [
+                            {
+                                from: '2020-01-01',
+                                value: 0.5,
+                            },
+                        ], // netto 50
+                    },
+                ],
+                vatRate: [
+                    {
+                        from: '2020-01-01',
+                        value: 25,
+                    },
+                ],
+                from: '2020-02-01',
+                to: '2020-02-01',
+                energy: 100,
+            }
+        })
+
+        it('test obliczania dla jednego parametru w każdej z grup', () => {
+            const cost = calculateEnergyCost(input)
+            expect(cost.value).toEqual(62.5)
+        })
+
+        it('funkcja ignoruje parametry, które posiadają inną jednostkę niż kWh', () => {
+            input.tariff.push({
+                name: 'Parametr miesięczny',
+                unitOfMeasure: UnitOfMeasure.zlMies,
+                values: [
+                    {
+                        from: '2020-01-01',
+                        value: 0.99,
+                    },
+                ],
+            })
+
+            const cost = calculateEnergyCost(input)
+            expect(cost.value).toEqual(62.5)
+        })
     })
 
     it('test obliczania dla pierwszych dni z nowymi wartościami', () => {
@@ -37,6 +61,7 @@ describe('calculateEnergyCost', () => {
             tariff: [
                 {
                     name: 'Parametr #1',
+                    unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
                             from: '2020-01-01',
@@ -88,6 +113,7 @@ describe('calculateEnergyCost', () => {
             tariff: [
                 {
                     name: 'Parametr #1',
+                    unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
                             from: '2020-01-01',
@@ -101,6 +127,7 @@ describe('calculateEnergyCost', () => {
                 },
                 {
                     name: 'Parametr z danymi dla innego roku',
+                    unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
                             from: '2022-01-01',
@@ -129,6 +156,7 @@ describe('calculateEnergyCost', () => {
             tariff: [
                 {
                     name: 'Energia czynna',
+                    unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
                             from: '2020-01-01',
@@ -138,6 +166,7 @@ describe('calculateEnergyCost', () => {
                 },
                 {
                     name: 'Opłata jakościowa',
+                    unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
                             from: '2020-01-01',
@@ -147,6 +176,7 @@ describe('calculateEnergyCost', () => {
                 },
                 {
                     name: 'Opłata zmienna sieciowa',
+                    unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
                             from: '2020-01-01',
@@ -156,6 +186,7 @@ describe('calculateEnergyCost', () => {
                 },
                 {
                     name: 'Opłata OZE',
+                    unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
                             from: '2020-01-01',
@@ -165,6 +196,7 @@ describe('calculateEnergyCost', () => {
                 },
                 {
                     name: 'Opłata kogeneracyjna',
+                    unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
                             from: '2020-01-01',
@@ -191,23 +223,28 @@ describe('calculateEnergyCost', () => {
     })
 
     describe('test rzucania wyjątku, gdy brakuje parametrów', () => {
-        it('gdy nie ma żadnych parametrów', () => {
-            const input: EnergyCostCalculationInput = {
-                tariff: [],
-                vatRate: [],
-                from: '2020-02-01',
-                to: '2020-02-01',
-                energy: 100,
-            }
+        let input: EnergyCostCalculationInput
 
+        function expectCalculationErrorWithCorrectMessageIsThrown() {
             expect(() => calculateEnergyCost(input)).toThrowError(
                 new CalculationError('Brak elementów taryfy')
             )
-        })
+        }
 
-        it('gdy nie ma parametru taryfy', () => {
-            const input: EnergyCostCalculationInput = {
-                tariff: [],
+        beforeEach(() => {
+            input = {
+                tariff: [
+                    {
+                        name: 'Parametr #1',
+                        unitOfMeasure: UnitOfMeasure.kWh,
+                        values: [
+                            {
+                                from: '2020-01-01',
+                                value: 0.5,
+                            },
+                        ],
+                    },
+                ],
                 vatRate: [
                     {
                         from: '2020-01-01',
@@ -218,34 +255,39 @@ describe('calculateEnergyCost', () => {
                 to: '2020-02-01',
                 energy: 100,
             }
+        })
 
-            expect(() => calculateEnergyCost(input)).toThrowError(
-                new CalculationError('Brak elementów taryfy')
-            )
+        it('gdy nie ma żadnych parametrów', () => {
+            input.tariff = []
+            input.vatRate = []
+            expectCalculationErrorWithCorrectMessageIsThrown()
+        })
+
+        it('gdy nie ma parametru taryfy', () => {
+            input.tariff = []
+            expectCalculationErrorWithCorrectMessageIsThrown()
+        })
+
+        it('gdy nie ma parametru taryfy, które posiadają jednostkę kWh', () => {
+            input.tariff = [
+                {
+                    name: 'Parametr miesięczny',
+                    unitOfMeasure: UnitOfMeasure.zlMies,
+                    values: [
+                        {
+                            from: '2020-01-01',
+                            value: 0.99,
+                        },
+                    ],
+                },
+            ]
+
+            expectCalculationErrorWithCorrectMessageIsThrown()
         })
 
         it('gdy nie ma parametru ze stawką VAT', () => {
-            const input: EnergyCostCalculationInput = {
-                tariff: [
-                    {
-                        name: 'Parametr #1',
-                        values: [
-                            {
-                                from: '2020-01-01',
-                                value: 0.5,
-                            },
-                        ],
-                    },
-                ],
-                vatRate: [],
-                from: '2020-02-01',
-                to: '2020-02-01',
-                energy: 100,
-            }
-
-            expect(() => calculateEnergyCost(input)).toThrowError(
-                new CalculationError('Brak elementów taryfy')
-            )
+            input.vatRate = []
+            expectCalculationErrorWithCorrectMessageIsThrown()
         })
 
         it('gdy są parametry, ale zakres dat obejmuje dni bez dostępnych parametrów', () => {
@@ -253,6 +295,7 @@ describe('calculateEnergyCost', () => {
                 tariff: [
                     {
                         name: 'Parametr #1',
+                        unitOfMeasure: UnitOfMeasure.kWh,
                         values: [
                             {
                                 from: '2020-01-01',
@@ -286,6 +329,7 @@ describe('calculateEnergyCost', () => {
                 tariff: [
                     {
                         name: 'Parametr #1',
+                        unitOfMeasure: UnitOfMeasure.kWh,
                         values: [
                             {
                                 from: '2020-01-01',
@@ -343,6 +387,7 @@ describe('calculateEnergyCost', () => {
                 tariff: [
                     {
                         name: 'Parametr #1',
+                        unitOfMeasure: UnitOfMeasure.kWh,
                         values: [
                             {
                                 from: '2020-01-01',
@@ -352,6 +397,7 @@ describe('calculateEnergyCost', () => {
                     },
                     {
                         name: 'Nowy parametr',
+                        unitOfMeasure: UnitOfMeasure.kWh,
                         values: [
                             {
                                 from: '2020-06-01',
