@@ -34,6 +34,10 @@
         throw new Error('Wybrane rekordy nie zawierają kompletnych danych')
     }
 
+    const rangeString = `${formatDate(from.date)} - ${formatDate(to.date)}`
+    const durationString = formatDuration({ from: from.date, to: to.date })
+    const daysRangeString = `${rangeString} (${durationString})`
+
     const {
         days,
         totalYield,
@@ -59,10 +63,6 @@
         plantProperties,
         metersHelper,
     })
-
-    const rangeString = `${formatDate(from.date)} - ${formatDate(to.date)}`
-    const durationString = formatDuration({ from: from.date, to: to.date })
-    const daysRangeString = `${rangeString} (${durationString})`
 
     const { accurate, savings } = calculateSavings({
         values: values.filter(isCompleteRecord),
