@@ -55,6 +55,25 @@ export function calculateEnergyCost(
     return addVatTax(rate, result)
 }
 
+/**
+ * Zwraca koszt zakupu 1 kWh energii w podanym dniu (obejmuje tylko koszty stałe).
+ * @param timeVaryingHelper Obiekt pomocniczy, dostarczający dane o taryfie i stawce VAT
+ * @param date Dzień, dla którego wyliczyć dane
+ */
+export function calculateEnergyCostAtDay(
+    timeVaryingHelper: TimeVaryingValuesHelper,
+    date: string | Dayjs
+): currency {
+    const day = parseDate(date)
+
+    return calculateEnergyCost({
+        timeVaryingHelper,
+        from: day,
+        to: day,
+        energy: 1,
+    })
+}
+
 function addVatTax(rate: number, value: currency): currency {
     return value.multiply(1 + rate / 100)
 }

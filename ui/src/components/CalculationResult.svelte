@@ -2,6 +2,7 @@
     import { isCompleteRecord } from 'schema'
     import {
         calculateEnergy,
+        calculateEnergyCostAtDay,
         calculateInvestment,
         calculateSavings,
     } from 'calculation'
@@ -70,15 +71,20 @@
         timeVaryingHelper,
     })
 
-    const { dailySaving, currentSavingsPerKwh, daysToInvestmentReturn } =
-        calculateInvestment({
-            lastValueDate: values[values.length - 1].date,
-            plantProperties,
-            timeVaryingHelper,
-            days,
-            savings,
-            savedEnergy,
-        })
+    const dailySaving = savings.divide(days)
+
+    const currentEnergyCost = calculateEnergyCostAtDay(
+        timeVaryingHelper,
+        values[values.length - 1].date
+    )
+
+    const { daysToInvestmentReturn } = calculateInvestment({
+        plantProperties,
+        days,
+        savings,
+        savedEnergy,
+        currentEnergyCost,
+    })
 </script>
 
 <div class="data">
@@ -147,7 +153,7 @@
 
     <Item
         label="Bieżąca cena energii"
-        value={currentSavingsPerKwh.format()}
+        value={currentEnergyCost.format()}
         unit="/ 1 kWh"
     />
     <Item label="Bieżące opłaty stałe" value={'Wkrótce :)'} />
