@@ -3,6 +3,9 @@ export enum UnitOfMeasure {
     zlMies = 'zlMies',
 }
 
+/**
+ * Wartość pozycji (parametr), ważna od zdefiniowanego czasu.
+ */
 export interface TariffItemValue {
     from: string
 
@@ -12,6 +15,9 @@ export interface TariffItemValue {
     comment?: string
 }
 
+/**
+ * Pozycja taryfowa na fakturze za energię.
+ */
 export interface TariffItem {
     name: string
     unitOfMeasure: UnitOfMeasure

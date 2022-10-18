@@ -1,6 +1,13 @@
-import { CompleteValuesRecord, MeterRecord, UnitOfMeasure } from 'schema'
+import {
+    CompleteValuesRecord,
+    MeterRecord,
+    UnitOfMeasure,
+    TariffItem,
+    VatRateItem,
+} from 'schema'
 import { calculateSavings, SavingsCalculationInput } from './savings'
 import { MetersDataHelper } from './meters-data-helper'
+import { TimeVaryingValuesHelper } from './time-varying-values-helper'
 
 describe('calculateSavings', () => {
     it('test obliczania oszczędności przy kilku zmiennych parametrach z danymi o pełni pasujących datach', () => {
@@ -50,49 +57,52 @@ describe('calculateSavings', () => {
             },
         ]
 
+        const tariff: TariffItem[] = [
+            {
+                name: 'Parametr #1',
+                unitOfMeasure: UnitOfMeasure.kWh,
+                values: [
+                    {
+                        from: '2020-01-01',
+                        value: 0.3,
+                    },
+                    {
+                        from: '2021-01-01',
+                        value: 0.5,
+                    },
+                ],
+            },
+            {
+                name: 'Parametr #2',
+                unitOfMeasure: UnitOfMeasure.kWh,
+                values: [
+                    {
+                        from: '2020-10-01',
+                        value: 0.15,
+                    },
+                ],
+            },
+        ]
+
+        const vatRate: VatRateItem[] = [
+            {
+                from: '2020-01-01',
+                value: 5,
+            },
+            {
+                from: '2021-01-01',
+                value: 23,
+            },
+        ]
+
         const baseInput: SavingsCalculationInput = {
             values,
-            tariff: [
-                {
-                    name: 'Parametr #1',
-                    unitOfMeasure: UnitOfMeasure.kWh,
-                    values: [
-                        {
-                            from: '2020-01-01',
-                            value: 0.3,
-                        },
-                        {
-                            from: '2021-01-01',
-                            value: 0.5,
-                        },
-                    ],
-                },
-                {
-                    name: 'Parametr #2',
-                    unitOfMeasure: UnitOfMeasure.kWh,
-                    values: [
-                        {
-                            from: '2020-10-01',
-                            value: 0.15,
-                        },
-                    ],
-                },
-            ],
-            vatRate: [
-                {
-                    from: '2020-01-01',
-                    value: 5,
-                },
-                {
-                    from: '2021-01-01',
-                    value: 23,
-                },
-            ],
             plantProperties: {
                 installationPower: 1, // bez znaczenia dla testów
                 energyInWarehouseFactor: 0.8,
             },
             metersHelper: new MetersDataHelper({ meters, values }),
+            timeVaryingHelper: new TimeVaryingValuesHelper({ tariff, vatRate }),
         }
 
         const prepareInput = (recordCount: number): SavingsCalculationInput => {

@@ -5,4 +5,7 @@ export * from './error'
 export * from './investment'
 export * from './meters-data-helper'
 export * from './savings'
+export * from './time-varying-values-helper'
+
 export * from './utils/date'
+export * from './utils/tests-utils'

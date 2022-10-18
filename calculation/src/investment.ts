@@ -1,5 +1,6 @@
 import currency from 'currency.js'
-import { PlantProperties, TariffItem, VatRateItem } from 'schema'
+import { PlantProperties } from 'schema'
+import { TimeVaryingValuesHelper } from './time-varying-values-helper'
 import { calculateEnergyCost } from './energy-cost'
 
 type InvestmentCalculationInputPlantProperties = Pick<
@@ -9,9 +10,9 @@ type InvestmentCalculationInputPlantProperties = Pick<
 
 export interface InvestmentCalculationInput {
     lastValueDate: string
-    tariff: TariffItem[]
-    vatRate: VatRateItem[]
     plantProperties: InvestmentCalculationInputPlantProperties
+
+    timeVaryingHelper: TimeVaryingValuesHelper
 
     days: number
     savings: currency
@@ -34,9 +35,8 @@ export function calculateInvestment(
 ): InvestmentCalculationResult {
     const {
         lastValueDate,
-        tariff,
-        vatRate,
         plantProperties,
+        timeVaryingHelper,
         days,
         savings,
         savedEnergy,
@@ -44,8 +44,7 @@ export function calculateInvestment(
 
     const dailySaving = savings.divide(days)
     const currentSavingsPerKwh = calculateEnergyCost({
-        tariff,
-        vatRate,
+        timeVaryingHelper,
         from: lastValueDate,
         to: lastValueDate,
         energy: 1,

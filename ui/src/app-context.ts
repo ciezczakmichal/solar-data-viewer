@@ -1,5 +1,5 @@
 import type { SolarData } from 'schema'
-import type { MetersDataHelper } from 'calculation'
+import type { MetersDataHelper, TimeVaryingValuesHelper } from 'calculation'
 import { getContext, setContext } from 'svelte'
 
 export interface AppContext {
@@ -7,6 +7,7 @@ export interface AppContext {
     getData(): SolarData
 
     getMetersHelper(): MetersDataHelper
+    getTimeVaryingHelper(): TimeVaryingValuesHelper
 }
 
 export interface AppContextValues {
@@ -14,6 +15,7 @@ export interface AppContextValues {
     data: SolarData
 
     metersHelper: MetersDataHelper
+    timeVaryingHelper: TimeVaryingValuesHelper
 }
 
 const key = Symbol()
@@ -23,11 +25,13 @@ export function setAppContext(data: AppContext) {
 }
 
 export function getAppContext(): AppContextValues {
-    const { getUrl, getData, getMetersHelper } = getContext<AppContext>(key)
+    const { getUrl, getData, getMetersHelper, getTimeVaryingHelper } =
+        getContext<AppContext>(key)
 
     return {
         url: getUrl(),
         data: getData(),
         metersHelper: getMetersHelper(),
+        timeVaryingHelper: getTimeVaryingHelper(),
     }
 }

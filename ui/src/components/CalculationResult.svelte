@@ -19,7 +19,7 @@
         formatDuration,
     } from '../utils/formatters/format-time'
 
-    const { data, metersHelper } = getAppContext()
+    const { data, metersHelper, timeVaryingHelper } = getAppContext()
     const { values, plantProperties, tariff, vatRate } = data
 
     // @todo uwspólnić from / to
@@ -65,18 +65,16 @@
 
     const { accurate, savings } = calculateSavings({
         values: values.filter(isCompleteRecord),
-        tariff,
-        vatRate,
         plantProperties,
         metersHelper,
+        timeVaryingHelper,
     })
 
     const { dailySaving, currentSavingsPerKwh, daysToInvestmentReturn } =
         calculateInvestment({
             lastValueDate: values[values.length - 1].date,
-            tariff,
-            vatRate,
             plantProperties,
+            timeVaryingHelper,
             days,
             savings,
             savedEnergy,

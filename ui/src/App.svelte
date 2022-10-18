@@ -5,7 +5,7 @@
         validateSolarData,
         type SolarData,
     } from 'schema'
-    import { MetersDataHelper } from 'calculation'
+    import { MetersDataHelper, TimeVaryingValuesHelper } from 'calculation'
     import AppHeader from './components/AppHeader.svelte'
     import AppContent from './components/AppContent.svelte'
     import AppFooter from './components/AppFooter.svelte'
@@ -31,6 +31,13 @@
 
             return metersHelper
         },
+        getTimeVaryingHelper: () => {
+            if (!timeVaryingHelper) {
+                throw new Error('Obiekt nie jest dostępny')
+            }
+
+            return timeVaryingHelper
+        },
     })
 
     const baseAppTitle = document.title
@@ -49,6 +56,7 @@
 
     // @todo przenieść - zależy tylko od danych - osobny kontekst?
     let metersHelper: MetersDataHelper | null = null
+    let timeVaryingHelper: TimeVaryingValuesHelper | null = null
 
     async function fetchData(): Promise<SolarData> {
         if (!url) {
@@ -81,10 +89,12 @@
         url = getHashValue('data-source')
         data = null
         metersHelper = null
+        timeVaryingHelper = null
 
         try {
             data = await fetchData()
             metersHelper = new MetersDataHelper(data)
+            timeVaryingHelper = new TimeVaryingValuesHelper(data)
             status = Status.DataDisplay
         } catch (error) {
             if (error instanceof Error) {

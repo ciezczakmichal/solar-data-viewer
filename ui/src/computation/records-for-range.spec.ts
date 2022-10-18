@@ -1,29 +1,11 @@
-import dayjs, { type Dayjs } from 'dayjs'
-import { parseDate } from 'calculation'
-import { DateFormat, type ValuesRecord } from 'schema'
+import type { ValuesRecord } from 'schema'
+import { dayJsInstance, dayJsInstanceWithExtraProperty } from 'calculation'
 import {
     DataRange,
     getCompleteRecordsForRange,
     getRecordsForRange,
     getYieldRecordsForRange,
 } from './records-for-range'
-
-// miesiąc tak jak wyświetlany (czyli 1 = styczeń)
-function dayJsInstance(year: number, month: number, day: number): Dayjs {
-    return dayjs(new Date(year, month - 1, day))
-}
-
-// miesiąc tak jak wyświetlany (czyli 1 = styczeń)
-function dayJsInstanceWithExtraProperty(
-    year: number,
-    month: number,
-    day: number
-): Dayjs {
-    const instance = dayjs(new Date(year, month - 1, day))
-    // sformatuj i parsuj - aby wewnętrzna reprezentacja obiektu się zgadzała
-    // inaczej była różnica na właściwości "$x"
-    return parseDate(instance.format(DateFormat))
-}
 
 describe('records-for-range', () => {
     describe('getRecordsForRange - podstawowy test zwracania rekordów', () => {

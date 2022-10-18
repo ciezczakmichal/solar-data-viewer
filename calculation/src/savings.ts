@@ -1,7 +1,6 @@
 import currency from 'currency.js'
 import { Dayjs } from 'dayjs'
-import { TariffItem, VatRateItem, CompleteValuesRecord } from 'schema'
-import { CalculationError } from './error'
+import { CompleteValuesRecord } from 'schema'
 import {
     calculateEnergy,
     EnergyCalculationInputPlantProperties,
@@ -9,16 +8,17 @@ import {
 import { calculateEnergyCost } from './energy-cost'
 import { CurrencyOptions } from './currency-options'
 import { MetersDataHelper } from './meters-data-helper'
+import { TimeVaryingValuesHelper } from './time-varying-values-helper'
 import { parseDate } from './utils/date'
 
 export interface SavingsCalculationInput {
     values: CompleteValuesRecord[]
-    tariff: TariffItem[]
-    vatRate: VatRateItem[]
     plantProperties: EnergyCalculationInputPlantProperties
 
     // wymagany, gdyż pozwala uwzględnić dane początkowe licznika
     metersHelper: MetersDataHelper
+
+    timeVaryingHelper: TimeVaryingValuesHelper
 }
 
 export interface SavingsCalculationResult {
@@ -38,14 +38,15 @@ export interface SavingsCalculationResult {
 export function calculateSavings(
     input: SavingsCalculationInput
 ): SavingsCalculationResult {
-    const { tariff, vatRate, plantProperties, metersHelper } = input
+    const { plantProperties, metersHelper, timeVaryingHelper } = input
 
     const initialValue = metersHelper.getMeterInitialValuesAsCompleteRecord(
         metersHelper.getFirstMeterId()
     )
     let values = [initialValue, ...input.values]
 
-    const daysOfChange = getDaysOfChange(tariff, vatRate)
+    const daysOfChange = timeVaryingHelper.getDaysOfChangeForEnergyCost()
+
     let accurate = true
     let savings = currency(0, CurrencyOptions)
 
@@ -87,8 +88,7 @@ export function calculateSavings(
         countedSavedEnergy = savedEnergy
 
         const rangeSavings = calculateEnergyCost({
-            tariff,
-            vatRate,
+            timeVaryingHelper,
             from: parseDate(from.date).add(1, 'day'), // from dla funkcji zawiera się w zakresie
             to: to.date,
             energy: savedEnergyAtRange,
@@ -102,33 +102,6 @@ export function calculateSavings(
         accurate,
         savings,
     }
-}
-
-function getDaysOfChange(
-    tariff: TariffItem[],
-    vatRate: VatRateItem[]
-): Dayjs[] {
-    const daysOfChangeSet = new Set<string>()
-
-    for (const item of tariff) {
-        for (const value of item.values) {
-            daysOfChangeSet.add(value.from)
-        }
-    }
-
-    for (const item of vatRate) {
-        daysOfChangeSet.add(item.from)
-    }
-
-    const daysOfChange = [...daysOfChangeSet.values()]
-        .map(parseDate)
-        .sort((a, b) => (a.isBefore(b) ? -1 : 1))
-
-    if (daysOfChange.length === 0) {
-        throw new CalculationError('Tablica parametrów jest pusta')
-    }
-
-    return daysOfChange
 }
 
 interface ValuesForRange {

@@ -1,13 +1,12 @@
 import currency from 'currency.js'
 import { Dayjs } from 'dayjs'
-import { TariffItem, TariffItemValue, UnitOfMeasure, VatRateItem } from 'schema'
 import { CurrencyOptions } from './currency-options'
 import { CalculationError } from './error'
+import { TimeVaryingValuesHelper } from './time-varying-values-helper'
 import { parseDate } from './utils/date'
 
 export interface EnergyCostCalculationInput {
-    tariff: TariffItem[]
-    vatRate: VatRateItem[]
+    timeVaryingHelper: TimeVaryingValuesHelper
 
     // pierwszy dzień poboru energii
     from: string | Dayjs
@@ -30,116 +29,32 @@ export interface EnergyCostCalculationInput {
 export function calculateEnergyCost(
     input: EnergyCostCalculationInput
 ): currency {
-    const {
-        tariff: inputTariff,
-        vatRate,
-        from: inputFrom,
-        to: inputTo,
-        energy,
-    } = input
+    const { timeVaryingHelper, from: inputFrom, to: inputTo, energy } = input
     const from = parseDate(inputFrom)
     const to = parseDate(inputTo)
 
-    let result = currency(0, CurrencyOptions)
-
-    const tariff = inputTariff.filter(
-        item => item.unitOfMeasure === UnitOfMeasure.kWh
+    const tariffValues = timeVaryingHelper.getTariffValuesForEnergyCost(
+        from,
+        to
     )
-    const tariffValues: TariffItemValue[] = []
-
-    if (tariff.length === 0) {
-        throw new CalculationError('Brak elementów taryfy')
-    }
-
-    for (const item of tariff) {
-        const itemValue = findAppropriateItemForRange(
-            item.name,
-            item.values,
-            from,
-            to
-        )
-
-        if (itemValue) {
-            tariffValues.push(itemValue)
-        }
-    }
 
     if (tariffValues.length === 0) {
         throw new CalculationError(
-            'Brak parametrów taryfy dla zadanego zakresu czasowego'
+            'Brak parametrów pozycji taryfy dla zadanego zakresu czasowego'
         )
     }
+
+    const rate = timeVaryingHelper.getVatTaxValue(from, to)
+    let result = currency(0, CurrencyOptions)
 
     for (const itemValue of tariffValues) {
         // biblioteka zastosuje zaokrąglenie do pełnych groszy
         result = result.add(itemValue.value * energy)
     }
 
-    return addVatTax(result, vatRate, from, to)
+    return addVatTax(rate, result)
 }
 
-interface BasicItem {
-    from: string
-}
-
-function findAppropriateItemForRange<T extends BasicItem>(
-    paramName: string,
-    items: T[],
-    from: Dayjs,
-    to: Dayjs
-): T | null {
-    if (items.length === 0) {
-        throw new CalculationError('Brak elementów taryfy')
-    }
-
-    const nextIndex = items.findIndex(item =>
-        parseDate(item.from).isAfter(from)
-    )
-
-    if (nextIndex === -1) {
-        // wszystkie parametry są młodsze niż data początku, weź ostatni
-        return items[items.length - 1]
-    }
-
-    const nextItem = items[nextIndex]
-
-    if (!to.isBefore(parseDate(nextItem.from))) {
-        if (nextIndex === 0) {
-            throw new CalculationError(
-                `Zakres czasowy obejmuje okres, w którym brak wartości parametru "${paramName}"`
-            )
-        }
-
-        throw new CalculationError(
-            `Zakres czasowy obejmuje dzień zmiany wartości parametru "${paramName}"`
-        )
-    }
-
-    if (nextIndex === 0) {
-        return null
-    }
-
-    return items[nextIndex - 1]
-}
-
-function addVatTax(
-    value: currency,
-    vatRates: VatRateItem[],
-    from: Dayjs,
-    to: Dayjs
-): currency {
-    const vatRateItem = findAppropriateItemForRange(
-        'stawka VAT',
-        vatRates,
-        from,
-        to
-    )
-
-    if (!vatRateItem) {
-        throw new CalculationError(
-            'Brak stawki VAT dla zadanego zakresu czasowego'
-        )
-    }
-
-    return value.multiply(1 + vatRateItem.value / 100)
+function addVatTax(rate: number, value: currency): currency {
+    return value.multiply(1 + rate / 100)
 }
