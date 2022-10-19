@@ -14,29 +14,45 @@ export interface ChartOptions {
     range: DataRange
 }
 
-export interface ChartDataItem {
+export interface ChartDataItemXAxis {
     // label, opis wartości (na osi X)
     x: string
+}
 
+export interface ChartDataItemYAxis {
     // value, wartość (na osi Y)
     y: number | null
 }
 
-export interface ChartDataItemWithDate extends ChartDataItem {
-    // wskazanie daty, z której wygenerowano opis wartości (label)
+export type ChartDataItem = ChartDataItemXAxis & ChartDataItemYAxis
+
+export type ChartData<ReturnType extends Record<string, any>> =
+    (ChartDataItemXAxis & ReturnType)[]
+
+export interface ChartValueCalculationFunctionInput<
+    ValuesRecordType extends ValuesRecordProperties
+> {
+    from: ValuesRecordType
+    to: ValuesRecordType
+
+    label: string
     date: Dayjs
 }
 
 export type ChartValueCalculationFunction<
-    T extends ValuesRecordProperties = ValuesRecord
-> = (from: T, to: T) => number | null
+    ReturnType extends Record<string, any>,
+    ValuesRecordType extends ValuesRecordProperties
+> = (input: ChartValueCalculationFunctionInput<ValuesRecordType>) => ReturnType
 
-function getLineChartData<T extends ValuesRecordProperties = ValuesRecord>(
-    from: T,
-    records: RangeValuesRecord<T>[],
+function getLineChartData<
+    ReturnType extends Record<string, any>,
+    ValuesRecordType extends ValuesRecordProperties
+>(
+    from: ValuesRecordType,
+    records: RangeValuesRecord<ValuesRecordType>[],
     range: DataRange,
-    calculationFn: ChartValueCalculationFunction<T>
-): ChartDataItemWithDate[] {
+    calculationFn: ChartValueCalculationFunction<ReturnType, ValuesRecordType>
+): ChartData<ReturnType> {
     return records.map(item => {
         let x = ''
 
@@ -46,29 +62,37 @@ function getLineChartData<T extends ValuesRecordProperties = ValuesRecord>(
             x = getMonthDisplayText(item.date)
         }
 
-        let y = null
+        let result: ReturnType = {} as ReturnType
 
         if (item.values) {
-            y = calculationFn(from, item.values)
+            result = calculationFn({
+                from,
+                to: item.values,
+                label: x,
+                date: item.date,
+            })
         }
 
-        return { x, y, date: item.date }
+        return { x, ...result }
     })
 }
 
-function getBarChartData<T extends ValuesRecordProperties = ValuesRecord>(
-    from: T,
-    records: RangeValuesRecord<T>[],
+function getBarChartData<
+    ReturnType extends Record<string, any>,
+    ValuesRecordType extends ValuesRecordProperties
+>(
+    from: ValuesRecordType,
+    records: RangeValuesRecord<ValuesRecordType>[],
     range: DataRange,
-    calculationFn: ChartValueCalculationFunction<T>
-): ChartDataItemWithDate[] {
-    const firstItem: RangeValuesRecord<T> = {
+    calculationFn: ChartValueCalculationFunction<ReturnType, ValuesRecordType>
+): ChartData<ReturnType> {
+    const firstItem: RangeValuesRecord<ValuesRecordType> = {
         date: parseDate(from.date),
         values: from,
     }
 
     const result = records.map((item, index) => {
-        const previousItem: RangeValuesRecord<T> =
+        const previousItem: RangeValuesRecord<ValuesRecordType> =
             index > 0 ? records[index - 1] : firstItem
         let x = ''
 
@@ -82,13 +106,18 @@ function getBarChartData<T extends ValuesRecordProperties = ValuesRecord>(
             x = getMonthDisplayText(item.date)
         }
 
-        let y = null
+        let result: ReturnType = {} as ReturnType
 
         if (item.values && previousItem.values) {
-            y = calculationFn(previousItem.values, item.values)
+            result = calculationFn({
+                from: previousItem.values,
+                to: item.values,
+                label: x,
+                date: item.date,
+            })
         }
 
-        return { x, y, date: item.date }
+        return { x, ...result }
     })
 
     // nie wyświetlaj danych dla okresu from - records[0]
@@ -99,12 +128,15 @@ function getBarChartData<T extends ValuesRecordProperties = ValuesRecord>(
     return result
 }
 
-export function getChartData<T extends ValuesRecordProperties = ValuesRecord>(
-    from: T,
-    records: RangeValuesRecord<T>[],
+export function getChartData<
+    ReturnType extends Record<string, any>,
+    ValuesRecordType extends ValuesRecordProperties = ValuesRecord
+>(
+    from: ValuesRecordType,
+    records: RangeValuesRecord<ValuesRecordType>[],
     options: ChartOptions,
-    calculationFn: ChartValueCalculationFunction<T>
-): ChartDataItemWithDate[] {
+    calculationFn: ChartValueCalculationFunction<ReturnType, ValuesRecordType>
+): ChartData<ReturnType> {
     const { type, range } = options
 
     if (type === ChartType.Line) {

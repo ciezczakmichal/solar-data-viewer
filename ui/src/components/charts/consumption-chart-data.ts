@@ -3,7 +3,7 @@ import { calculateEnergy, MetersDataHelper } from 'calculation'
 import { getCompleteRecordsForRange } from '../../computation/records-for-range'
 import {
     getChartData,
-    type ChartDataItemWithDate,
+    type ChartDataItem,
     type ChartOptions,
 } from '../../computation/chart-data'
 
@@ -14,7 +14,7 @@ export interface ConsumptionChartInput {
     options: ChartOptions
 }
 
-export type ConsumptionChartData = ChartDataItemWithDate[]
+export type ConsumptionChartData = ChartDataItem[]
 
 export function getConsumptionChartData(
     input: ConsumptionChartInput
@@ -22,19 +22,14 @@ export function getConsumptionChartData(
     const { from, data, metersHelper, options } = input
     const records = getCompleteRecordsForRange(data.values, options.range)
 
-    return getChartData(
-        from,
-        records,
-        options,
-        (from: CompleteValuesRecord, to: CompleteValuesRecord) => {
-            const result = calculateEnergy({
-                from,
-                to,
-                plantProperties: data.plantProperties,
-                metersHelper,
-            })
+    return getChartData(from, records, options, ({ from, to }) => {
+        const { totalConsumption } = calculateEnergy({
+            from,
+            to,
+            plantProperties: data.plantProperties,
+            metersHelper,
+        })
 
-            return result.totalConsumption
-        }
-    )
+        return { y: totalConsumption }
+    })
 }

@@ -3,7 +3,7 @@ import { calculateEnergy, MetersDataHelper } from 'calculation'
 import { getCompleteRecordsForRange } from '../../computation/records-for-range'
 import {
     getChartData,
-    type ChartDataItemWithDate,
+    type ChartDataItem,
     type ChartOptions,
 } from '../../computation/chart-data'
 
@@ -14,7 +14,7 @@ export interface BalanceChartInput {
     options: ChartOptions
 }
 
-export type BalanceChartData = ChartDataItemWithDate[]
+export type BalanceChartData = ChartDataItem[]
 
 export function getBalanceChartData(
     input: BalanceChartInput
@@ -22,19 +22,14 @@ export function getBalanceChartData(
     const { from, data, metersHelper, options } = input
     const records = getCompleteRecordsForRange(data.values, options.range)
 
-    return getChartData(
-        from,
-        records,
-        options,
-        (from: CompleteValuesRecord, to: CompleteValuesRecord) => {
-            const result = calculateEnergy({
-                from,
-                to,
-                plantProperties: data.plantProperties,
-                metersHelper,
-            })
+    return getChartData(from, records, options, ({ from, to }) => {
+        const { energyToChargeOrBuy } = calculateEnergy({
+            from,
+            to,
+            plantProperties: data.plantProperties,
+            metersHelper,
+        })
 
-            return result.energyToChargeOrBuy
-        }
-    )
+        return { y: energyToChargeOrBuy }
+    })
 }

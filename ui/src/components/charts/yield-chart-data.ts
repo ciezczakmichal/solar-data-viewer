@@ -1,4 +1,5 @@
-import type { SolarData, ValuesRecord, YieldValuesRecord } from 'schema'
+import type { Dayjs } from 'dayjs'
+import type { SolarData, YieldValuesRecord } from 'schema'
 import { type MetersDataHelper, calculateBaseEnergyParams } from 'calculation'
 import {
     DataRange,
@@ -8,7 +9,6 @@ import {
     ChartType,
     getChartData,
     type ChartDataItem,
-    type ChartDataItemWithDate,
     type ChartOptions,
 } from '../../computation/chart-data'
 
@@ -20,60 +20,80 @@ export interface YieldChartInput {
 }
 
 export interface YieldChartData {
-    yieldData: ChartDataItemWithDate[]
+    yieldData: ChartDataItem[]
     yieldForecastData: ChartDataItem[]
 }
 
-function getYieldData(
-    from: YieldValuesRecord,
-    values: ValuesRecord[],
-    metersHelper: MetersDataHelper,
-    options: ChartOptions
-): ChartDataItemWithDate[] {
-    const records = getYieldRecordsForRange(values, options.range)
-
-    return getChartData(
-        from,
-        records,
-        options,
-        (from: YieldValuesRecord, to: YieldValuesRecord) => {
-            const result = calculateBaseEnergyParams({
-                from,
-                to,
-                metersHelper,
-            })
-
-            return result.totalYield
-        }
-    )
+interface CalculationReturnType {
+    totalYield: number
+    forecastedYield: number | null
 }
 
-export function getYieldChartData(input: YieldChartInput): YieldChartData {
-    const { from, data, metersHelper, options } = input
+interface ForecastFunctionFactoryResult {
+    fn: (date: Dayjs) => number | null
+    useForecastedData: boolean
+}
 
-    const yieldData = getYieldData(from, data.values, metersHelper, options)
-    let yieldForecastData: ChartDataItem[] = []
-
+function createForecastedValueFunction(
+    options: ChartOptions,
+    data: SolarData
+): ForecastFunctionFactoryResult {
     if (
         options.type === ChartType.Bar &&
         options.range === DataRange.Month &&
         data.yieldForecastData
     ) {
-        // znajdź odpowiadające wartości prognozy dla danych produkcji
-        for (const yieldItem of yieldData) {
-            const item = data.yieldForecastData.find(
-                forecastItem =>
-                    forecastItem.month === yieldItem.date.month() + 1
-            )
+        return {
+            fn: date => {
+                const item = (data.yieldForecastData || []).find(
+                    forecastItem => forecastItem.month === date.month() + 1
+                )
 
-            if (item) {
-                yieldForecastData.push({
-                    x: yieldItem.x,
-                    y: item.value,
-                })
-            }
+                return item?.value || null
+            },
+            useForecastedData: true,
+        }
+    } else {
+        return {
+            fn: () => null,
+            useForecastedData: false,
         }
     }
+}
 
-    return { yieldData, yieldForecastData }
+export function getYieldChartData(input: YieldChartInput): YieldChartData {
+    const { from, data, metersHelper, options } = input
+    const records = getYieldRecordsForRange(data.values, options.range)
+
+    let { fn: getForecastedValue, useForecastedData } =
+        createForecastedValueFunction(options, data)
+
+    const result = getChartData<CalculationReturnType, YieldValuesRecord>(
+        from,
+        records,
+        options,
+        ({ from, to, date }) => {
+            const { totalYield } = calculateBaseEnergyParams({
+                from,
+                to,
+                metersHelper,
+            })
+
+            const forecastedYield = getForecastedValue(date)
+            return { totalYield, forecastedYield }
+        }
+    )
+
+    return {
+        yieldData: result.map(item => ({
+            x: item.x,
+            y: item.totalYield,
+        })),
+        yieldForecastData: !useForecastedData
+            ? []
+            : result.map(item => ({
+                  x: item.x,
+                  y: item.forecastedYield,
+              })),
+    }
 }
