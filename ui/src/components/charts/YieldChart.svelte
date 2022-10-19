@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte'
-    import { Chart } from 'chart.js'
+    import { Chart, type ChartDataset } from 'chart.js'
     import { getAppContext } from '../../app-context'
     import { DataRange } from '../../computation/records-for-range'
     import {
@@ -77,12 +77,14 @@
 
         chartData = getYieldChartData({ from, data, metersHelper, options })
 
-        const datasets = [
+        const datasets: ChartDataset<'bar' | 'line', ChartDataItem[]>[] = [
             {
                 label: 'Uzysk',
                 backgroundColor: '#ffc107',
                 borderColor: '#ffc107',
                 data: chartData.yieldData,
+                cubicInterpolationMode: 'monotone',
+                tension: 0.4,
             },
         ]
 
@@ -92,6 +94,7 @@
                 backgroundColor: '#03a9f4',
                 borderColor: '#03a9f4',
                 data: chartData.yieldForecastData,
+                // ustawienia interpolacji zbędne - dane tylko na wykresie kolumnowym
             })
         }
 

@@ -60,6 +60,8 @@
                             borderColor: getSegmentColor,
                             backgroundColor: getSegmentColor,
                         },
+                        cubicInterpolationMode: 'monotone',
+                        tension: 0.4,
                     },
                 ],
             },
