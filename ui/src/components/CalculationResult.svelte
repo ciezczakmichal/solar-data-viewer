@@ -43,8 +43,8 @@
         totalYield,
         dailyYield,
         kWhTokWp,
-        selfConsumed,
-        selfConsumedPercent,
+        selfConsumption,
+        selfConsumptionPercent,
         donated,
         donatedToUse,
         charged,
@@ -95,8 +95,8 @@
 
     <Item
         label="Autokonsumpcja"
-        value={`${formatKwh(selfConsumed)} (${formatPercent(
-            selfConsumedPercent
+        value={`${formatKwh(selfConsumption)} (${formatPercent(
+            selfConsumptionPercent
         )} uzysku)`}
     />
     <Item

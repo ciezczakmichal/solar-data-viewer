@@ -48,8 +48,8 @@ export interface EnergyCalculationResult {
     dailyYield: number
     kWhTokWp: number
 
-    selfConsumed: number
-    selfConsumedPercent: number
+    selfConsumption: number
+    selfConsumptionPercent: number
 
     donated: number
     donatedToUse: number
@@ -174,12 +174,12 @@ export function calculateEnergy(
 
     const donatedToUse = donated * plantProperties.energyInWarehouseFactor
 
-    const selfConsumed = totalYield - donated
-    const selfConsumedPercent = selfConsumed / totalYield
+    const selfConsumption = totalYield - donated
+    const selfConsumptionPercent = selfConsumption / totalYield
 
     const dailyYield = totalYield / days
 
-    const totalConsumption = selfConsumed + charged
+    const totalConsumption = selfConsumption + charged
     const dailyConsumption = totalConsumption / days
     const monthlyConsumption = dailyConsumption * (365 / 12)
 
@@ -202,7 +202,7 @@ export function calculateEnergy(
         energyToCharge = 0
         energyToChargeOrBuy = -energyToBuy
 
-        savedEnergy = charged - energyToBuy + selfConsumed
+        savedEnergy = charged - energyToBuy + selfConsumption
         needsFulfilmentPercent =
             (totalConsumption - energyToBuy) / totalConsumption
     }
@@ -212,8 +212,8 @@ export function calculateEnergy(
         totalYield,
         dailyYield,
         kWhTokWp,
-        selfConsumed,
-        selfConsumedPercent,
+        selfConsumption,
+        selfConsumptionPercent,
         donated,
         donatedToUse,
         charged,

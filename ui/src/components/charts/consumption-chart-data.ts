@@ -21,7 +21,7 @@ export interface ConsumptionChartData {
 
 interface CalculationReturnType {
     charged: number
-    selfConsumed: number
+    selfConsumption: number
 }
 
 export function getConsumptionChartData(
@@ -35,14 +35,14 @@ export function getConsumptionChartData(
         records,
         options,
         ({ from, to }) => {
-            const { charged, selfConsumed } = calculateEnergy({
+            const { charged, selfConsumption } = calculateEnergy({
                 from,
                 to,
                 plantProperties: data.plantProperties,
                 metersHelper,
             })
 
-            return { charged, selfConsumed }
+            return { charged, selfConsumption }
         }
     )
 
@@ -53,7 +53,7 @@ export function getConsumptionChartData(
         })),
         selfConsumptionData: chartData.map(item => ({
             x: item.x,
-            y: item.selfConsumed,
+            y: item.selfConsumption,
         })),
     }
 }
