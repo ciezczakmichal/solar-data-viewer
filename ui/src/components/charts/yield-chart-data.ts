@@ -68,7 +68,7 @@ export function getYieldChartData(input: YieldChartInput): YieldChartData {
     let { fn: getForecastedValue, useForecastedData } =
         createForecastedValueFunction(options, data)
 
-    const result = getChartData<CalculationReturnType, YieldValuesRecord>(
+    const chartData = getChartData<CalculationReturnType, YieldValuesRecord>(
         from,
         records,
         options,
@@ -85,13 +85,13 @@ export function getYieldChartData(input: YieldChartInput): YieldChartData {
     )
 
     return {
-        yieldData: result.map(item => ({
+        yieldData: chartData.map(item => ({
             x: item.x,
             y: item.totalYield,
         })),
         yieldForecastData: !useForecastedData
             ? []
-            : result.map(item => ({
+            : chartData.map(item => ({
                   x: item.x,
                   y: item.forecastedYield,
               })),

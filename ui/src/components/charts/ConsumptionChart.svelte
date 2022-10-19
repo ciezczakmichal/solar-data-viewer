@@ -27,7 +27,10 @@
         range: DataRange.Week,
     }
 
-    let chartData: ConsumptionChartData = []
+    let chartData: ConsumptionChartData = {
+        chargedEnergyData: [],
+        selfConsumptionData: [],
+    }
     let chartDataNeedsUpdate = true
 
     function createChart() {
@@ -36,16 +39,30 @@
             data: {
                 datasets: [
                     {
-                        label: 'Energia zużyta',
+                        label: 'Autokonsumpcja',
+                        backgroundColor: '#6573c3',
+                        borderColor: '#6573c3',
+                        data: chartData.selfConsumptionData,
+                    },
+                    {
+                        label: 'Energia pobrana',
                         backgroundColor: '#2c387e',
                         borderColor: '#2c387e',
-                        data: chartData,
+                        data: chartData.chargedEnergyData,
                     },
                 ],
             },
             options: {
+                interaction: {
+                    mode: 'x',
+                    axis: 'x',
+                },
                 scales: {
+                    x: {
+                        stacked: true,
+                    },
                     y: {
+                        stacked: true,
                         title: {
                             display: true,
                             text: 'Energia w kWh',
@@ -68,6 +85,15 @@
 
                                 return label
                             },
+                            footer: tooltipItems => {
+                                let sum = 0
+
+                                tooltipItems.forEach(
+                                    item => (sum += item.parsed.y)
+                                )
+
+                                return 'Energia zużyta: ' + formatKwh(sum)
+                            },
                         },
                     },
                 },
@@ -89,7 +115,8 @@
             options,
         })
 
-        chart.data.datasets[0].data = chartData
+        chart.data.datasets[0].data = chartData.selfConsumptionData
+        chart.data.datasets[1].data = chartData.chargedEnergyData
         chart.update()
 
         chartDataNeedsUpdate = false

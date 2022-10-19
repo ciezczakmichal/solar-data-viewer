@@ -14,7 +14,15 @@ export interface ConsumptionChartInput {
     options: ChartOptions
 }
 
-export type ConsumptionChartData = ChartDataItem[]
+export interface ConsumptionChartData {
+    chargedEnergyData: ChartDataItem[]
+    selfConsumptionData: ChartDataItem[]
+}
+
+interface CalculationReturnType {
+    charged: number
+    selfConsumed: number
+}
 
 export function getConsumptionChartData(
     input: ConsumptionChartInput
@@ -22,14 +30,30 @@ export function getConsumptionChartData(
     const { from, data, metersHelper, options } = input
     const records = getCompleteRecordsForRange(data.values, options.range)
 
-    return getChartData(from, records, options, ({ from, to }) => {
-        const { totalConsumption } = calculateEnergy({
-            from,
-            to,
-            plantProperties: data.plantProperties,
-            metersHelper,
-        })
+    const chartData = getChartData<CalculationReturnType, CompleteValuesRecord>(
+        from,
+        records,
+        options,
+        ({ from, to }) => {
+            const { charged, selfConsumed } = calculateEnergy({
+                from,
+                to,
+                plantProperties: data.plantProperties,
+                metersHelper,
+            })
 
-        return { y: totalConsumption }
-    })
+            return { charged, selfConsumed }
+        }
+    )
+
+    return {
+        chargedEnergyData: chartData.map(item => ({
+            x: item.x,
+            y: item.charged,
+        })),
+        selfConsumptionData: chartData.map(item => ({
+            x: item.x,
+            y: item.selfConsumed,
+        })),
+    }
 }
