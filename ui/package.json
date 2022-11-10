@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "chart.js": "^3.9.1",
+        "currency.js": "^2.0.4",
         "dayjs": "^1.11.5",
         "sirv-cli": "^2.0.2"
     },

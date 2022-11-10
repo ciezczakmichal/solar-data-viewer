@@ -1,8 +1,9 @@
 <script lang="ts">
+    import currency from 'currency.js'
     import { formatNumber } from '../utils/formatters/format-numbers'
 
     export let label: string = ''
-    export let value: string | number
+    export let value: string | number | currency
     export let unit: string = ''
     export let noSpaceBeforeUnit: boolean = false
 
@@ -10,6 +11,8 @@
 
     if (typeof value === 'number') {
         valueToUse = formatNumber(value)
+    } else if (value instanceof currency) {
+        valueToUse = value.format()
     }
 
     const space = noSpaceBeforeUnit ? '' : ' '

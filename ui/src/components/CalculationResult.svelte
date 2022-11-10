@@ -159,12 +159,12 @@
 
     <Item
         label="Bieżąca cena energii"
-        value={currentEnergyCost.format()}
+        value={currentEnergyCost}
         unit="/ 1 kWh"
     />
     <Item
         label="Bieżące opłaty stałe"
-        value={currentFixedCost.format()}
+        value={currentFixedCost}
         unit="/ miesiąc"
     />
 
@@ -172,13 +172,10 @@
 
     <Item
         label="Oszczędność na rachunkach dzięki instalacji"
-        value={savings.format()}
+        value={savings}
         unit={!accurate ? '(dane przybliżone)' : undefined}
     />
-    <Item
-        label="Średnia kwota oszczędności na dzień"
-        value={dailySaving.format()}
-    />
+    <Item label="Średnia kwota oszczędności na dzień" value={dailySaving} />
     <Item
         label="Przybliżony pozostały czas do zwrotu inwestycji"
         value={formatDuration(
