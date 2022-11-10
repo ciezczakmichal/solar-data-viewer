@@ -6,9 +6,9 @@ import {
     EnergyCalculationInputPlantProperties,
 } from './energy'
 import { calculateEnergyCost } from './energy-cost'
-import { CurrencyOptions } from './currency-options'
 import { MetersDataHelper } from './meters-data-helper'
 import { TimeVaryingValuesHelper } from './time-varying-values-helper'
+import { CurrencyZloty } from './utils/currency-zloty'
 import { parseDate } from './utils/date'
 
 export interface SavingsCalculationInput {
@@ -48,7 +48,7 @@ export function calculateSavings(
     const daysOfChange = timeVaryingHelper.getDaysOfChangeForEnergyCost()
 
     let accurate = true
-    let savings = currency(0, CurrencyOptions)
+    let savings = new CurrencyZloty()
 
     let firstValue: CompleteValuesRecord | null = null
     let countedSavedEnergy = 0

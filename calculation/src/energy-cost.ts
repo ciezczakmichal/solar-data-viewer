@@ -1,8 +1,8 @@
 import currency from 'currency.js'
 import { Dayjs } from 'dayjs'
-import { CurrencyOptions } from './currency-options'
 import { CalculationError } from './error'
 import { TimeVaryingValuesHelper } from './time-varying-values-helper'
+import { CurrencyZloty } from './utils/currency-zloty'
 import { parseDate } from './utils/date'
 import { Month } from './utils/month'
 
@@ -47,7 +47,7 @@ export function calculateEnergyCost(
     }
 
     const rate = timeVaryingHelper.getVatTaxRate(from, to)
-    let result = currency(0, CurrencyOptions)
+    let result = new CurrencyZloty()
 
     for (const itemValue of tariffValues) {
         // biblioteka zastosuje zaokrąglenie do pełnych groszy
@@ -100,7 +100,7 @@ export function calculateFixedCost(
     }
 
     const rate = timeVaryingHelper.getVatTaxRate(month.lastDayOfMonth())
-    let result = currency(0, CurrencyOptions)
+    let result = new CurrencyZloty()
 
     for (const itemValue of tariffValues) {
         // biblioteka zastosuje zaokrąglenie do pełnych groszy
