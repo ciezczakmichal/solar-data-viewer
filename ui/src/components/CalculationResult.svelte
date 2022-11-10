@@ -3,8 +3,10 @@
     import {
         calculateEnergy,
         calculateEnergyCostAtDay,
+        calculateFixedCost,
         calculateInvestment,
         calculateSavings,
+        Month,
     } from 'calculation'
     import { getAppContext } from '../app-context'
     import Item from './Item.svelte'
@@ -75,7 +77,11 @@
 
     const currentEnergyCost = calculateEnergyCostAtDay(
         timeVaryingHelper,
-        values[values.length - 1].date
+        to.date
+    )
+    const currentFixedCost = calculateFixedCost(
+        timeVaryingHelper,
+        new Month(to.date)
     )
 
     const { daysToInvestmentReturn } = calculateInvestment({
@@ -156,8 +162,11 @@
         value={currentEnergyCost.format()}
         unit="/ 1 kWh"
     />
-    <Item label="Bieżące opłaty stałe" value={'Wkrótce :)'} />
-    <!-- <Item label="Bieżące opłaty stałe" value={'TODO'} unit="/ miesiąc" /> -->
+    <Item
+        label="Bieżące opłaty stałe"
+        value={currentFixedCost.format()}
+        unit="/ miesiąc"
+    />
 
     <br />
 

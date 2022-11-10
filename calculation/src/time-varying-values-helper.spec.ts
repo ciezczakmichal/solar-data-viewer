@@ -208,7 +208,7 @@ describe('TimeVaryingValuesHelper', () => {
         })
     })
 
-    describe('getVatTaxValue', () => {
+    describe('getVatTaxRate', () => {
         it('test poprawności zwracanych wartości w poszczególnych okresach ważności', () => {
             const input: TimeVaryingValuesHelperInput = {
                 tariff: [],
@@ -229,18 +229,30 @@ describe('TimeVaryingValuesHelper', () => {
             }
 
             const instance = new TimeVaryingValuesHelper(input)
+            let result: number
 
-            let result = instance.getVatTaxValue('2020-01-01', '2020-05-31')
+            result = instance.getVatTaxRate('2020-01-01', '2020-05-31')
             expect(result).toEqual(23)
 
-            result = instance.getVatTaxValue('2020-06-01', '2021-12-31')
+            result = instance.getVatTaxRate('2020-06-01', '2021-12-31')
             expect(result).toEqual(5)
 
-            result = instance.getVatTaxValue('2022-01-01', '2035-11-24') // dowolna późniejsza data
+            result = instance.getVatTaxRate('2022-01-01', '2035-11-24') // dowolna późniejsza data
+            expect(result).toEqual(50)
+
+            // test wersji z jednym argumentem
+
+            result = instance.getVatTaxRate('2020-05-31')
+            expect(result).toEqual(23)
+
+            result = instance.getVatTaxRate('2021-12-31')
+            expect(result).toEqual(5)
+
+            result = instance.getVatTaxRate('2035-11-24')
             expect(result).toEqual(50)
         })
 
-        it('funkcja rzuca wyjątek, jeśli dla zadanego okresu nie ma dostępnej stawki VAT', () => {
+        it('funkcja rzuca wyjątek, jeśli dla zadanego okresu lub pojedynczych dni nie ma dostępnej stawki VAT', () => {
             const input: TimeVaryingValuesHelperInput = {
                 tariff: [],
                 vatRate: [
@@ -252,13 +264,19 @@ describe('TimeVaryingValuesHelper', () => {
             }
 
             const instance = new TimeVaryingValuesHelper(input)
+            const error = new CalculationError(
+                'Brak stawki VAT dla zadanego zakresu czasowego'
+            )
 
             expect(() =>
-                instance.getVatTaxValue('2019-05-13', '2019-12-31')
-            ).toThrowError(
-                new CalculationError(
-                    'Brak stawki VAT dla zadanego zakresu czasowego'
-                )
+                instance.getVatTaxRate('2019-05-13', '2019-12-31')
+            ).toThrowError(error)
+
+            expect(() => instance.getVatTaxRate('2019-05-13')).toThrowError(
+                error
+            )
+            expect(() => instance.getVatTaxRate('2019-12-31')).toThrowError(
+                error
             )
         })
 
@@ -285,7 +303,7 @@ describe('TimeVaryingValuesHelper', () => {
 
             it('dla zakresu kończącego się w dniu zmiany', () => {
                 expect(() =>
-                    instance.getVatTaxValue('2020-03-01', '2020-04-12')
+                    instance.getVatTaxRate('2020-03-01', '2020-04-12')
                 ).toThrowError(
                     new CalculationError(
                         'Zakres czasowy obejmuje dzień zmiany wartości pozycji "stawka VAT"'
@@ -295,7 +313,7 @@ describe('TimeVaryingValuesHelper', () => {
 
             it('dla zakresu obejmującego dzień zmiany', () => {
                 expect(() =>
-                    instance.getVatTaxValue('2020-03-01', '2020-04-13')
+                    instance.getVatTaxRate('2020-03-01', '2020-04-13')
                 ).toThrowError(
                     new CalculationError(
                         'Zakres czasowy obejmuje dzień zmiany wartości pozycji "stawka VAT"'

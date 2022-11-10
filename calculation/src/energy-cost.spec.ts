@@ -1,7 +1,12 @@
 import { UnitOfMeasure } from 'schema'
-import { calculateEnergyCost, EnergyCostCalculationInput } from './energy-cost'
+import {
+    calculateEnergyCost,
+    calculateFixedCost,
+    EnergyCostCalculationInput,
+} from './energy-cost'
 import { CalculationError } from './error'
 import { TimeVaryingValuesHelper } from './time-varying-values-helper'
+import { Month } from './utils/month'
 
 describe('calculateEnergyCost', () => {
     describe('testy na minimalnej liczbie danych', () => {
@@ -112,80 +117,6 @@ describe('calculateEnergyCost', () => {
 
         const cost2 = calculateEnergyCost(input2)
         expect(cost2.value).toEqual(90)
-    })
-
-    it('test obliczania na podstawie faktury P/22215359/0004/21', () => {
-        // daty "from" i "to" nie mają znaczenia, byle były później niż wartości współczynników
-        const input: EnergyCostCalculationInput = {
-            timeVaryingHelper: new TimeVaryingValuesHelper({
-                tariff: [
-                    {
-                        name: 'Energia czynna',
-                        unitOfMeasure: UnitOfMeasure.kWh,
-                        values: [
-                            {
-                                from: '2020-01-01',
-                                value: 0.3015, // inna niż w bazie
-                            },
-                        ], // netto 87,44
-                    },
-                    {
-                        name: 'Opłata jakościowa',
-                        unitOfMeasure: UnitOfMeasure.kWh,
-                        values: [
-                            {
-                                from: '2020-01-01',
-                                value: 0.0102,
-                            },
-                        ], // netto 2,96
-                    },
-                    {
-                        name: 'Opłata zmienna sieciowa',
-                        unitOfMeasure: UnitOfMeasure.kWh,
-                        values: [
-                            {
-                                from: '2020-01-01',
-                                value: 0.1648,
-                            },
-                        ], // netto 47,79
-                    },
-                    {
-                        name: 'Opłata OZE',
-                        unitOfMeasure: UnitOfMeasure.kWh,
-                        values: [
-                            {
-                                from: '2020-01-01',
-                                value: 0.0022,
-                            },
-                        ], // netto 0,64
-                    },
-                    {
-                        name: 'Opłata kogeneracyjna',
-                        unitOfMeasure: UnitOfMeasure.kWh,
-                        values: [
-                            {
-                                from: '2020-01-01',
-                                value: 0,
-                            },
-                        ],
-                    },
-                ],
-                vatRate: [
-                    {
-                        from: '2020-01-01',
-                        value: 23,
-                    },
-                ],
-            }),
-            from: '2021-03-01',
-            to: '2021-03-31',
-            energy: 290,
-        }
-
-        // netto razem: 138,83
-
-        const cost = calculateEnergyCost(input)
-        expect(cost.value).toEqual(170.76)
     })
 
     describe('test rzucania wyjątku, gdy brakuje pozycji, stawki VAT lub parametrów', () => {
@@ -299,4 +230,121 @@ describe('calculateEnergyCost', () => {
             )
         })
     })
+})
+
+describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21', () => {
+    // daty "from" i "to" nie mają znaczenia, byle były później niż wartości współczynników
+    const input: EnergyCostCalculationInput = {
+        timeVaryingHelper: new TimeVaryingValuesHelper({
+            tariff: [
+                {
+                    name: 'Energia czynna',
+                    unitOfMeasure: UnitOfMeasure.kWh,
+                    values: [
+                        {
+                            from: '2021-01-01',
+                            value: 0.3015, // inna niż w bazie
+                        },
+                    ], // netto 87,44
+                },
+                {
+                    name: 'Opłata jakościowa',
+                    unitOfMeasure: UnitOfMeasure.kWh,
+                    values: [
+                        {
+                            from: '2021-01-01',
+                            value: 0.0102,
+                        },
+                    ], // netto 2,96
+                },
+                {
+                    name: 'Opłata zmienna sieciowa',
+                    unitOfMeasure: UnitOfMeasure.kWh,
+                    values: [
+                        {
+                            from: '2021-01-01',
+                            value: 0.1648,
+                        },
+                    ], // netto 47,79
+                },
+                {
+                    name: 'Opłata OZE',
+                    unitOfMeasure: UnitOfMeasure.kWh,
+                    values: [
+                        {
+                            from: '2021-01-01',
+                            value: 0.0022,
+                        },
+                    ], // netto 0,64
+                },
+                {
+                    name: 'Opłata kogeneracyjna',
+                    unitOfMeasure: UnitOfMeasure.kWh,
+                    values: [
+                        {
+                            from: '2021-01-01',
+                            value: 0,
+                        },
+                    ],
+                },
+
+                {
+                    name: 'Opłata stała sieciowa - układ 3-fazowy',
+                    unitOfMeasure: UnitOfMeasure.zlMies,
+                    values: [
+                        {
+                            from: '2021-01-01',
+                            value: 6.02,
+                        },
+                    ],
+                },
+                {
+                    name: 'Opłata przejściowa > 1200 kWh',
+                    unitOfMeasure: UnitOfMeasure.zlMies,
+                    values: [
+                        {
+                            from: '2021-01-01',
+                            value: 0.33,
+                        },
+                    ],
+                },
+                {
+                    name: 'Opłata mocowa (1200 - 2800 kWh)',
+                    unitOfMeasure: UnitOfMeasure.zlMies,
+                    values: [
+                        {
+                            from: '2021-01-01',
+                            value: 7.47,
+                        },
+                    ],
+                },
+                {
+                    name: 'Opłata abonamentowa',
+                    unitOfMeasure: UnitOfMeasure.zlMies,
+                    values: [
+                        {
+                            from: '2021-01-01',
+                            value: 1.92,
+                        },
+                    ],
+                },
+            ],
+            vatRate: [
+                {
+                    from: '2021-01-01',
+                    value: 23,
+                },
+            ],
+        }),
+        from: '2021-03-01',
+        to: '2021-03-31',
+        energy: 290,
+    }
+
+    // koszt energii - netto razem: 138,83
+    let cost = calculateEnergyCost(input)
+    expect(cost.value).toEqual(170.76)
+
+    cost = calculateFixedCost(input.timeVaryingHelper, new Month(2021, 2))
+    expect(cost.value).toEqual(19.36)
 })

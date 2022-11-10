@@ -8,6 +8,7 @@ import {
 } from 'schema'
 import { CalculationError } from './error'
 import { parseDate } from './utils/date'
+import { Month } from './utils/month'
 
 export type TimeVaryingValuesHelperInput = Pick<SolarData, 'tariff' | 'vatRate'>
 
@@ -18,6 +19,7 @@ interface BasicDateItem {
 export class TimeVaryingValuesHelper {
     private _tariff!: TariffItem[]
     private _tariffKwh!: TariffItem[]
+    private _tariffFixed!: TariffItem[]
     private _vatRates!: VatRateItem[]
 
     constructor(input: TimeVaryingValuesHelperInput) {
@@ -34,6 +36,9 @@ export class TimeVaryingValuesHelper {
         this._tariffKwh = items.filter(
             item => item.unitOfMeasure === UnitOfMeasure.kWh
         )
+        this._tariffFixed = items.filter(
+            item => item.unitOfMeasure === UnitOfMeasure.zlMies
+        )
     }
 
     vatRates(): VatRateItem[] {
@@ -45,7 +50,7 @@ export class TimeVaryingValuesHelper {
     }
 
     /**
-     * Zwraca wartości pozycji z taryfy, które odnoszą się do zdefiniowanego zakresu czasowego.
+     * Zwraca wartości pozycji z taryfy, które dotyczą opłat za energię (koszty zmienne) i odnoszą się do zdefiniowanego zakresu czasowego.
      * Zakres czasowy nie może obejmować dnia zmiany lub wprowadzenia wartości taryfy (w takiej sytuacji jest rzucany wyjątek).
      * @param from Pierwszy dzień zakresu czasowego (włącznie)
      * @param to Ostatni dzień zakresu czasowego (włącznie)
@@ -77,17 +82,61 @@ export class TimeVaryingValuesHelper {
     }
 
     /**
-     * Zwraca wartość podatku VAT, który obowiązuje w zdefiniowanym zakresie czasowym.
+     * Zwraca wartości pozycji z taryfy, które dotyczą opłat stałych i odnoszą się do zdefiniowanego miesiąca.
+     * Jeśli we wskazanym miesiącu doszło do zmian w elementach taryfy, rzucany jest wyjątek.
+     * @param month Miesiąc, dla którego pobrać dane
+     * @returns Tablica wartości pozycji
+     * @todo po zmianie definicji opłat stałych - sprawdzić, czy można scalić z getTariffValuesForEnergyCost()
+     * @todo testy jednostkowe
+     */
+    getTariffValuesForFixedCost(month: Month): TariffItemValue[] {
+        const result: TariffItemValue[] = []
+        const { from, to } = month.dateRange()
+
+        for (const item of this._tariffFixed) {
+            const itemValue = this.findAppropriateItemForRange(
+                item.name,
+                item.values,
+                from,
+                to
+            )
+
+            if (itemValue) {
+                result.push(itemValue)
+            }
+        }
+
+        return result
+    }
+
+    /**
+     * Zwraca stawkę podatku VAT, który obowiązuje w zdefiniowanym zakresie czasowym.
      * Zakres czasowy nie może obejmować dnia zmiany lub wprowadzenia nowej wartości (w takiej sytuacji jest rzucany wyjątek).
      * Zwracana wartość pochodzi bezpośrednio z danych źródłowych, zatem jest to wartość wyrażona w procentach, np. 23.
      * Rzuca wyjątek, jeśli dla zakresu czasowego nie zdefiniowano wartości.
      * @param from Pierwszy dzień zakresu czasowego (włącznie)
      * @param to Ostatni dzień zakresu czasowego (włącznie)
-     * @returns Wartość podatku VAT
+     * @returns Stawka podatku VAT
      */
-    getVatTaxValue(from: string | Dayjs, to: string | Dayjs): number {
-        from = parseDate(from)
-        to = parseDate(to)
+    getVatTaxRate(from: string | Dayjs, to: string | Dayjs): number
+
+    /**
+     * Zwraca stawkę podatku VAT, który obowiązuje we wskazanym dniu.
+     * Zwracana wartość pochodzi bezpośrednio z danych źródłowych, zatem jest to wartość wyrażona w procentach, np. 23.
+     * Rzuca wyjątek, jeśli dla podanej daty nie zdefiniowano wartości.
+     * @param date Dzień, dla którego pobrać stawkę
+     * @returns Stawka podatku VAT
+     */
+    getVatTaxRate(date: string | Dayjs): number
+
+    getVatTaxRate(fromOrDate: string | Dayjs, to?: string | Dayjs): number {
+        const from = parseDate(fromOrDate)
+
+        if (to === undefined) {
+            to = from
+        } else {
+            to = parseDate(to)
+        }
 
         const vatRateItem = this.findAppropriateItemForRange(
             'stawka VAT',
