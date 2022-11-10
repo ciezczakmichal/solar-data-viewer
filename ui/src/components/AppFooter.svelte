@@ -2,11 +2,14 @@
     Kod źródłowy:
     <a
         href="https://github.com/ciezczakmichal/solar-data-viewer"
-        target="_blank">GitHub</a
+        target="_blank"
+        rel="noreferrer">GitHub</a
     >
     | Logo aplikacji z
-    <a href="https://github.com/twitter/twemoji" target="_blank"
-        >Twitter Emoji</a
+    <a
+        href="https://github.com/twitter/twemoji"
+        target="_blank"
+        rel="noreferrer">Twitter Emoji</a
     >, CC-BY 4.0
 </footer>
 

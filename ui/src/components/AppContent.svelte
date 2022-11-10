@@ -15,6 +15,7 @@
         <a
             href={url}
             target="_blank"
+            rel="noreferrer"
             title="Adres URL źródła danych (otwiera w nowej karcie)">{url}</a
         >
     </div>
