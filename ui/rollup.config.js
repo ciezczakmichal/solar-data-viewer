@@ -20,7 +20,7 @@ function serve() {
     return {
         writeBundle() {
             if (server) return
-            server = spawn('npm', ['run', 'start', '--', '--dev'], {
+            server = spawn('yarn', ['start'], {
                 stdio: ['ignore', 'inherit', 'inherit'],
                 shell: true,
             })
@@ -66,7 +66,7 @@ export default {
             inlineSources: !production,
         }),
 
-        // In dev mode, call `npm run start` once
+        // In dev mode, call `yarn start` once
         // the bundle has been generated
         !production && serve(),
 
@@ -74,8 +74,8 @@ export default {
         // browser on changes when not in production
         !production && livereload('public'),
 
-        // If we're building for production (npm run build
-        // instead of npm run dev), minify
+        // If we're building for production (yarn build
+        // instead of yarn dev), minify
         production && terser(),
     ],
     watch: {
