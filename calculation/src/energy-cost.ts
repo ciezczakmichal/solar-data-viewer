@@ -27,7 +27,6 @@ export interface EnergyCostCalculationInput {
  * W celu obliczenia kosztu potrzebny jest minimum jeden parametr taryfy oraz stawka VAT.
  * @param input Dane niezbędne do obliczenia kosztu
  * @returns Koszt zakupu energii
- * @todo nie rzucaj wyjątku, gdy brak pozycji taryfy
  */
 export function calculateEnergyCost(
     input: EnergyCostCalculationInput
@@ -61,6 +60,7 @@ export function calculateEnergyCost(
 /**
  * Zwraca koszt zakupu 1 kWh energii w podanym dniu.
  * Uwzględniane są wyłącznie opłaty zmienne, zależne od ilości energii.
+ * @see calculateEnergyCost()
  * @param timeVaryingHelper Obiekt pomocniczy, dostarczający dane o taryfie i stawce VAT
  * @param date Dzień, dla którego wyliczyć dane
  * @returns Koszt zakupu energii
@@ -85,7 +85,6 @@ export function calculateEnergyCostAtDay(
  * @param timeVaryingHelper Obiekt pomocniczy, dostarczający dane o taryfie i stawce VAT
  * @param month Miesiąc, dla którego pobrać dane
  * @returns Kwota opłat stałych w miesiącu
- * @todo nie rzucaj wyjątku, gdy brak pozycji taryfy
  * @todo testy jednostkowe - na wzór calculateEnergyCost()
  */
 export function calculateFixedCost(
