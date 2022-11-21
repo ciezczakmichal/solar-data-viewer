@@ -369,6 +369,46 @@
                     "value": 0.00406
                 }
             ]
+        },
+        {
+            "name": "Opłata stała sieciowa - układ 3-fazowy",
+            "unitOfMeasure": "zlMies",
+            "values": [
+                {
+                    "from": "2022-01-01",
+                    "value": 6.51
+                }
+            ]
+        },
+        {
+            "name": "Opłata przejściowa < 500 kWh",
+            "unitOfMeasure": "zlMies",
+            "values": [
+                {
+                    "from": "2021-01-01",
+                    "value": 0.02
+                }
+            ]
+        },
+        {
+            "name": "Opłata mocowa < 500 kWh",
+            "unitOfMeasure": "zlMies",
+            "values": [
+                {
+                    "from": "2022-01-01",
+                    "value": 2.37
+                }
+            ]
+        },
+        {
+            "name": "Opłata abonamentowa",
+            "unitOfMeasure": "zlMies",
+            "values": [
+                {
+                    "from": "2021-01-01",
+                    "value": 0.32
+                }
+            ]
         }
     ],
     "vatRate": [
