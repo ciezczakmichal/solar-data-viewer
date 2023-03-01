@@ -171,7 +171,7 @@
     <br />
 
     <Item
-        label="Oszczędność na rachunkach dzięki instalacji"
+        label="Oszczędności na rachunkach za prąd"
         value={savings}
         unit={!accurate ? '(dane przybliżone)' : undefined}
     />
