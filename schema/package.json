@@ -14,7 +14,9 @@
     "scripts": {
         "build": "yarn generate-validator && tsc --build",
         "generate-validator": "node --experimental-specifier-resolution=node --no-warnings --loader ts-node/esm scripts/generate-standalone-validator.ts",
-        "test": "yarn generate-validator && node --experimental-vm-modules --no-warnings $(yarn bin jest) --no-cache"
+        "test": "yarn generate-validator && node --experimental-vm-modules --no-warnings $(yarn bin jest) --no-cache",
+        "lint": "prettier --check . && eslint .",
+        "format": "prettier --write ."
     },
     "dependencies": {
         "ajv": "^8.11.0",

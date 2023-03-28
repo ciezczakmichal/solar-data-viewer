@@ -13,7 +13,9 @@
     },
     "scripts": {
         "build": "tsc --build",
-        "test": "node --experimental-vm-modules --no-warnings $(yarn bin jest) --no-cache"
+        "test": "node --experimental-vm-modules --no-warnings $(yarn bin jest) --no-cache",
+        "lint": "prettier --check . && eslint .",
+        "format": "prettier --write ."
     },
     "dependencies": {
         "currency.js": "^2.0.4",
