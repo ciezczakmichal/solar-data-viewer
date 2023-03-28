@@ -17,8 +17,6 @@
         "build:schema": "yarn schema build",
         "build:ui": "yarn ui build",
         "dev": "yarn build:core && yarn ui dev",
-        "start": "yarn ui start",
-        "test": "yarn build:core && yarn schema test && yarn calculation test && yarn ui test",
-        "check": "yarn ui check"
+        "test": "yarn build:core && yarn schema test && yarn calculation test && yarn ui test"
     }
 }
