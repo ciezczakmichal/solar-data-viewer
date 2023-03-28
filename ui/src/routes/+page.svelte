@@ -1,9 +1,10 @@
 <script lang="ts">
+    import { AppTitle } from '$lib/app-title'
     import App from '$lib/App.svelte'
 </script>
 
 <svelte:head>
-    <title>Solar Data Viewer</title>
+    <title>{AppTitle}</title>
 </svelte:head>
 
 <App />

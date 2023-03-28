@@ -10,7 +10,7 @@
     import AppContent from './components/AppContent.svelte'
     import AppFooter from './components/AppFooter.svelte'
     import { setAppContext } from './app-context'
-    import { formatNumber } from './utils/formatters/format-numbers'
+    import { generateApplicationTitle } from './app-title'
     import { getHashValue } from './utils/get-hash-value'
     import './utils/chartjs-import'
     import './utils/dayjs-import'
@@ -39,8 +39,6 @@
             return timeVaryingHelper
         },
     })
-
-    const baseAppTitle = document.title
 
     enum Status {
         Loading,
@@ -111,26 +109,15 @@
         }
     }
 
-    function generateApplicationTitle(data: SolarData): string {
-        let title = baseAppTitle
-
-        const { location, installationPower } = data.plantProperties
-        const powerString = formatNumber(installationPower) + ' kWp'
-
-        if (location) {
-            title = `${location} ${powerString} | ${title}`
-        }
-
-        return title
-    }
-
-    $: document.title = data ? generateApplicationTitle(data) : baseAppTitle
-
     onMount(() => {
         addEventListener('hashchange', updateDataSource)
         updateDataSource()
     })
 </script>
+
+<svelte:head>
+    <title>{generateApplicationTitle(data)}</title>
+</svelte:head>
 
 <main>
     <AppHeader />
