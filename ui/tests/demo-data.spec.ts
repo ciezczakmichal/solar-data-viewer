@@ -3,7 +3,7 @@ import { validateSolarData } from 'schema'
 
 async function getData(): Promise<Record<string, any>> {
     const json = await readFile(
-        new URL('../public/demo-data.json', import.meta.url),
+        new URL('../static/demo-data.json', import.meta.url),
         'utf8'
     )
     return JSON.parse(json)

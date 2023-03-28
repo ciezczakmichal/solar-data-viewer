@@ -65,7 +65,7 @@ export function getYieldChartData(input: YieldChartInput): YieldChartData {
     const { from, data, metersHelper, options } = input
     const records = getYieldRecordsForRange(data.values, options.range)
 
-    let { fn: getForecastedValue, useForecastedData } =
+    const { fn: getForecastedValue, useForecastedData } =
         createForecastedValueFunction(options, data)
 
     const chartData = getChartData<CalculationReturnType, YieldValuesRecord>(
