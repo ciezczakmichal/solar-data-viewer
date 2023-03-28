@@ -61,7 +61,7 @@
     async function fetchData(): Promise<SolarData> {
         if (!url) {
             throw new Error(
-                'URL nie zawiera parametru "data-source", wskazującego na źródło danych dla aplikacji'
+                'URL nie zawiera parametru "data-source", wskazującego źródło danych dla aplikacji'
             )
         }
 
@@ -138,7 +138,16 @@
     {#if status === Status.Loading}
         <h3>Trwa pobieranie danych...</h3>
     {:else if status === Status.Error}
-        <p>⚠ Pobranie danych nie powiodło się.<br />{errorMessage}.</p>
+        <p>
+            ⚠ Pobranie danych nie powiodło się.
+            <br />
+            {errorMessage}.
+        </p>
+        <p>
+            Alternatywnie możesz wyświetlić <a
+                href="#data-source=demo-data.json">dane demo</a
+            >.
+        </p>
     {:else if data !== null}
         <AppContent />
     {/if}
