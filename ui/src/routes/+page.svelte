@@ -1,6 +1,7 @@
 <script lang="ts">
     import { AppTitle } from '$lib/app-title'
     import App from '$lib/App.svelte'
+    import '../assets/global.css'
 </script>
 
 <svelte:head>
