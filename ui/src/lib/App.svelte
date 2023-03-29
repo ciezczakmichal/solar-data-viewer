@@ -126,7 +126,7 @@
         <h3>Trwa pobieranie danych...</h3>
     {:else if status === Status.Error}
         <p>
-            ⚠ Pobranie danych nie powiodło się.
+            ⚠️ Pobranie danych nie powiodło się.
             <br />
             {errorMessage}.
         </p>
