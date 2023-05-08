@@ -157,11 +157,7 @@
 
     <br />
 
-    <Item
-        label="Bieżąca cena energii"
-        value={currentEnergyCost}
-        unit="/ 1 kWh"
-    />
+    <Item label="Bieżąca cena energii" value={currentEnergyCost} unit="/ kWh" />
     <Item
         label="Bieżące opłaty stałe"
         value={currentFixedCost}
