@@ -1,14 +1,14 @@
 <script lang="ts">
-    import { onMount } from 'svelte'
-    import { Chart, type ChartDataset } from 'chart.js'
-    import { getAppContext } from '../../app-context'
-    import { DataRange } from '../../computation/records-for-range'
+    import { Chart } from 'chart.js'
+    import { getAppContext } from '$lib/app-context'
+    import { ChartType } from '$lib/computation/chart-data'
+    import { formatKwh } from '$lib/utils/formatters/format-numbers'
     import {
-        ChartType,
-        type ChartDataItem,
-        type ChartOptions,
-    } from '../../computation/chart-data'
-    import { formatKwh } from '../../utils/formatters/format-numbers'
+        BaseChartController,
+        type ChartJsDataset,
+        type ChartJsType,
+    } from './base-chart-controller'
+    import ChartViewer from './ChartViewer.svelte'
     import { getYieldChartData, type YieldChartData } from './yield-chart-data'
 
     const { data, metersHelper } = getAppContext()
@@ -17,177 +17,93 @@
         metersHelper.getFirstMeterId()
     )
 
-    let chart: Chart<'bar' | 'line', ChartDataItem[]> | null = null
-    let canvas: HTMLCanvasElement
-    let options: ChartOptions = {
-        type: ChartType.Bar,
-        range: DataRange.Week,
-    }
+    class YieldChartController extends BaseChartController {
+        private chartData!: YieldChartData
 
-    let chartData: YieldChartData = {
-        yieldData: [],
-        yieldForecastData: [],
-    }
-    let chartDataNeedsUpdate = true
+        protected beforeInitOrUpdate(): void {
+            this.chartData = getYieldChartData({
+                from,
+                data,
+                metersHelper,
+                options: this.getOptions(),
+            })
+        }
 
-    function createChart() {
-        chart = new Chart(canvas, {
-            type: options.type === ChartType.Line ? 'line' : 'bar',
-            data: {
-                datasets: [],
-            },
-            options: {
-                scales: {
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Energia w kWh',
+        protected createChartInstance(canvas: HTMLCanvasElement): ChartJsType {
+            const { type } = this.getOptions()
+
+            return new Chart(canvas, {
+                type: type === ChartType.Line ? 'line' : 'bar',
+                data: {
+                    datasets: this.getChartDatasets() as any,
+                },
+                options: {
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Energia w kWh',
+                            },
                         },
                     },
-                },
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                let label = context.dataset.label || ''
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    let label = context.dataset.label || ''
 
-                                if (label) {
-                                    label += ': '
-                                }
+                                    if (label) {
+                                        label += ': '
+                                    }
 
-                                if (context.parsed.y !== null) {
-                                    label += formatKwh(context.parsed.y)
-                                }
+                                    if (context.parsed.y !== null) {
+                                        label += formatKwh(context.parsed.y)
+                                    }
 
-                                return label
+                                    return label
+                                },
                             },
                         },
                     },
                 },
-            },
-        })
-
-        updateChartData()
-    }
-
-    function updateChartData() {
-        if (!chart || !chartDataNeedsUpdate) {
-            return
-        }
-
-        chartData = getYieldChartData({ from, data, metersHelper, options })
-
-        const datasets: ChartDataset<'bar' | 'line', ChartDataItem[]>[] = [
-            {
-                label: 'Uzysk',
-                backgroundColor: '#ffc107',
-                borderColor: '#ffc107',
-                data: chartData.yieldData,
-                cubicInterpolationMode: 'monotone',
-                tension: 0.4,
-            },
-        ]
-
-        if (chartData.yieldForecastData.length > 0) {
-            datasets.push({
-                label: 'Uzysk prognozowany',
-                backgroundColor: '#03a9f4',
-                borderColor: '#03a9f4',
-                data: chartData.yieldForecastData,
-                // ustawienia interpolacji zbędne - dane tylko na wykresie kolumnowym
             })
         }
 
-        chart.data.datasets = datasets
-        chart.update()
-
-        chartDataNeedsUpdate = false
-    }
-
-    function handleSwitchType() {
-        options.type =
-            options.type === ChartType.Line ? ChartType.Bar : ChartType.Line
-        chartDataNeedsUpdate = true
-
-        let position = null
-
-        if (chart) {
-            position = window.scrollY
-            chart.destroy()
-            chart = null
+        protected doChartUpdate(): void {
+            this.getChart().data.datasets = this.getChartDatasets()
         }
 
-        createChart()
+        private getChartDatasets(): ChartJsDataset[] {
+            const datasets: ChartJsDataset[] = [
+                {
+                    label: 'Uzysk',
+                    backgroundColor: '#ffc107',
+                    borderColor: '#ffc107',
+                    data: this.chartData.yieldData,
+                    cubicInterpolationMode: 'monotone',
+                    tension: 0.4,
+                },
+            ]
 
-        // wywołanie destroy() wywołuje niepożądane działanie w postaci zmniejszenia rozmiaru strony
-        // jeśli użytkownik znajduje się w dolnej części aplikacji, powoduje to przesunięcie widoku w górę
-        // konieczne manualne przewinięcie do pozycji sprzed zwolnienia wykresu
-        if (position) {
-            window.scrollTo({ top: position })
+            if (this.chartData.yieldForecastData.length > 0) {
+                datasets.push({
+                    label: 'Uzysk prognozowany',
+                    backgroundColor: '#03a9f4',
+                    borderColor: '#03a9f4',
+                    data: this.chartData.yieldForecastData,
+                    // ustawienia interpolacji zbędne - dane tylko na wykresie kolumnowym
+                })
+            }
+
+            return datasets
         }
     }
 
-    function handleSwitchRange() {
-        options.range =
-            options.range === DataRange.Week ? DataRange.Month : DataRange.Week
-        chartDataNeedsUpdate = true
-    }
-
-    $: switchTypeButtonText =
-        'Wykres ' +
-        (options.type === ChartType.Line
-            ? 'liniowy (narastająco)'
-            : 'kolumnowy')
-
-    $: switchRangeButtonText =
-        'Dane ' +
-        (options.range === DataRange.Week ? 'tygodniowe' : 'miesięczne')
-
-    $: if (chartDataNeedsUpdate) {
-        updateChartData()
-    }
-
-    onMount(createChart)
+    const controller = new YieldChartController()
 </script>
 
-<div class="chart">
-    <div class="chart-header">
-        <div class="chart-names">
-            <h3>Wykres uzysku</h3>
-            <div class="chart-desc">
-                Ilość energii wyprodukowanej przez instalację.
-            </div>
-        </div>
-        <div>
-            <button on:click={handleSwitchType}>{switchTypeButtonText}</button>
-            <button on:click={handleSwitchRange}>{switchRangeButtonText}</button
-            >
-        </div>
-    </div>
-    <canvas bind:this={canvas} width="4" height="1" />
-</div>
-
-<style>
-    .chart {
-        padding-top: 10px;
-    }
-
-    .chart-header {
-        display: flex;
-        align-items: center;
-    }
-
-    .chart-names {
-        flex-grow: 1;
-    }
-
-    h3 {
-        margin: 0;
-        margin-bottom: 6px;
-    }
-
-    .chart-desc {
-        font-size: 14px;
-        color: #666;
-    }
-</style>
+<ChartViewer
+    {controller}
+    title="Wykres uzysku"
+    description="Ilość energii wyprodukowanej przez instalację."
+/>

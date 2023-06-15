@@ -1,14 +1,13 @@
 <script lang="ts">
-    import { onMount } from 'svelte'
     import { Chart } from 'chart.js'
-    import { getAppContext } from '../../app-context'
-    import { DataRange } from '../../computation/records-for-range'
+    import { getAppContext } from '$lib/app-context'
+    import { ChartType } from '$lib/computation/chart-data'
+    import { formatKwh } from '$lib/utils/formatters/format-numbers'
     import {
-        ChartType,
-        type ChartDataItem,
-        type ChartOptions,
-    } from '../../computation/chart-data'
-    import { formatKwh } from '../../utils/formatters/format-numbers'
+        BaseChartController,
+        type ChartJsType,
+    } from './base-chart-controller'
+    import ChartViewer from './ChartViewer.svelte'
     import {
         getConsumptionChartData,
         type ConsumptionChartData,
@@ -20,196 +19,104 @@
         metersHelper.getFirstMeterId()
     )
 
-    let chart: Chart<'bar' | 'line', ChartDataItem[]> | null = null
-    let canvas: HTMLCanvasElement
-    let options: ChartOptions = {
-        type: ChartType.Bar,
-        range: DataRange.Week,
-    }
+    class ConsumptionChartController extends BaseChartController {
+        private chartData!: ConsumptionChartData
 
-    let chartData: ConsumptionChartData = {
-        chargedEnergyData: [],
-        selfConsumptionData: [],
-    }
-    let chartDataNeedsUpdate = true
+        protected beforeInitOrUpdate(): void {
+            this.chartData = getConsumptionChartData({
+                from,
+                data,
+                metersHelper,
+                options: this.getOptions(),
+            })
+        }
 
-    function createChart() {
-        chart = new Chart(canvas, {
-            type: options.type === ChartType.Line ? 'line' : 'bar',
-            data: {
-                datasets: [
-                    {
-                        label: 'Autokonsumpcja',
-                        backgroundColor: '#6573c3',
-                        borderColor: '#6573c3',
-                        data: chartData.selfConsumptionData,
-                        cubicInterpolationMode: 'monotone',
-                        tension: 0.4,
-                    },
-                    {
-                        label: 'Energia pobrana',
-                        backgroundColor: '#2c387e',
-                        borderColor: '#2c387e',
-                        data: chartData.chargedEnergyData,
-                        cubicInterpolationMode: 'monotone',
-                        tension: 0.4,
-                    },
-                ],
-            },
-            options: {
-                interaction: {
-                    mode: 'x',
-                    axis: 'x',
-                },
-                scales: {
-                    x: {
-                        stacked: true,
-                    },
-                    y: {
-                        stacked: true,
-                        title: {
-                            display: true,
-                            text: 'Energia w kWh',
+        protected createChartInstance(canvas: HTMLCanvasElement): ChartJsType {
+            const { type } = this.getOptions()
+
+            return new Chart(canvas, {
+                type: type === ChartType.Line ? 'line' : 'bar',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Autokonsumpcja',
+                            backgroundColor: '#6573c3',
+                            borderColor: '#6573c3',
+                            data: this.chartData.selfConsumptionData,
+                            cubicInterpolationMode: 'monotone',
+                            tension: 0.4,
                         },
-                    },
+                        {
+                            label: 'Energia pobrana',
+                            backgroundColor: '#2c387e',
+                            borderColor: '#2c387e',
+                            data: this.chartData.chargedEnergyData,
+                            cubicInterpolationMode: 'monotone',
+                            tension: 0.4,
+                        },
+                    ],
                 },
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                let label = context.dataset.label || ''
-
-                                if (label) {
-                                    label += ': '
-                                }
-
-                                if (context.parsed.y !== null) {
-                                    label += formatKwh(context.parsed.y)
-                                }
-
-                                return label
-                            },
-                            footer: tooltipItems => {
-                                let sum = 0
-
-                                tooltipItems.forEach(
-                                    item => (sum += item.parsed.y)
-                                )
-
-                                return 'Energia zużyta: ' + formatKwh(sum)
+                options: {
+                    interaction: {
+                        mode: 'x',
+                        axis: 'x',
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                        },
+                        y: {
+                            stacked: true,
+                            title: {
+                                display: true,
+                                text: 'Energia w kWh',
                             },
                         },
                     },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    let label = context.dataset.label || ''
+
+                                    if (label) {
+                                        label += ': '
+                                    }
+
+                                    if (context.parsed.y !== null) {
+                                        label += formatKwh(context.parsed.y)
+                                    }
+
+                                    return label
+                                },
+                                footer: tooltipItems => {
+                                    let sum = 0
+
+                                    tooltipItems.forEach(
+                                        item => (sum += item.parsed.y)
+                                    )
+
+                                    return 'Energia zużyta: ' + formatKwh(sum)
+                                },
+                            },
+                        },
+                    },
                 },
-            },
-        })
-
-        updateChartData()
-    }
-
-    function updateChartData() {
-        if (!chart || !chartDataNeedsUpdate) {
-            return
+            })
         }
 
-        chartData = getConsumptionChartData({
-            from,
-            data,
-            metersHelper,
-            options,
-        })
-
-        chart.data.datasets[0].data = chartData.selfConsumptionData
-        chart.data.datasets[1].data = chartData.chargedEnergyData
-        chart.update()
-
-        chartDataNeedsUpdate = false
-    }
-
-    function handleSwitchType() {
-        options.type =
-            options.type === ChartType.Line ? ChartType.Bar : ChartType.Line
-        chartDataNeedsUpdate = true
-
-        let position = null
-
-        if (chart) {
-            position = window.scrollY
-            chart.destroy()
-            chart = null
-        }
-
-        createChart()
-
-        // wywołanie destroy() wywołuje niepożądane działanie w postaci zmniejszenia rozmiaru strony
-        // jeśli użytkownik znajduje się w dolnej części aplikacji, powoduje to przesunięcie widoku w górę
-        // konieczne manualne przewinięcie do pozycji sprzed zwolnienia wykresu
-        if (position) {
-            window.scrollTo({ top: position })
+        protected doChartUpdate(): void {
+            const chart = this.getChart()
+            chart.data.datasets[0].data = this.chartData.selfConsumptionData
+            chart.data.datasets[1].data = this.chartData.chargedEnergyData
         }
     }
 
-    function handleSwitchRange() {
-        options.range =
-            options.range === DataRange.Week ? DataRange.Month : DataRange.Week
-        chartDataNeedsUpdate = true
-    }
-
-    $: switchTypeButtonText =
-        'Wykres ' +
-        (options.type === ChartType.Line
-            ? 'liniowy (narastająco)'
-            : 'kolumnowy')
-
-    $: switchRangeButtonText =
-        'Dane ' +
-        (options.range === DataRange.Week ? 'tygodniowe' : 'miesięczne')
-
-    $: if (chartDataNeedsUpdate) {
-        updateChartData()
-    }
-
-    onMount(createChart)
+    const controller = new ConsumptionChartController()
 </script>
 
-<div class="chart">
-    <div class="chart-header">
-        <div class="chart-names">
-            <h3>Wykres zużycia</h3>
-            <div class="chart-desc">
-                Całkowita ilość energii zużytej przez dom.
-            </div>
-        </div>
-        <div>
-            <button on:click={handleSwitchType}>{switchTypeButtonText}</button>
-            <button on:click={handleSwitchRange}>{switchRangeButtonText}</button
-            >
-        </div>
-    </div>
-    <canvas bind:this={canvas} width="4" height="1" />
-</div>
-
-<style>
-    .chart {
-        padding-top: 10px;
-    }
-
-    .chart-header {
-        display: flex;
-        align-items: center;
-    }
-
-    .chart-names {
-        flex-grow: 1;
-    }
-
-    h3 {
-        margin: 0;
-        margin-bottom: 6px;
-    }
-
-    .chart-desc {
-        font-size: 14px;
-        color: #666;
-    }
-</style>
+<ChartViewer
+    {controller}
+    title="Wykres zużycia"
+    description="Całkowita ilość energii zużytej przez dom."
+/>
