@@ -12,6 +12,7 @@
         getConsumptionChartData,
         type ConsumptionChartData,
     } from './consumption-chart-data'
+    import { getTooltipLabel } from './utils'
 
     const { data, metersHelper } = getAppContext()
 
@@ -76,19 +77,7 @@
                     plugins: {
                         tooltip: {
                             callbacks: {
-                                label: function (context) {
-                                    let label = context.dataset.label || ''
-
-                                    if (label) {
-                                        label += ': '
-                                    }
-
-                                    if (context.parsed.y !== null) {
-                                        label += formatKwh(context.parsed.y)
-                                    }
-
-                                    return label
-                                },
+                                label: getTooltipLabel,
                                 footer: tooltipItems => {
                                     let sum = 0
 

@@ -2,7 +2,6 @@
     import { Chart } from 'chart.js'
     import { getAppContext } from '$lib/app-context'
     import { ChartType } from '$lib/computation/chart-data'
-    import { formatKwh } from '$lib/utils/formatters/format-numbers'
     import {
         BaseChartController,
         type ChartJsDataset,
@@ -10,6 +9,7 @@
     } from './base-chart-controller'
     import ChartViewer from './ChartViewer.svelte'
     import { getYieldChartData, type YieldChartData } from './yield-chart-data'
+    import { getTooltipLabel } from './utils'
 
     const { data, metersHelper } = getAppContext()
 
@@ -49,19 +49,7 @@
                     plugins: {
                         tooltip: {
                             callbacks: {
-                                label: function (context) {
-                                    let label = context.dataset.label || ''
-
-                                    if (label) {
-                                        label += ': '
-                                    }
-
-                                    if (context.parsed.y !== null) {
-                                        label += formatKwh(context.parsed.y)
-                                    }
-
-                                    return label
-                                },
+                                label: getTooltipLabel,
                             },
                         },
                     },
