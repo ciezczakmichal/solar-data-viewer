@@ -276,5 +276,74 @@ describe('calculateEnergy', () => {
         })
     })
 
-    // @todo 3 wymiany licznika
+    it('test obsługi trzech liczników - każdy z różnymi, wybranymi wartościami', () => {
+        const meters: MeterRecord[] = [
+            {
+                id: 1,
+                installationDate: '2022-01-01',
+                initialValues: {
+                    totalYield: 0,
+                    charged: 20000,
+                    donated: 1000,
+                },
+            },
+            {
+                id: 2,
+                installationDate: '2022-02-01',
+                initialValues: {
+                    charged: 0,
+                    donated: 0,
+                },
+            },
+            {
+                // nowy falownik
+                id: 3,
+                installationDate: '2022-03-01',
+                initialValues: {
+                    totalYield: 0,
+                },
+            },
+        ]
+
+        const values: CompleteValuesRecord[] = [
+            {
+                meterId: 1,
+                date: '2022-02-01',
+                totalYield: 500,
+                charged: 20300,
+                donated: 1400,
+            },
+            {
+                meterId: 2,
+                date: '2022-03-01',
+                totalYield: 800,
+                charged: 100,
+                donated: 200,
+            },
+            {
+                meterId: 3,
+                date: '2022-03-15',
+                totalYield: 300,
+                charged: 350,
+                donated: 400,
+            },
+        ]
+
+        const metersHelper = new MetersDataHelper({ meters, values })
+
+        const input: EnergyCalculationInput = {
+            from: metersHelper.getMeterInitialValuesAsCompleteRecord(1),
+            to: values[2],
+            plantProperties: {
+                installationPower: 1, // nieistone
+                energyInWarehouseFactor: 0.8,
+            },
+            metersHelper: metersHelper,
+        }
+
+        const result = calculateEnergy(input)
+        expect(result.totalYield).toEqual(1100) // 800 + 300
+        expect(result.charged).toEqual(650) // 20300 - 20000 + 100 - 0 + 350 - 100
+        expect(result.donated).toEqual(800) // 1400 - 1000 + 200 - 0 + 400 - 200
+    })
 })

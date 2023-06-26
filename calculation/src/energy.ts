@@ -121,9 +121,6 @@ function calculateBaseEnergyParamsImpl(
     input: BaseEnergyParamsCalculationInput
 ): BaseEnergyParamsCalculationResult {
     const { from, to, metersHelper } = input
-    let totalYield = 0,
-        charged = 0,
-        donated = 0
 
     if (!metersHelper && from.meterId !== to.meterId) {
         throw new CalculationError(
@@ -133,28 +130,30 @@ function calculateBaseEnergyParamsImpl(
 
     const metersId = metersHelper
         ? metersHelper.getMetersIdForPeriod(from, to)
-        : []
+        : [from.meterId]
 
-    if (metersHelper && metersId.length >= 2) {
-        while (metersId.length >= 2) {
-            const currentMeterId = metersId.shift() as number
-            const nextMeterId = metersId[0]
+    let totalYield = 0,
+        charged = 0,
+        donated = 0
 
-            const lastValue = metersHelper.getLastMeterValue(currentMeterId)
-            const initialValue =
-                metersHelper.getMeterInitialValuesAsCompleteRecord(nextMeterId)
+    while (metersId.length > 0) {
+        const currentMeterId = metersId.shift() as number
 
-            const getValue = (field: ValuesRecordNumberProps): number =>
-                lastValue[field] - from[field] + to[field] - initialValue[field]
+        const currentFrom =
+            from.meterId !== currentMeterId && metersHelper
+                ? metersHelper.getMeterInitialValuesAsCompleteRecord(
+                      currentMeterId
+                  )
+                : from
 
-            totalYield += getValue('totalYield')
-            charged += getValue('charged')
-            donated += getValue('donated')
-        }
-    } else {
-        totalYield = to.totalYield - from.totalYield
-        charged = to.charged - from.charged
-        donated = to.donated - from.donated
+        const currentTo =
+            to.meterId !== currentMeterId && metersHelper
+                ? metersHelper.getLastMeterValue(currentMeterId)
+                : to
+
+        totalYield += currentTo.totalYield - currentFrom.totalYield
+        charged += currentTo.charged - currentFrom.charged
+        donated += currentTo.donated - currentFrom.donated
     }
 
     return { totalYield, charged, donated }
