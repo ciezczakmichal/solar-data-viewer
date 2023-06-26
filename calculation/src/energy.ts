@@ -121,9 +121,9 @@ function calculateBaseEnergyParamsImpl(
     input: BaseEnergyParamsCalculationInput
 ): BaseEnergyParamsCalculationResult {
     const { from, to, metersHelper } = input
-    let totalYield: number = 0,
-        charged: number = 0,
-        donated: number = 0
+    let totalYield = 0,
+        charged = 0,
+        donated = 0
 
     if (!metersHelper && from.meterId !== to.meterId) {
         throw new CalculationError(
