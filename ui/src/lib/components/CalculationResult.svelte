@@ -23,7 +23,7 @@
     } from '../utils/formatters/format-time'
 
     const { data, metersHelper, timeVaryingHelper } = getAppContext()
-    const { values, plantProperties, tariff, vatRate } = data
+    const { values, plantProperties } = data
 
     // @todo uwspólnić from / to
     const from = metersHelper.getMeterInitialValuesAsCompleteRecord(
