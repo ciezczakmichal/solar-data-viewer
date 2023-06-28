@@ -43,7 +43,7 @@ export function calculateSavings(
     const initialValue = metersHelper.getMeterInitialValuesAsCompleteRecord(
         metersHelper.getFirstMeterId()
     )
-    let values = [initialValue, ...input.values]
+    const values = [initialValue, ...input.values]
 
     const daysOfChange = timeVaryingHelper.getDaysOfChangeForEnergyCost()
 
