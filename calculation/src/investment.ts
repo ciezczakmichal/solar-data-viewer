@@ -9,9 +9,13 @@ type InvestmentCalculationInputPlantProperties = Pick<
 export interface InvestmentCalculationInput {
     plantProperties: InvestmentCalculationInputPlantProperties
 
-    days: number
+    // kwota oszczędności - koszt zakupu prądu wyprodukowanego i zużytego
     savings: currency
-    savedEnergy: number
+
+    // średnia oszczędność energii na dzień - NIE średnie zużycie
+    dailyEnergySavings: number
+
+    // obecny koszt 1 kWh energii
     currentEnergyCost: currency
 }
 
@@ -28,13 +32,12 @@ export interface InvestmentCalculationResult {
 export function calculateInvestment(
     input: InvestmentCalculationInput
 ): InvestmentCalculationResult {
-    const { plantProperties, days, savings, savedEnergy, currentEnergyCost } =
+    const { plantProperties, savings, dailyEnergySavings, currentEnergyCost } =
         input
 
     const remainingCost = plantProperties.investmentCost - savings.value
-    const dailyEnergySavings = savedEnergy / days
     const daysToInvestmentReturn =
-        remainingCost / (currentEnergyCost.value * dailyEnergySavings)
+        remainingCost / currentEnergyCost.multiply(dailyEnergySavings).value
 
     return {
         daysToInvestmentReturn,

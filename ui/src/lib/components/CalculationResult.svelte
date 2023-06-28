@@ -7,20 +7,23 @@
         calculateInvestment,
         calculateSavings,
         Month,
+        type EnergyCalculationResult,
     } from 'calculation'
-    import { getAppContext } from '../app-context'
-    import Item from './Item.svelte'
-    import EnergyCountItem from './EnergyCountItem.svelte'
+    import type currency from 'currency.js'
+    import { getAppContext } from '$lib/app-context'
+    import { getCompleteValueCloseToYear } from '$lib/computation/value-close-to-year'
     import {
         formatNumber,
         formatKwh,
         formatPercent,
-    } from '../utils/formatters/format-numbers'
+    } from '$lib/utils/formatters/format-numbers'
     import {
         DurationFormatFlag,
         formatDate,
         formatDuration,
-    } from '../utils/formatters/format-time'
+    } from '$lib/utils/formatters/format-time'
+    import Item from './Item.svelte'
+    import EnergyCountItem from './EnergyCountItem.svelte'
 
     const { data, metersHelper, timeVaryingHelper } = getAppContext()
     const { values, plantProperties } = data
@@ -84,11 +87,25 @@
         new Month(to.date)
     )
 
+    const valueCloseToYear = getCompleteValueCloseToYear(values)
+    let lastYearCalculationResult: EnergyCalculationResult | null = null
+
+    if (valueCloseToYear) {
+        lastYearCalculationResult = calculateEnergy({
+            from: valueCloseToYear,
+            to,
+            plantProperties,
+            metersHelper,
+        })
+    }
+
     const { daysToInvestmentReturn } = calculateInvestment({
         plantProperties,
-        days,
         savings,
-        savedEnergy,
+        dailyEnergySavings: lastYearCalculationResult
+            ? lastYearCalculationResult.savedEnergy /
+              lastYearCalculationResult.days
+            : savedEnergy / days,
         currentEnergyCost,
     })
 </script>
@@ -123,6 +140,16 @@
             monthlyConsumption
         )} / miesiąc`}
     />
+    {#if lastYearCalculationResult}
+        <Item
+            label="Średnie zużycie energii (12 mies.)"
+            value={`${formatKwh(
+                lastYearCalculationResult.dailyConsumption
+            )} / dzień, ${formatKwh(
+                lastYearCalculationResult.monthlyConsumption
+            )} / miesiąc`}
+        />
+    {/if}
     <br />
 
     {#if fulfillNeeds}
