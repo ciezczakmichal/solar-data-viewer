@@ -50,6 +50,7 @@
 
 <style>
     .chart {
+        margin: 10px 0;
         padding-top: 10px;
     }
 

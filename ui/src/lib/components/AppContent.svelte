@@ -25,21 +25,7 @@
     <br />
     <CalculationResult />
 
-    <div class="chart-container">
-        <YieldChart />
-    </div>
-
-    <div class="chart-container">
-        <ConsumptionChart />
-    </div>
-
-    <div class="chart-container">
-        <BalanceChart />
-    </div>
+    <YieldChart />
+    <ConsumptionChart />
+    <BalanceChart />
 </div>
-
-<style>
-    .chart-container {
-        margin: 10px 0;
-    }
-</style>
