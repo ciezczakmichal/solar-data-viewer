@@ -1,4 +1,5 @@
 import { JSONSchemaType } from 'ajv'
+import { MessageType } from './message'
 import { SolarData, SolarDataVersion } from './solar-data'
 import { UnitOfMeasure } from './tariff-item'
 
@@ -105,6 +106,29 @@ export const SolarDataSchema: JSONSchemaType<SolarData> = {
         version: {
             type: 'integer',
             const: SolarDataVersion,
+        },
+        messages: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    type: {
+                        type: 'string',
+                        enum: Object.values(MessageType),
+                    },
+                    text: {
+                        type: 'string',
+                    },
+                    url: {
+                        type: 'string',
+                        nullable: true,
+                    },
+                },
+                required: ['type', 'text'],
+            },
+            // @todo nie pozwól na NULL - możliwe w przyszłej wersji AJV v.9
+            // https://github.com/ajv-validator/ajv/issues/1664
+            nullable: true,
         },
         meters: {
             type: 'array',
