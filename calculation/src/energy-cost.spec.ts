@@ -27,7 +27,7 @@ describe('calculateEnergyCost', () => {
                             ], // netto 50
                         },
                     ],
-                    vatRate: [
+                    vatRates: [
                         {
                             from: '2020-01-01',
                             value: 25,
@@ -84,7 +84,7 @@ describe('calculateEnergyCost', () => {
                         ],
                     },
                 ],
-                vatRate: [
+                vatRates: [
                     {
                         from: '2020-01-01',
                         value: 25,
@@ -145,7 +145,7 @@ describe('calculateEnergyCost', () => {
                             ],
                         },
                     ],
-                    vatRate: [
+                    vatRates: [
                         {
                             from: '2020-01-01',
                             value: 25,
@@ -211,7 +211,7 @@ describe('calculateEnergyCost', () => {
                             ],
                         },
                     ],
-                    vatRate: [
+                    vatRates: [
                         {
                             from: '2020-01-01',
                             value: 25,
@@ -329,7 +329,7 @@ describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21
                     ],
                 },
             ],
-            vatRate: [
+            vatRates: [
                 {
                     from: '2021-01-01',
                     value: 23,

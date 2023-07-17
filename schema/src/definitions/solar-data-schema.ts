@@ -198,7 +198,7 @@ export const SolarDataSchema: JSONSchemaType<SolarData> = {
                 'energyInWarehouseFactor',
             ],
         },
-        yieldForecastData: {
+        yieldForecast: {
             type: 'array',
             items: {
                 type: 'object',
@@ -252,7 +252,7 @@ export const SolarDataSchema: JSONSchemaType<SolarData> = {
                 required: ['name', 'unitOfMeasure', 'values'],
             },
         },
-        vatRate: {
+        vatRates: {
             type: 'array',
             items: {
                 type: 'object',
@@ -278,6 +278,6 @@ export const SolarDataSchema: JSONSchemaType<SolarData> = {
         'values',
         'plantProperties',
         'tariff',
-        'vatRate',
+        'vatRates',
     ],
 }

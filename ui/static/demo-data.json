@@ -1,5 +1,5 @@
 {
-    "version": 11,
+    "version": 12,
     "meters": [
         {
             "id": 1,
@@ -289,7 +289,7 @@
         "investmentCost": 18000,
         "energyInWarehouseFactor": 0.8
     },
-    "yieldForecastData": [
+    "yieldForecast": [
         {
             "month": 1,
             "value": 141
@@ -411,7 +411,7 @@
             ]
         }
     ],
-    "vatRate": [
+    "vatRates": [
         {
             "from": "2022-01-01",
             "value": 5

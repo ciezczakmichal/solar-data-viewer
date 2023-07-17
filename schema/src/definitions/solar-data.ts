@@ -6,7 +6,7 @@ import { ValuesRecord } from './values-record'
 import { VatRateItem } from './vat-rate-item'
 import { YieldForecastRecord } from './yield-forecast-record'
 
-export const SolarDataVersion = 11
+export const SolarDataVersion = 12
 
 export interface SolarData {
     version: typeof SolarDataVersion
@@ -14,7 +14,7 @@ export interface SolarData {
     meters: MeterRecord[]
     values: ValuesRecord[]
     plantProperties: PlantProperties
-    yieldForecastData?: YieldForecastRecord[]
+    yieldForecast?: YieldForecastRecord[]
     tariff: TariffItem[]
-    vatRate: VatRateItem[]
+    vatRates: VatRateItem[]
 }

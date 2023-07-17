@@ -84,7 +84,7 @@ describe('calculateSavings', () => {
             },
         ]
 
-        const vatRate: VatRateItem[] = [
+        const vatRates: VatRateItem[] = [
             {
                 from: '2020-01-01',
                 value: 5,
@@ -102,7 +102,10 @@ describe('calculateSavings', () => {
                 energyInWarehouseFactor: 0.8,
             },
             metersHelper: new MetersDataHelper({ meters, values }),
-            timeVaryingHelper: new TimeVaryingValuesHelper({ tariff, vatRate }),
+            timeVaryingHelper: new TimeVaryingValuesHelper({
+                tariff,
+                vatRates,
+            }),
         }
 
         const prepareInput = (recordCount: number): SavingsCalculationInput => {

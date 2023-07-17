@@ -1,10 +1,13 @@
 import { readFile } from 'fs/promises'
+import { basename } from 'path'
 import { InvalidSolarDataSchemaError } from '../error'
 import { validateSolarData } from './validator'
 
+const smallestDataPath = './tests/example-smallest-data.json'
+
 async function getExampleSmallestData(): Promise<Record<string, any>> {
     const json = await readFile(
-        new URL('./tests/example-smallest-data.json', import.meta.url),
+        new URL(smallestDataPath, import.meta.url),
         'utf8'
     )
     return JSON.parse(json)
@@ -51,14 +54,16 @@ describe('validateSolarData', () => {
         })
     })
 
-    describe('testy na pliku z minimalną liczbą danych', () => {
+    describe(`testy na pliku z minimalną ilością danych (${basename(
+        smallestDataPath
+    )})`, () => {
         let data: Record<string, any>
 
         beforeEach(async () => {
             data = await getExampleSmallestData()
         })
 
-        it('przykładowy plik z minimalną liczbą danych jest traktowany jako poprawny', async () => {
+        it('przykładowy plik z minimalną ilością danych jest traktowany jako poprawny', async () => {
             await validateSolarData(data)
         })
 

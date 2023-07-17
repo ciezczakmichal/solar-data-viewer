@@ -41,11 +41,11 @@ function createForecastedValueFunction(
     if (
         options.type === ChartType.Bar &&
         options.range === DataRange.Month &&
-        data.yieldForecastData
+        data.yieldForecast
     ) {
         return {
             fn: date => {
-                const item = (data.yieldForecastData || []).find(
+                const item = (data.yieldForecast || []).find(
                     forecastItem => forecastItem.month === date.month() + 1
                 )
 

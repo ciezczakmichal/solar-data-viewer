@@ -1,5 +1,5 @@
 {
-    "version": 11,
+    "version": 12,
     "meters": [
         {
             "id": 1,
@@ -37,7 +37,7 @@
             ]
         }
     ],
-    "vatRate": [
+    "vatRates": [
         {
             "from": "2020-01-01",
             "value": 23

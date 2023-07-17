@@ -38,7 +38,7 @@ describe('TimeVaryingValuesHelper', () => {
                         ],
                     },
                 ],
-                vatRate: [],
+                vatRates: [],
             }
 
             const instance = new TimeVaryingValuesHelper(input)
@@ -113,7 +113,7 @@ describe('TimeVaryingValuesHelper', () => {
                                 ],
                             },
                         ],
-                        vatRate: [],
+                        vatRates: [],
                     }
 
                     instance = new TimeVaryingValuesHelper(input)
@@ -173,7 +173,7 @@ describe('TimeVaryingValuesHelper', () => {
                                 ],
                             },
                         ],
-                        vatRate: [],
+                        vatRates: [],
                     }
 
                     instance = new TimeVaryingValuesHelper(input)
@@ -212,7 +212,7 @@ describe('TimeVaryingValuesHelper', () => {
         it('test poprawności zwracanych wartości w poszczególnych okresach ważności', () => {
             const input: TimeVaryingValuesHelperInput = {
                 tariff: [],
-                vatRate: [
+                vatRates: [
                     {
                         from: '2020-01-01',
                         value: 23,
@@ -255,7 +255,7 @@ describe('TimeVaryingValuesHelper', () => {
         it('funkcja rzuca wyjątek, jeśli dla zadanego okresu lub pojedynczych dni nie ma dostępnej stawki VAT', () => {
             const input: TimeVaryingValuesHelperInput = {
                 tariff: [],
-                vatRate: [
+                vatRates: [
                     {
                         from: '2020-01-01',
                         value: 23,
@@ -286,7 +286,7 @@ describe('TimeVaryingValuesHelper', () => {
             beforeEach(() => {
                 const input: TimeVaryingValuesHelperInput = {
                     tariff: [],
-                    vatRate: [
+                    vatRates: [
                         {
                             from: '2020-01-01',
                             value: 5,
@@ -362,7 +362,7 @@ describe('TimeVaryingValuesHelper', () => {
                         ],
                     },
                 ],
-                vatRate: [],
+                vatRates: [],
             }
 
             const instance = new TimeVaryingValuesHelper(input)
@@ -389,7 +389,7 @@ describe('TimeVaryingValuesHelper', () => {
                         ],
                     },
                 ],
-                vatRate: [
+                vatRates: [
                     {
                         from: '2019-01-23',
                         value: 23,
@@ -442,7 +442,7 @@ describe('TimeVaryingValuesHelper', () => {
                         ],
                     },
                 ],
-                vatRate: [],
+                vatRates: [],
             }
 
             const instance = new TimeVaryingValuesHelper(input)
@@ -485,7 +485,7 @@ describe('TimeVaryingValuesHelper', () => {
                         ],
                     },
                 ],
-                vatRate: [
+                vatRates: [
                     {
                         from: '2020-01-01',
                         value: 23,
@@ -529,7 +529,7 @@ describe('TimeVaryingValuesHelper', () => {
                         ],
                     },
                 ],
-                vatRate: [],
+                vatRates: [],
             }
 
             const instance = new TimeVaryingValuesHelper(input)

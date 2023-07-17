@@ -10,7 +10,10 @@ import { CalculationError } from './error'
 import { parseDate } from './utils/date'
 import { Month } from './utils/month'
 
-export type TimeVaryingValuesHelperInput = Pick<SolarData, 'tariff' | 'vatRate'>
+export type TimeVaryingValuesHelperInput = Pick<
+    SolarData,
+    'tariff' | 'vatRates'
+>
 
 interface BasicDateItem {
     from: string
@@ -24,7 +27,7 @@ export class TimeVaryingValuesHelper {
 
     constructor(input: TimeVaryingValuesHelperInput) {
         this.setTariff(input.tariff)
-        this.setVatRates(input.vatRate)
+        this.setVatRates(input.vatRates)
     }
 
     tariff(): TariffItem[] {
