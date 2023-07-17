@@ -112,6 +112,8 @@
     onMount(() => {
         addEventListener('hashchange', updateDataSource)
         updateDataSource()
+
+        return () => removeEventListener('hashchange', updateDataSource)
     })
 </script>
 
