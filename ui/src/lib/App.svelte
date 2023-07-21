@@ -5,14 +5,14 @@
         type SolarData,
     } from 'schema'
     import { onMount } from 'svelte'
+    import './global/chartjs-import'
+    import './global/dayjs-import'
     import AppContent from './components/AppContent.svelte'
     import AppContextProvider from './components/AppContextProvider.svelte'
     import AppFooter from './components/AppFooter.svelte'
     import AppHeader from './components/AppHeader.svelte'
-    import { generateApplicationTitle } from './app-title'
+    import { generateApplicationTitle } from './utils/app-title'
     import { getHashValue } from './utils/get-hash-value'
-    import './utils/chartjs-import'
-    import './utils/dayjs-import'
 
     enum Status {
         Loading,

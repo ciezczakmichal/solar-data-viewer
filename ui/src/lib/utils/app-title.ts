@@ -1,5 +1,5 @@
 import type { SolarData } from 'schema'
-import { formatNumber } from './utils/formatters/format-numbers'
+import { formatNumber } from './formatters/format-numbers'
 
 export const AppTitle = 'Solar Data Viewer'
 
