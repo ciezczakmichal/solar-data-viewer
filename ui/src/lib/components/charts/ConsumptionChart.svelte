@@ -14,11 +14,7 @@
     } from './consumption-chart-data'
     import { getTooltipLabel } from './utils'
 
-    const { data, metersHelper } = getAppContext()
-
-    const from = metersHelper.getMeterInitialValuesAsCompleteRecord(
-        metersHelper.getFirstMeterId()
-    )
+    const { data, from, metersHelper } = getAppContext()
 
     class ConsumptionChartController extends BaseChartController {
         private chartData!: ConsumptionChartData

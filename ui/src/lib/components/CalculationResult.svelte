@@ -24,19 +24,8 @@
     import Item from './Item.svelte'
     import EnergyCountItem from './EnergyCountItem.svelte'
 
-    const { data, metersHelper, timeVaryingHelper } = getAppContext()
+    const { data, from, to, metersHelper, timeVaryingHelper } = getAppContext()
     const { values, plantProperties } = data
-
-    // @todo uwspólnić from / to
-    const from = metersHelper.getMeterInitialValuesAsCompleteRecord(
-        metersHelper.getFirstMeterId()
-    )
-    const to = values[values.length - 1]
-
-    // @todo automatyczne określanie zakresu dni
-    if (!isCompleteRecord(to)) {
-        throw new Error('Wybrane rekordy nie zawierają kompletnych danych')
-    }
 
     const rangeString = `${formatDate(from.date)} - ${formatDate(to.date)}`
     const durationString = formatDuration({ from: from.date, to: to.date })

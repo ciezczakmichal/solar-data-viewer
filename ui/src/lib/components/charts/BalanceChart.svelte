@@ -14,11 +14,7 @@
     } from './base-chart-controller'
     import ChartViewer from './ChartViewer.svelte'
 
-    const { data, metersHelper } = getAppContext()
-
-    const from = metersHelper.getMeterInitialValuesAsCompleteRecord(
-        metersHelper.getFirstMeterId()
-    )
+    const { data, from, metersHelper } = getAppContext()
 
     class BalanceChartController extends BaseChartController {
         private chartData: BalanceChartData = []

@@ -1,10 +1,13 @@
-import type { SolarData } from 'schema'
+import type { CompleteValuesRecord, SolarData } from 'schema'
 import type { MetersDataHelper, TimeVaryingValuesHelper } from 'calculation'
 import { getContext, setContext } from 'svelte'
 
 export interface AppContext {
     data: SolarData
     url: string
+
+    from: CompleteValuesRecord
+    to: CompleteValuesRecord
 
     metersHelper: MetersDataHelper
     timeVaryingHelper: TimeVaryingValuesHelper
