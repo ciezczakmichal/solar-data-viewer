@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getAppContext } from '../app-context'
+    import { getAppContext } from '../global/app-context'
     import Item from './Item.svelte'
 
     const { data } = getAppContext()

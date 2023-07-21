@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Chart } from 'chart.js'
-    import { getAppContext } from '$lib/app-context'
+    import { getAppContext } from '$lib/global/app-context'
     import { DataRange } from '$lib/computation/records-for-range'
     import { ChartType } from '$lib/computation/chart-data'
     import { formatKwh } from '$lib/utils/formatters/format-numbers'

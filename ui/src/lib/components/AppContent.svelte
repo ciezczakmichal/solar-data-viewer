@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getAppContext } from '../app-context'
+    import { getAppContext } from '../global/app-context'
     import YieldChart from './charts/YieldChart.svelte'
     import ConsumptionChart from './charts/ConsumptionChart.svelte'
     import BalanceChart from './charts/BalanceChart.svelte'

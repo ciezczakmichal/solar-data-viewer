@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getAppContext } from '$lib/app-context'
+    import { getAppContext } from '$lib/global/app-context'
 
     const {
         data: { messages = [] },

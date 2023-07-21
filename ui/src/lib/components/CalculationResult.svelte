@@ -9,8 +9,7 @@
         Month,
         type EnergyCalculationResult,
     } from 'calculation'
-    import type currency from 'currency.js'
-    import { getAppContext } from '$lib/app-context'
+    import { getAppContext } from '$lib/global/app-context'
     import { getCompleteValueCloseToYear } from '$lib/computation/value-close-to-year'
     import {
         formatNumber,

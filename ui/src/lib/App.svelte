@@ -1,44 +1,18 @@
 <script lang="ts">
-    import { onMount } from 'svelte'
     import {
         InvalidSolarDataSchemaError,
         validateSolarData,
         type SolarData,
     } from 'schema'
-    import { MetersDataHelper, TimeVaryingValuesHelper } from 'calculation'
-    import AppHeader from './components/AppHeader.svelte'
+    import { onMount } from 'svelte'
     import AppContent from './components/AppContent.svelte'
+    import AppContextProvider from './components/AppContextProvider.svelte'
     import AppFooter from './components/AppFooter.svelte'
-    import { setAppContext } from './app-context'
+    import AppHeader from './components/AppHeader.svelte'
     import { generateApplicationTitle } from './app-title'
     import { getHashValue } from './utils/get-hash-value'
     import './utils/chartjs-import'
     import './utils/dayjs-import'
-
-    setAppContext({
-        getUrl: () => url,
-        getData: () => {
-            if (!data) {
-                throw new Error('Dane nie są dostępne')
-            }
-
-            return data
-        },
-        getMetersHelper: () => {
-            if (!metersHelper) {
-                throw new Error('Obiekt nie jest dostępny')
-            }
-
-            return metersHelper
-        },
-        getTimeVaryingHelper: () => {
-            if (!timeVaryingHelper) {
-                throw new Error('Obiekt nie jest dostępny')
-            }
-
-            return timeVaryingHelper
-        },
-    })
 
     enum Status {
         Loading,
@@ -51,10 +25,6 @@
 
     let url: string = ''
     let data: SolarData | null = null
-
-    // @todo przenieść - zależy tylko od danych - osobny kontekst?
-    let metersHelper: MetersDataHelper | null = null
-    let timeVaryingHelper: TimeVaryingValuesHelper | null = null
 
     async function fetchData(): Promise<SolarData> {
         if (!url) {
@@ -86,13 +56,9 @@
         errorMessage = ''
         url = getHashValue('data-source')
         data = null
-        metersHelper = null
-        timeVaryingHelper = null
 
         try {
             data = await fetchData()
-            metersHelper = new MetersDataHelper(data)
-            timeVaryingHelper = new TimeVaryingValuesHelper(data)
             status = Status.DataDisplay
         } catch (error) {
             if (error instanceof Error) {
@@ -138,7 +104,7 @@
             >.
         </p>
     {:else if data !== null}
-        <AppContent />
+        <AppContextProvider {data} {url}><AppContent /></AppContextProvider>
     {/if}
 
     <AppFooter />
