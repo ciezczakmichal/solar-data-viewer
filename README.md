@@ -9,4 +9,4 @@ Wylicza wartości takie jak uzysk, zużycie, autokonsumpcja, poziom spełnienia 
 
 ## 💻 Demo
 
-Aplikacja wraz z przykładowymi danymi znajduje się [tutaj](https://solardataviewer.tk/#data-source=demo-data.json).
+Aplikacja wraz z przykładowymi danymi znajduje się [tutaj](https://solardataviewer.tk/#source=demo-data.json).

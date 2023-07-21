@@ -26,10 +26,21 @@
     let url: string = ''
     let data: SolarData | null = null
 
+    function getDataUrl(): string {
+        let result = getHashValue('source')
+
+        // kompatybilność ze starymi adresami
+        if (!result) {
+            result = getHashValue('data-source')
+        }
+
+        return result
+    }
+
     async function fetchData(): Promise<SolarData> {
         if (!url) {
             throw new Error(
-                'URL nie zawiera parametru "data-source", wskazującego źródło danych dla aplikacji'
+                'URL nie zawiera parametru "source", wskazującego źródło danych dla aplikacji'
             )
         }
 
@@ -54,7 +65,7 @@
     async function updateDataSource(): Promise<void> {
         status = Status.Loading
         errorMessage = ''
-        url = getHashValue('data-source')
+        url = getDataUrl()
         data = null
 
         try {
@@ -99,8 +110,8 @@
             {errorMessage}.
         </p>
         <p>
-            Alternatywnie możesz wyświetlić <a
-                href="#data-source=demo-data.json">dane demo</a
+            Alternatywnie możesz wyświetlić <a href="#source=demo-data.json"
+                >dane demo</a
             >.
         </p>
     {:else if data !== null}
