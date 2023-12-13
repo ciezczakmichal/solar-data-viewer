@@ -62,7 +62,6 @@ export const SolarDataSchema: JSONSchemaType<SolarData> = {
                 },
                 comment: {
                     type: 'string',
-                    nullable: true,
                 },
             },
             required: ['meterId', 'date'],
