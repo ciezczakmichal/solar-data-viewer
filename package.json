@@ -19,7 +19,8 @@
         "dev": "yarn build:core && yarn ui dev",
         "test": "yarn build:core && yarn schema test && yarn calculation test && yarn ui test",
         "lint": "prettier --check *.*  && eslint . && yarn schema lint && yarn calculation lint && yarn ui lint",
-        "format": "prettier --write *.* && yarn schema format && yarn calculation format && yarn ui format"
+        "format": "prettier --write *.* && yarn schema format && yarn calculation format && yarn ui format",
+        "ncu": "node scripts/ncu-upgrade.mjs"
     },
     "comment": "Lintowanie osobno podprojektów - z powodu błędu ładowania wtyczki Prettier, gdy uruchomiono na poziomie globalnym"
 }
