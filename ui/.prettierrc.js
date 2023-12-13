@@ -1,4 +1,5 @@
-module.exports = {
+/** @type {import("prettier").Config} */
+export default {
     /* Konfiguracja główna - skopiowana z poziomu najwyższego */
 
     arrowParens: 'avoid',
@@ -9,6 +10,5 @@ module.exports = {
     /* Konfiguracja dla UI */
 
     plugins: ['prettier-plugin-svelte'],
-    pluginSearchDirs: ['.'],
     overrides: [{ files: '*.svelte', options: { parser: 'svelte' } }],
 }
