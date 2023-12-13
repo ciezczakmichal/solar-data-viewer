@@ -11,7 +11,7 @@ import { MetersDataHelper } from './meters-data-helper'
 import { parseDate } from './utils/date'
 
 export interface BaseEnergyParamsCalculationInputGeneric<
-    T extends BaseValuesRecord
+    T extends BaseValuesRecord,
 > {
     from: T
     to: T
@@ -78,15 +78,15 @@ export interface EnergyCalculationResult {
 }
 
 export function calculateBaseEnergyParams(
-    input: BaseEnergyParamsCalculationInput
+    input: BaseEnergyParamsCalculationInput,
 ): BaseEnergyParamsCalculationResult
 export function calculateBaseEnergyParams(
-    input: BaseEnergyParamsCalculationInputYieldVersion
+    input: BaseEnergyParamsCalculationInputYieldVersion,
 ): Pick<BaseEnergyParamsCalculationResult, 'totalYield'>
 export function calculateBaseEnergyParams(
     input:
         | BaseEnergyParamsCalculationInput
-        | BaseEnergyParamsCalculationInputYieldVersion
+        | BaseEnergyParamsCalculationInputYieldVersion,
 ):
     | BaseEnergyParamsCalculationResult
     | Pick<BaseEnergyParamsCalculationResult, 'totalYield'> {
@@ -94,7 +94,7 @@ export function calculateBaseEnergyParams(
 
     if (isCompleteRecord(input.from) && isCompleteRecord(input.to)) {
         return calculateBaseEnergyParamsImpl(
-            input as BaseEnergyParamsCalculationInput
+            input as BaseEnergyParamsCalculationInput,
         )
     } else {
         // uzupełnij pozostałe dane wartościami 0, a potem usuń ze zwracanego obiektu
@@ -118,13 +118,13 @@ export function calculateBaseEnergyParams(
 }
 
 function calculateBaseEnergyParamsImpl(
-    input: BaseEnergyParamsCalculationInput
+    input: BaseEnergyParamsCalculationInput,
 ): BaseEnergyParamsCalculationResult {
     const { from, to, metersHelper } = input
 
     if (!metersHelper && from.meterId !== to.meterId) {
         throw new CalculationError(
-            `Nie przekazano obiektu ${MetersDataHelper.name}, a wartości liczbowe pochodzą z różnych liczników`
+            `Nie przekazano obiektu ${MetersDataHelper.name}, a wartości liczbowe pochodzą z różnych liczników`,
         )
     }
 
@@ -142,7 +142,7 @@ function calculateBaseEnergyParamsImpl(
         const currentFrom =
             from.meterId !== currentMeterId && metersHelper
                 ? metersHelper.getMeterInitialValuesAsCompleteRecord(
-                      currentMeterId
+                      currentMeterId,
                   )
                 : from
 
@@ -160,7 +160,7 @@ function calculateBaseEnergyParamsImpl(
 }
 
 export function calculateEnergy(
-    input: EnergyCalculationInput
+    input: EnergyCalculationInput,
 ): EnergyCalculationResult {
     const { from, to, plantProperties } = input
     const { totalYield, charged, donated } = calculateBaseEnergyParams(input)

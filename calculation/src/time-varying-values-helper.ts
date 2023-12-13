@@ -37,10 +37,10 @@ export class TimeVaryingValuesHelper {
     setTariff(items: TariffItem[]) {
         this._tariff = items
         this._tariffKwh = items.filter(
-            item => item.unitOfMeasure === UnitOfMeasure.kWh
+            item => item.unitOfMeasure === UnitOfMeasure.kWh,
         )
         this._tariffFixed = items.filter(
-            item => item.unitOfMeasure === UnitOfMeasure.zlMies
+            item => item.unitOfMeasure === UnitOfMeasure.zlMies,
         )
     }
 
@@ -61,7 +61,7 @@ export class TimeVaryingValuesHelper {
      */
     getTariffValuesForEnergyCost(
         from: string | Dayjs,
-        to: string | Dayjs
+        to: string | Dayjs,
     ): TariffItemValue[] {
         const result: TariffItemValue[] = []
 
@@ -73,7 +73,7 @@ export class TimeVaryingValuesHelper {
                 item.name,
                 item.values,
                 from,
-                to
+                to,
             )
 
             if (itemValue) {
@@ -101,7 +101,7 @@ export class TimeVaryingValuesHelper {
                 item.name,
                 item.values,
                 from,
-                to
+                to,
             )
 
             if (itemValue) {
@@ -145,12 +145,12 @@ export class TimeVaryingValuesHelper {
             'stawka VAT',
             this._vatRates,
             from,
-            to
+            to,
         )
 
         if (!vatRateItem) {
             throw new CalculationError(
-                'Brak stawki VAT dla zadanego zakresu czasowego'
+                'Brak stawki VAT dla zadanego zakresu czasowego',
             )
         }
 
@@ -184,14 +184,14 @@ export class TimeVaryingValuesHelper {
         name: string,
         items: T[],
         from: Dayjs,
-        to: Dayjs
+        to: Dayjs,
     ): T | null {
         if (items.length === 0) {
             return null
         }
 
         const nextIndex = items.findIndex(item =>
-            parseDate(item.from).isAfter(from)
+            parseDate(item.from).isAfter(from),
         )
 
         if (nextIndex === -1) {
@@ -204,12 +204,12 @@ export class TimeVaryingValuesHelper {
         if (!to.isBefore(parseDate(nextItem.from))) {
             if (nextIndex === 0) {
                 throw new CalculationError(
-                    `Zakres czasowy obejmuje okres, w którym brak wartości pozycji "${name}"`
+                    `Zakres czasowy obejmuje okres, w którym brak wartości pozycji "${name}"`,
                 )
             }
 
             throw new CalculationError(
-                `Zakres czasowy obejmuje dzień zmiany wartości pozycji "${name}"`
+                `Zakres czasowy obejmuje dzień zmiany wartości pozycji "${name}"`,
             )
         }
 

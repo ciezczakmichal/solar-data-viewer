@@ -36,19 +36,19 @@ export type ValuesRecord =
 export type ValuesRecordNumberProps = 'totalYield' | 'charged' | 'donated'
 
 export function isYieldRecord(
-    data: ValuesRecordProperties
+    data: ValuesRecordProperties,
 ): data is YieldValuesRecord {
     return 'totalYield' in data
 }
 
 export function isMeterRecord(
-    data: ValuesRecordProperties
+    data: ValuesRecordProperties,
 ): data is MeterValuesRecord {
     return 'charged' in data && 'donated' in data
 }
 
 export function isCompleteRecord(
-    data: ValuesRecordProperties
+    data: ValuesRecordProperties,
 ): data is CompleteValuesRecord {
     return isYieldRecord(data) && isMeterRecord(data)
 }

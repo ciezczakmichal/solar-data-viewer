@@ -89,8 +89,8 @@
                                         value > 0
                                             ? 'Nadwyżka energii'
                                             : value < 0
-                                            ? 'Niedobór energii'
-                                            : context.dataset.label || ''
+                                              ? 'Niedobór energii'
+                                              : context.dataset.label || ''
 
                                     return (
                                         label +

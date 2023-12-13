@@ -36,7 +36,7 @@ interface ForecastFunctionFactoryResult {
 
 function createForecastedValueFunction(
     options: ChartOptions,
-    data: SolarData
+    data: SolarData,
 ): ForecastFunctionFactoryResult {
     if (
         options.type === ChartType.Bar &&
@@ -46,7 +46,7 @@ function createForecastedValueFunction(
         return {
             fn: date => {
                 const item = (data.yieldForecast || []).find(
-                    forecastItem => forecastItem.month === date.month() + 1
+                    forecastItem => forecastItem.month === date.month() + 1,
                 )
 
                 return item?.value || null
@@ -81,7 +81,7 @@ export function getYieldChartData(input: YieldChartInput): YieldChartData {
 
             const forecastedYield = getForecastedValue(date)
             return { totalYield, forecastedYield }
-        }
+        },
     )
 
     return {

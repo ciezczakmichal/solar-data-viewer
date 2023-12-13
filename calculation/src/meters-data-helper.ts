@@ -53,7 +53,7 @@ export class MetersDataHelper {
     }
 
     getMeterInitialValuesAsCompleteRecord(
-        meterId: number
+        meterId: number,
     ): CompleteValuesRecord {
         const { installationDate, initialValues } = this.getMeterById(meterId)
 
@@ -68,8 +68,8 @@ export class MetersDataHelper {
             field in initialValues
                 ? (initialValues as any)[field]
                 : previousMeterLastValue
-                ? previousMeterLastValue[field]
-                : 0
+                  ? previousMeterLastValue[field]
+                  : 0
 
         return {
             meterId,
@@ -110,7 +110,7 @@ export class MetersDataHelper {
 
         if (!result) {
             throw new CalculationError(
-                `Brak danych dla licznika o ID ${meterId}`
+                `Brak danych dla licznika o ID ${meterId}`,
             )
         }
 
@@ -119,19 +119,19 @@ export class MetersDataHelper {
 
     private findLastMeterValue(
         valuesReversed: ValuesRecord[],
-        meterId: number
+        meterId: number,
     ): CompleteValuesRecord {
         const found = valuesReversed.find(item => item.meterId === meterId)
 
         if (!found) {
             throw new CalculationError(
-                `Nie odnaleziono żadnych wartości dla licznika o ID ${meterId}`
+                `Nie odnaleziono żadnych wartości dla licznika o ID ${meterId}`,
             )
         }
 
         if (!isCompleteRecord(found)) {
             throw new CalculationError(
-                `Rekord zawierający ostatnie dane licznika o ID ${meterId} nie zawiera pełnych danych`
+                `Rekord zawierający ostatnie dane licznika o ID ${meterId} nie zawiera pełnych danych`,
             )
         }
 

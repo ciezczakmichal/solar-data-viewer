@@ -25,7 +25,7 @@ export abstract class BaseChartController implements ChartController {
     protected beforeInitOrUpdate(): void {}
 
     protected abstract createChartInstance(
-        canvas: HTMLCanvasElement
+        canvas: HTMLCanvasElement,
     ): ChartJsType
     protected abstract doChartUpdate(): void
 

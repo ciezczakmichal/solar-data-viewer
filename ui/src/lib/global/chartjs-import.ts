@@ -27,5 +27,5 @@ Chart.register(
     CategoryScale,
 
     Legend,
-    Tooltip
+    Tooltip,
 )

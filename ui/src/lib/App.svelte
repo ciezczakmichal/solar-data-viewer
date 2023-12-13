@@ -40,7 +40,7 @@
     async function fetchData(): Promise<SolarData> {
         if (!url) {
             throw new Error(
-                'URL nie zawiera parametru "source", wskazującego źródło danych dla aplikacji'
+                'URL nie zawiera parametru "source", wskazującego źródło danych dla aplikacji',
             )
         }
 

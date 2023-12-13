@@ -8,7 +8,7 @@ const smallestDataPath = './tests/example-smallest-data.json'
 async function getExampleSmallestData(): Promise<Record<string, any>> {
     const json = await readFile(
         new URL(smallestDataPath, import.meta.url),
-        'utf8'
+        'utf8',
     )
     return JSON.parse(json)
 }
@@ -16,7 +16,7 @@ async function getExampleSmallestData(): Promise<Record<string, any>> {
 describe('validateSolarData', () => {
     function testThrowsErrorWithValue(value: any): Promise<void> {
         return expect(() => validateSolarData(value)).rejects.toThrow(
-            InvalidSolarDataSchemaError
+            InvalidSolarDataSchemaError,
         )
     }
 
@@ -55,7 +55,7 @@ describe('validateSolarData', () => {
     })
 
     describe(`testy na pliku z minimalną ilością danych (${basename(
-        smallestDataPath
+        smallestDataPath,
     )})`, () => {
         let data: Record<string, any>
 

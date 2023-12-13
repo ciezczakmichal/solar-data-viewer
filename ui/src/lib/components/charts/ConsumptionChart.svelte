@@ -78,7 +78,7 @@
                                     let sum = 0
 
                                     tooltipItems.forEach(
-                                        item => (sum += item.parsed.y)
+                                        item => (sum += item.parsed.y),
                                     )
 
                                     return 'Energia zużyta: ' + formatKwh(sum)

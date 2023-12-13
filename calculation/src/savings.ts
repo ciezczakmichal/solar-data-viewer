@@ -36,12 +36,12 @@ export interface SavingsCalculationResult {
  * @returns Kwota oszczędności
  */
 export function calculateSavings(
-    input: SavingsCalculationInput
+    input: SavingsCalculationInput,
 ): SavingsCalculationResult {
     const { plantProperties, metersHelper, timeVaryingHelper } = input
 
     const initialValue = metersHelper.getMeterInitialValuesAsCompleteRecord(
-        metersHelper.getFirstMeterId()
+        metersHelper.getFirstMeterId(),
     )
     const values = [initialValue, ...input.values]
 
@@ -61,7 +61,7 @@ export function calculateSavings(
         const valuesForRange = getValuesForRange(
             values,
             currentStart,
-            nextStart
+            nextStart,
         )
 
         if (!valuesForRange) {
@@ -114,13 +114,13 @@ interface ValuesForRange {
 function getValuesForRange(
     values: CompleteValuesRecord[],
     currentStart: Dayjs,
-    nextStart: Dayjs | null
+    nextStart: Dayjs | null,
 ): ValuesForRange | null {
     // @todo parsowanie dat oraz reverse wartości - optymalizacja - tylko raz
 
     const currentStartFrom = currentStart.add(-1, 'day')
     const from = values.find(
-        value => !parseDate(value.date).isBefore(currentStartFrom)
+        value => !parseDate(value.date).isBefore(currentStartFrom),
     )
 
     if (!from) {

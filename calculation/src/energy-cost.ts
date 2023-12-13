@@ -29,7 +29,7 @@ export interface EnergyCostCalculationInput {
  * @returns Koszt zakupu energii
  */
 export function calculateEnergyCost(
-    input: EnergyCostCalculationInput
+    input: EnergyCostCalculationInput,
 ): currency {
     const { timeVaryingHelper, from: inputFrom, to: inputTo, energy } = input
     const from = parseDate(inputFrom)
@@ -37,12 +37,12 @@ export function calculateEnergyCost(
 
     const tariffValues = timeVaryingHelper.getTariffValuesForEnergyCost(
         from,
-        to
+        to,
     )
 
     if (tariffValues.length === 0) {
         throw new CalculationError(
-            'Brak parametrów pozycji taryfy dla zadanego zakresu czasowego'
+            'Brak parametrów pozycji taryfy dla zadanego zakresu czasowego',
         )
     }
 
@@ -67,7 +67,7 @@ export function calculateEnergyCost(
  */
 export function calculateEnergyCostAtDay(
     timeVaryingHelper: TimeVaryingValuesHelper,
-    date: string | Dayjs
+    date: string | Dayjs,
 ): currency {
     const day = parseDate(date)
 
@@ -89,13 +89,13 @@ export function calculateEnergyCostAtDay(
  */
 export function calculateFixedCost(
     timeVaryingHelper: TimeVaryingValuesHelper,
-    month: Month
+    month: Month,
 ): currency {
     const tariffValues = timeVaryingHelper.getTariffValuesForFixedCost(month)
 
     if (tariffValues.length === 0) {
         throw new CalculationError(
-            'Brak parametrów pozycji taryfy dla wskazanego miesiąca'
+            'Brak parametrów pozycji taryfy dla wskazanego miesiąca',
         )
     }
 

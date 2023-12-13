@@ -30,7 +30,7 @@ export type ChartData<ReturnType extends Record<string, any>> =
     (ChartDataItemXAxis & ReturnType)[]
 
 export interface ChartValueCalculationFunctionInput<
-    ValuesRecordType extends ValuesRecordProperties
+    ValuesRecordType extends ValuesRecordProperties,
 > {
     from: ValuesRecordType
     to: ValuesRecordType
@@ -41,17 +41,17 @@ export interface ChartValueCalculationFunctionInput<
 
 export type ChartValueCalculationFunction<
     ReturnType extends Record<string, any>,
-    ValuesRecordType extends ValuesRecordProperties
+    ValuesRecordType extends ValuesRecordProperties,
 > = (input: ChartValueCalculationFunctionInput<ValuesRecordType>) => ReturnType
 
 function getLineChartData<
     ReturnType extends Record<string, any>,
-    ValuesRecordType extends ValuesRecordProperties
+    ValuesRecordType extends ValuesRecordProperties,
 >(
     from: ValuesRecordType,
     records: RangeValuesRecord<ValuesRecordType>[],
     range: DataRange,
-    calculationFn: ChartValueCalculationFunction<ReturnType, ValuesRecordType>
+    calculationFn: ChartValueCalculationFunction<ReturnType, ValuesRecordType>,
 ): ChartData<ReturnType> {
     return records.map(item => {
         let x = ''
@@ -79,12 +79,12 @@ function getLineChartData<
 
 function getBarChartData<
     ReturnType extends Record<string, any>,
-    ValuesRecordType extends ValuesRecordProperties
+    ValuesRecordType extends ValuesRecordProperties,
 >(
     from: ValuesRecordType,
     records: RangeValuesRecord<ValuesRecordType>[],
     range: DataRange,
-    calculationFn: ChartValueCalculationFunction<ReturnType, ValuesRecordType>
+    calculationFn: ChartValueCalculationFunction<ReturnType, ValuesRecordType>,
 ): ChartData<ReturnType> {
     const firstItem: RangeValuesRecord<ValuesRecordType> = {
         date: parseDate(from.date),
@@ -130,12 +130,12 @@ function getBarChartData<
 
 export function getChartData<
     ReturnType extends Record<string, any>,
-    ValuesRecordType extends ValuesRecordProperties = ValuesRecord
+    ValuesRecordType extends ValuesRecordProperties = ValuesRecord,
 >(
     from: ValuesRecordType,
     records: RangeValuesRecord<ValuesRecordType>[],
     options: ChartOptions,
-    calculationFn: ChartValueCalculationFunction<ReturnType, ValuesRecordType>
+    calculationFn: ChartValueCalculationFunction<ReturnType, ValuesRecordType>,
 ): ChartData<ReturnType> {
     const { type, range } = options
 

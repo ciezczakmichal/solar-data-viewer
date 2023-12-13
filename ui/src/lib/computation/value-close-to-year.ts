@@ -17,7 +17,7 @@ import type { Dayjs } from 'dayjs'
  * @returns Kompletna wartość odczytów sprzed roku lub null, jeśli wartości nie można wskazać.
  */
 export function getCompleteValueCloseToYear(
-    values: ValuesRecord[]
+    values: ValuesRecord[],
 ): CompleteValuesRecord | null {
     let lastValue: CompleteValuesRecord | null = null
     let lastValueDate: Dayjs | null = null
@@ -42,7 +42,7 @@ export function getCompleteValueCloseToYear(
         const lastDateCasted = lastValueDate as unknown as Dayjs
 
         const currentDaysDiff = Math.abs(
-            365 - lastDateCasted.diff(parseDate(value.date), 'days')
+            365 - lastDateCasted.diff(parseDate(value.date), 'days'),
         )
 
         if (currentDaysDiff <= 30 && currentDaysDiff < daysDiff) {

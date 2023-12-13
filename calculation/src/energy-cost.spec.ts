@@ -125,8 +125,8 @@ describe('calculateEnergyCost', () => {
         function expectCalculationErrorWithCorrectMessageIsThrown() {
             expect(() => calculateEnergyCost(input)).toThrowError(
                 new CalculationError(
-                    'Brak parametrów pozycji taryfy dla zadanego zakresu czasowego'
-                )
+                    'Brak parametrów pozycji taryfy dla zadanego zakresu czasowego',
+                ),
             )
         }
 
@@ -191,8 +191,8 @@ describe('calculateEnergyCost', () => {
 
             expect(() => calculateEnergyCost(input)).toThrowError(
                 new CalculationError(
-                    'Brak stawki VAT dla zadanego zakresu czasowego'
-                )
+                    'Brak stawki VAT dla zadanego zakresu czasowego',
+                ),
             )
         })
 
@@ -225,8 +225,8 @@ describe('calculateEnergyCost', () => {
 
             expect(() => calculateEnergyCost(input)).toThrowError(
                 new CalculationError(
-                    'Zakres czasowy obejmuje okres, w którym brak wartości pozycji "Pozycja #1"'
-                )
+                    'Zakres czasowy obejmuje okres, w którym brak wartości pozycji "Pozycja #1"',
+                ),
             )
         })
     })

@@ -37,11 +37,11 @@ export interface Duration {
 export function formatDuration(days: number, flag?: DurationFormatFlag): string
 export function formatDuration(
     duration: Duration,
-    flag?: DurationFormatFlag
+    flag?: DurationFormatFlag,
 ): string
 export function formatDuration(
     input: number | Duration,
-    flag = DurationFormatFlag.None
+    flag = DurationFormatFlag.None,
 ): string {
     let values: number[]
 

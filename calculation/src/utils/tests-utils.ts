@@ -11,7 +11,7 @@ export function dayJsInstance(year: number, month: number, day: number): Dayjs {
 export function dayJsInstanceWithExtraProperty(
     year: number,
     month: number,
-    day: number
+    day: number,
 ): Dayjs {
     const instance = dayjs(new Date(year, month - 1, day))
     // sformatuj i parsuj - aby wewnętrzna reprezentacja obiektu się zgadzała

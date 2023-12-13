@@ -12,7 +12,7 @@
     const { values } = data
 
     const from = metersHelper.getMeterInitialValuesAsCompleteRecord(
-        metersHelper.getFirstMeterId()
+        metersHelper.getFirstMeterId(),
     )
     const to = values[values.length - 1]
 

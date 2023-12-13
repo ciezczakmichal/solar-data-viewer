@@ -17,7 +17,7 @@ export enum DataRange {
 }
 
 export interface RangeValuesRecord<
-    T extends ValuesRecordProperties = ValuesRecord
+    T extends ValuesRecordProperties = ValuesRecord,
 > {
     date: Dayjs
     values: T | null
@@ -29,7 +29,7 @@ export type RangeCompleteValuesRecord = RangeValuesRecord<CompleteValuesRecord>
 
 export function getRecordsForRange<T extends ValuesRecordProperties>(
     values: T[],
-    range: DataRange
+    range: DataRange,
 ): RangeValuesRecord<T>[] {
     let presentValues: RangeValuesRecord<T>[] = values.map(item => ({
         date: parseDate(item.date),
@@ -83,7 +83,7 @@ export function getRecordsForRange<T extends ValuesRecordProperties>(
 
 export function getYieldRecordsForRange(
     values: ValuesRecord[],
-    range: DataRange
+    range: DataRange,
 ): RangeYieldValuesRecord[] {
     const records = values.filter(isYieldRecord)
     return getRecordsForRange(records, range)
@@ -91,7 +91,7 @@ export function getYieldRecordsForRange(
 
 export function getCompleteRecordsForRange(
     values: ValuesRecord[],
-    range: DataRange
+    range: DataRange,
 ): RangeCompleteValuesRecord[] {
     const records = values.filter(isCompleteRecord)
     return getRecordsForRange(records, range)

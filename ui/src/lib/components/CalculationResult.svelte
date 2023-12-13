@@ -68,11 +68,11 @@
 
     const currentEnergyCost = calculateEnergyCostAtDay(
         timeVaryingHelper,
-        to.date
+        to.date,
     )
     const currentFixedCost = calculateFixedCost(
         timeVaryingHelper,
-        new Month(to.date)
+        new Month(to.date),
     )
 
     const valueCloseToYear = getCompleteValueCloseToYear(values)
@@ -107,13 +107,13 @@
     <Item
         label="Autokonsumpcja"
         value={`${formatKwh(selfConsumption)} (${formatPercent(
-            selfConsumptionPercent
+            selfConsumptionPercent,
         )} uzysku)`}
     />
     <Item
         label="Energia oddana do sieci"
         value={`${formatKwh(donated)} (= do pobrania ${formatKwh(
-            donatedToUse
+            donatedToUse,
         )})`}
     />
 
@@ -125,16 +125,16 @@
     <Item
         label="Średnie zużycie energii"
         value={`${formatKwh(dailyConsumption)} / dzień, ${formatKwh(
-            monthlyConsumption
+            monthlyConsumption,
         )} / miesiąc`}
     />
     {#if lastYearCalculationResult}
         <Item
             label="Średnie zużycie energii (12 mies.)"
             value={`${formatKwh(
-                lastYearCalculationResult.dailyConsumption
+                lastYearCalculationResult.dailyConsumption,
             )} / dzień, ${formatKwh(
-                lastYearCalculationResult.monthlyConsumption
+                lastYearCalculationResult.monthlyConsumption,
             )} / miesiąc`}
         />
     {/if}
@@ -156,7 +156,7 @@
         />
         <Item
             value={`Zapotrzebowanie na energię elektryczną jest spełnione w ${formatPercent(
-                needsFulfilmentPercent
+                needsFulfilmentPercent,
             )}`}
         />
         <EnergyCountItem
@@ -191,7 +191,7 @@
         label="Przybliżony pozostały czas do zwrotu inwestycji"
         value={formatDuration(
             daysToInvestmentReturn,
-            DurationFormatFlag.OmitDays
+            DurationFormatFlag.OmitDays,
         )}
     />
 </div>

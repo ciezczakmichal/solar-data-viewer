@@ -46,15 +46,15 @@ describe('TimeVaryingValuesHelper', () => {
             expect(
                 instance.getTariffValuesForEnergyCost(
                     '2018-01-01',
-                    '2019-12-31'
-                )
+                    '2019-12-31',
+                ),
             ).toEqual([])
 
             expect(
                 instance.getTariffValuesForEnergyCost(
                     '2020-01-01',
-                    '2020-04-30'
-                )
+                    '2020-04-30',
+                ),
             ).toEqual([
                 {
                     from: '2020-01-01',
@@ -65,8 +65,8 @@ describe('TimeVaryingValuesHelper', () => {
             expect(
                 instance.getTariffValuesForEnergyCost(
                     '2020-05-01',
-                    '2021-12-31'
-                )
+                    '2021-12-31',
+                ),
             ).toEqual([
                 {
                     from: '2020-05-01',
@@ -77,8 +77,8 @@ describe('TimeVaryingValuesHelper', () => {
             expect(
                 instance.getTariffValuesForEnergyCost(
                     '2022-01-01',
-                    '2030-05-12' // dowolna późniejsza data
-                )
+                    '2030-05-12', // dowolna późniejsza data
+                ),
             ).toEqual([
                 {
                     from: '2020-05-01',
@@ -123,12 +123,12 @@ describe('TimeVaryingValuesHelper', () => {
                     expect(() =>
                         instance.getTariffValuesForEnergyCost(
                             '2020-03-01',
-                            '2020-04-12'
-                        )
+                            '2020-04-12',
+                        ),
                     ).toThrowError(
                         new CalculationError(
-                            'Zakres czasowy obejmuje dzień zmiany wartości pozycji "Pozycja #1"'
-                        )
+                            'Zakres czasowy obejmuje dzień zmiany wartości pozycji "Pozycja #1"',
+                        ),
                     )
                 })
 
@@ -136,12 +136,12 @@ describe('TimeVaryingValuesHelper', () => {
                     expect(() =>
                         instance.getTariffValuesForEnergyCost(
                             '2020-03-01',
-                            '2020-04-13'
-                        )
+                            '2020-04-13',
+                        ),
                     ).toThrowError(
                         new CalculationError(
-                            'Zakres czasowy obejmuje dzień zmiany wartości pozycji "Pozycja #1"'
-                        )
+                            'Zakres czasowy obejmuje dzień zmiany wartości pozycji "Pozycja #1"',
+                        ),
                     )
                 })
             })
@@ -183,12 +183,12 @@ describe('TimeVaryingValuesHelper', () => {
                     expect(() =>
                         instance.getTariffValuesForEnergyCost(
                             '2020-05-31',
-                            '2020-06-01'
-                        )
+                            '2020-06-01',
+                        ),
                     ).toThrowError(
                         new CalculationError(
-                            'Zakres czasowy obejmuje okres, w którym brak wartości pozycji "Nowa pozycja"'
-                        )
+                            'Zakres czasowy obejmuje okres, w którym brak wartości pozycji "Nowa pozycja"',
+                        ),
                     )
                 })
 
@@ -196,12 +196,12 @@ describe('TimeVaryingValuesHelper', () => {
                     expect(() =>
                         instance.getTariffValuesForEnergyCost(
                             '2020-05-31',
-                            '2020-06-02'
-                        )
+                            '2020-06-02',
+                        ),
                     ).toThrowError(
                         new CalculationError(
-                            'Zakres czasowy obejmuje okres, w którym brak wartości pozycji "Nowa pozycja"'
-                        )
+                            'Zakres czasowy obejmuje okres, w którym brak wartości pozycji "Nowa pozycja"',
+                        ),
                     )
                 })
             })
@@ -265,18 +265,18 @@ describe('TimeVaryingValuesHelper', () => {
 
             const instance = new TimeVaryingValuesHelper(input)
             const error = new CalculationError(
-                'Brak stawki VAT dla zadanego zakresu czasowego'
+                'Brak stawki VAT dla zadanego zakresu czasowego',
             )
 
             expect(() =>
-                instance.getVatTaxRate('2019-05-13', '2019-12-31')
+                instance.getVatTaxRate('2019-05-13', '2019-12-31'),
             ).toThrowError(error)
 
             expect(() => instance.getVatTaxRate('2019-05-13')).toThrowError(
-                error
+                error,
             )
             expect(() => instance.getVatTaxRate('2019-12-31')).toThrowError(
-                error
+                error,
             )
         })
 
@@ -303,21 +303,21 @@ describe('TimeVaryingValuesHelper', () => {
 
             it('dla zakresu kończącego się w dniu zmiany', () => {
                 expect(() =>
-                    instance.getVatTaxRate('2020-03-01', '2020-04-12')
+                    instance.getVatTaxRate('2020-03-01', '2020-04-12'),
                 ).toThrowError(
                     new CalculationError(
-                        'Zakres czasowy obejmuje dzień zmiany wartości pozycji "stawka VAT"'
-                    )
+                        'Zakres czasowy obejmuje dzień zmiany wartości pozycji "stawka VAT"',
+                    ),
                 )
             })
 
             it('dla zakresu obejmującego dzień zmiany', () => {
                 expect(() =>
-                    instance.getVatTaxRate('2020-03-01', '2020-04-13')
+                    instance.getVatTaxRate('2020-03-01', '2020-04-13'),
                 ).toThrowError(
                     new CalculationError(
-                        'Zakres czasowy obejmuje dzień zmiany wartości pozycji "stawka VAT"'
-                    )
+                        'Zakres czasowy obejmuje dzień zmiany wartości pozycji "stawka VAT"',
+                    ),
                 )
             })
         })

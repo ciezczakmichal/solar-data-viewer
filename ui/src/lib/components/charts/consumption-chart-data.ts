@@ -25,7 +25,7 @@ interface CalculationReturnType {
 }
 
 export function getConsumptionChartData(
-    input: ConsumptionChartInput
+    input: ConsumptionChartInput,
 ): ConsumptionChartData {
     const { from, data, metersHelper, options } = input
     const records = getCompleteRecordsForRange(data.values, options.range)
@@ -43,7 +43,7 @@ export function getConsumptionChartData(
             })
 
             return { charged, selfConsumption }
-        }
+        },
     )
 
     return {

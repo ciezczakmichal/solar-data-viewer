@@ -42,7 +42,7 @@ export class Month {
 
     private setMonthImpl(
         dateOrYear: string | Dayjs | number,
-        month?: number
+        month?: number,
     ): void {
         if (typeof dateOrYear === 'number') {
             if (month !== undefined) {

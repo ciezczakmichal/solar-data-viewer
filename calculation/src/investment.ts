@@ -30,7 +30,7 @@ export interface InvestmentCalculationResult {
  * @returns Obiekt zawierający dane wynikowe
  */
 export function calculateInvestment(
-    input: InvestmentCalculationInput
+    input: InvestmentCalculationInput,
 ): InvestmentCalculationResult {
     const { plantProperties, savings, dailyEnergySavings, currentEnergyCost } =
         input

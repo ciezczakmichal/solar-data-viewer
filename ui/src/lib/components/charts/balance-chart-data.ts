@@ -17,7 +17,7 @@ export interface BalanceChartInput {
 export type BalanceChartData = ChartDataItem[]
 
 export function getBalanceChartData(
-    input: BalanceChartInput
+    input: BalanceChartInput,
 ): BalanceChartData {
     const { from, data, metersHelper, options } = input
     const records = getCompleteRecordsForRange(data.values, options.range)
