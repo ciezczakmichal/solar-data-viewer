@@ -14,9 +14,9 @@
         "format": "prettier --plugin-search-dir . --write ."
     },
     "dependencies": {
-        "chart.js": "^3.9.1",
+        "chart.js": "^4.4.1",
         "currency.js": "^2.0.4",
-        "dayjs": "^1.11.5"
+        "dayjs": "^1.11.10"
     },
     "devDependencies": {
         "@sveltejs/adapter-auto": "^2.1.1",

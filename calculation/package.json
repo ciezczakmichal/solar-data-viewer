@@ -19,7 +19,7 @@
     },
     "dependencies": {
         "currency.js": "^2.0.4",
-        "dayjs": "^1.11.5"
+        "dayjs": "^1.11.10"
     },
     "devDependencies": {
         "@types/jest": "^29.5.11",
