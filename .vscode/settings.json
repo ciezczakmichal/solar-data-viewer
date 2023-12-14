@@ -3,5 +3,6 @@
         {
             "mode": "auto"
         }
-    ]
+    ],
+    "eslint.validate": ["javascript", "svelte"]
 }
