@@ -1,6 +1,6 @@
 import { CompleteValuesRecord, MeterRecord } from 'schema'
-import { CalculationError } from './error'
 import { EnergyCalculationInput, calculateEnergy } from './energy'
+import { CalculationError } from './error'
 import { MetersDataHelper } from './meters-data-helper'
 
 describe('calculateEnergy', () => {

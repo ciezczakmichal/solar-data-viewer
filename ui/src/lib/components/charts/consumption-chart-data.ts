@@ -1,11 +1,11 @@
+import { MetersDataHelper, calculateEnergy } from 'calculation'
 import type { CompleteValuesRecord, SolarData } from 'schema'
-import { calculateEnergy, MetersDataHelper } from 'calculation'
-import { getCompleteRecordsForRange } from '../../computation/records-for-range'
 import {
     getChartData,
     type ChartDataItem,
     type ChartOptions,
 } from '../../computation/chart-data'
+import { getCompleteRecordsForRange } from '../../computation/records-for-range'
 
 export interface ConsumptionChartInput {
     from: CompleteValuesRecord

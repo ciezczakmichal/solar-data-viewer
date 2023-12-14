@@ -1,10 +1,10 @@
-import type { Chart, ChartDataset } from 'chart.js'
 import {
     ChartType,
     type ChartDataItem,
     type ChartOptions,
 } from '$lib/computation/chart-data'
 import { DataRange } from '$lib/computation/records-for-range'
+import type { Chart, ChartDataset } from 'chart.js'
 import type { ChartController } from './chart-controller'
 
 export type ChartJsType = Chart<'bar' | 'line', ChartDataItem[]>

@@ -1,8 +1,8 @@
+import { parseDate } from 'calculation'
 import type { Dayjs } from 'dayjs'
 import type { ValuesRecord, ValuesRecordProperties } from 'schema'
-import { parseDate } from 'calculation'
-import { DataRange, type RangeValuesRecord } from './records-for-range'
 import { getMonthDisplayText } from '../utils/date'
+import { DataRange, type RangeValuesRecord } from './records-for-range'
 
 export enum ChartType {
     Line,

@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
 import 'dayjs/locale/pl'
+import duration from 'dayjs/plugin/duration'
 import localeData from 'dayjs/plugin/localeData'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
-import duration from 'dayjs/plugin/duration'
 
 dayjs.locale('pl') // zmiana globalnie
 

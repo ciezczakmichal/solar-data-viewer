@@ -1,10 +1,10 @@
+import { parseDate } from 'calculation'
+import type { Dayjs } from 'dayjs'
 import {
     isCompleteRecord,
     type CompleteValuesRecord,
     type ValuesRecord,
 } from 'schema'
-import { parseDate } from 'calculation'
-import type { Dayjs } from 'dayjs'
 
 /**
  * Zwraca wartość posiadajacą komplet danych, która datowana jest na rok wcześniej

@@ -1,7 +1,7 @@
-import { dirname, join } from 'path'
-import { fileURLToPath } from 'url'
 import { readFile } from 'fs/promises'
+import { dirname, join } from 'path'
 import { validateSolarData } from 'schema'
+import { fileURLToPath } from 'url'
 
 const filename = fileURLToPath(import.meta.url)
 const dir = dirname(filename)

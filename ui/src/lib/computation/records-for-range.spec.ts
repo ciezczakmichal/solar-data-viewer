@@ -1,5 +1,5 @@
-import type { ValuesRecord } from 'schema'
 import { dayJsInstance, dayJsInstanceWithExtraProperty } from 'calculation'
+import type { ValuesRecord } from 'schema'
 import {
     DataRange,
     getCompleteRecordsForRange,

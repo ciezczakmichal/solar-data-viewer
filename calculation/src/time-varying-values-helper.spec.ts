@@ -1,9 +1,9 @@
 import { UnitOfMeasure } from 'schema'
-import {
-    TimeVaryingValuesHelperInput,
-    TimeVaryingValuesHelper,
-} from './time-varying-values-helper'
 import { CalculationError } from './error'
+import {
+    TimeVaryingValuesHelper,
+    TimeVaryingValuesHelperInput,
+} from './time-varying-values-helper'
 import { dayJsInstanceWithExtraProperty } from './utils/tests-utils'
 
 // @todo test gdy daty "od" i "do" są na odwrót

@@ -1,12 +1,12 @@
 import {
     CompleteValuesRecord,
     MeterRecord,
-    UnitOfMeasure,
     TariffItem,
+    UnitOfMeasure,
     VatRateItem,
 } from 'schema'
-import { calculateSavings, SavingsCalculationInput } from './savings'
 import { MetersDataHelper } from './meters-data-helper'
+import { SavingsCalculationInput, calculateSavings } from './savings'
 import { TimeVaryingValuesHelper } from './time-varying-values-helper'
 
 describe('calculateSavings', () => {
