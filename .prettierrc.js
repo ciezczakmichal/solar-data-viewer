@@ -6,4 +6,8 @@ export default {
     semi: false,
     tabWidth: 4,
     singleQuote: true,
+
+    /* Konfiguracja dla tego projektu */
+
+    plugins: ['prettier-plugin-organize-imports'],
 }
