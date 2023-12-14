@@ -30,46 +30,24 @@
     onMount(() => controller.initChart(canvas))
 </script>
 
-<div class="chart">
-    <div class="chart-header">
-        <div class="chart-names">
-            <h3>{title}</h3>
-            <div class="chart-desc">{description}</div>
+<div class="mt-2 pt-2">
+    <div class="flex items-center">
+        <div class="flex-grow">
+            <div class="mb-1 text-lg font-bold">{title}</div>
+            <div class="text-sm text-gray-600">{description}</div>
         </div>
         <div>
-            <button on:click={() => controller.switchChartType()}
+            <button
+                class="btn btn-neutral"
+                on:click={() => controller.switchChartType()}
                 >{switchTypeButtonText}</button
             >
-            <button on:click={() => controller.switchDataRange()}
+            <button
+                class="btn btn-neutral"
+                on:click={() => controller.switchDataRange()}
                 >{switchRangeButtonText}</button
             >
         </div>
     </div>
     <canvas bind:this={canvas} width="4" height="1" />
 </div>
-
-<style>
-    .chart {
-        margin: 10px 0;
-        padding-top: 10px;
-    }
-
-    .chart-header {
-        display: flex;
-        align-items: center;
-    }
-
-    .chart-names {
-        flex-grow: 1;
-    }
-
-    h3 {
-        margin: 0;
-        margin-bottom: 6px;
-    }
-
-    .chart-desc {
-        font-size: 14px;
-        color: #666;
-    }
-</style>

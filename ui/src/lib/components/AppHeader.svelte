@@ -2,18 +2,9 @@
     import AppLogo from './AppLogo.svelte'
 </script>
 
-<header>
-    <AppLogo />
-    <h1>Solar Data Viewer</h1>
+<header class="mb-4 mt-2 flex items-center">
+    <div class="ml-2 mr-4">
+        <AppLogo />
+    </div>
+    <h1 class="text-3xl font-bold">Solar Data Viewer</h1>
 </header>
-
-<style>
-    header {
-        display: flex;
-        align-items: center;
-    }
-
-    header h1 {
-        margin-left: 15px;
-    }
-</style>

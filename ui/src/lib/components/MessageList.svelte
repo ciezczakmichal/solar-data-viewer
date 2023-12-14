@@ -7,12 +7,29 @@
 </script>
 
 {#if messages.length > 0}
-    <div class="container">
+    <div class="pb-1 pt-3">
         {#each messages as message}
-            <div class="alert">
+            <div class="alert alert-orange mb-1">
+                <!-- TODO zastąpić ikoną z projektu -->
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    class="h-6 w-6 shrink-0 stroke-current"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path></svg
+                >
+
                 {#if message.url}
-                    <a href={message.url} target="_blank" rel="noreferrer"
-                        >{message.text}</a
+                    <a
+                        class="link link-hover"
+                        href={message.url}
+                        target="_blank"
+                        rel="noreferrer">{message.text}</a
                     >
                 {:else}
                     {message.text}
@@ -23,19 +40,8 @@
 {/if}
 
 <style>
-    a {
-        color: unset;
-    }
-
-    .container {
-        margin: 10px 0;
-    }
-
-    .alert {
-        padding: 15px;
-        margin-bottom: 5px;
+    .alert-orange {
         background-color: #ff9800;
         color: white;
-        border-radius: 10px;
     }
 </style>

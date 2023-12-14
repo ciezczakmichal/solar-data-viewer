@@ -14,6 +14,7 @@
     <div>
         <b>Źródło danych:</b>
         <a
+            class="link link-hover link-neutral"
             href={url}
             target="_blank"
             rel="noreferrer"

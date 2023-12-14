@@ -98,7 +98,7 @@
     <title>{generateApplicationTitle(data)}</title>
 </svelte:head>
 
-<main>
+<main class="p-4">
     <AppHeader />
 
     {#if status === Status.Loading}
