@@ -8,12 +8,7 @@ module.exports = {
         '../.eslintrc',
     ],
     plugins: ['svelte3', '@typescript-eslint'],
-    ignorePatterns: [
-        '*.cjs',
-        'global.d.ts',
-        'jest.config.js',
-        'svelte.config.js',
-    ],
+    ignorePatterns: ['*.cjs'],
     overrides: [{ files: ['*.svelte'], processor: 'svelte3/svelte3' }],
     settings: {
         'svelte3/typescript': () => require('typescript'),
