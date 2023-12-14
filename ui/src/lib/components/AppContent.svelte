@@ -13,13 +13,17 @@
 <div>
     <div>
         <b>Źródło danych:</b>
-        <a
-            class="link-hover link"
-            href={url}
-            target="_blank"
-            rel="noreferrer"
-            title="Adres URL źródła danych (otwiera w nowej karcie)">{url}</a
+        <div
+            class="tooltip"
+            data-tip="Otwórz adres URL źródła danych (w nowej karcie)"
         >
+            <a
+                class="link-hover link"
+                href={url}
+                target="_blank"
+                rel="noreferrer">{url}</a
+            >
+        </div>
     </div>
 
     <MessageList />
