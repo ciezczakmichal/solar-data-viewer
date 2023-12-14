@@ -9,7 +9,7 @@
 {#if messages.length > 0}
     <div class="pb-1 pt-3">
         {#each messages as message}
-            <div class="alert alert-orange mb-1">
+            <div class="alert-orange alert mb-1">
                 <!-- TODO zastąpić ikoną z projektu -->
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +26,7 @@
 
                 {#if message.url}
                     <a
-                        class="link link-hover"
+                        class="link-hover link"
                         href={message.url}
                         target="_blank"
                         rel="noreferrer">{message.text}</a
