@@ -1,42 +1,7 @@
-<script lang="ts">
-    import { onMount } from 'svelte'
-
-    // automatyczna zmiana dostępna od Fx 121
-
-    let dark = false
-    let useManualHandler = false
-
-    function getFirefoxVersion(): number | null {
-        const match = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./)
-        return match ? parseInt(match[1]) : null
-    }
-
-    function toggleTheme() {
-        dark = !dark
-        const value = dark ? 'dark' : 'light'
-        document.querySelector('html')?.setAttribute('data-theme', value)
-    }
-
-    onMount(() => {
-        const version = getFirefoxVersion()
-        useManualHandler = !!(version && version < 121)
-
-        // ręczna kontrola - domyślnie motyw ciemny
-        if (useManualHandler) {
-            toggleTheme()
-        }
-    })
-</script>
-
 <div class="tooltip tooltip-left" data-tip="Zmień motyw">
     <label class="swap swap-rotate">
         <!-- this hidden checkbox controls the state -->
-        <input
-            type="checkbox"
-            class="theme-controller"
-            value="light"
-            on:click={useManualHandler ? toggleTheme : undefined}
-        />
+        <input type="checkbox" class="theme-controller" value="light" />
 
         <!-- sun icon -->
         <svg
