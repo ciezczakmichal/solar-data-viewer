@@ -47,7 +47,7 @@
 
         fulfillNeeds,
         savedEnergy,
-        needsFulfillmentPercent,
+        demandFulfillmentPercent,
         energyToBuy,
         energyToCharge,
     } = calculateEnergy({
@@ -151,7 +151,7 @@
         />
         <Item
             value={`Zapotrzebowanie na energię elektryczną jest spełnione w ${formatPercent(
-                needsFulfillmentPercent,
+                demandFulfillmentPercent,
             )}`}
         />
         <EnergyCountItem
