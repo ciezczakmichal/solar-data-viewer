@@ -5,6 +5,7 @@ export default {
     preset: 'ts-jest/presets/default-esm',
     rootDir: '.',
     testEnvironment: 'jsdom', // zmienione (z node)
+    setupFiles: ['./src/lib/global/dayjs-import.ts'],
     setupFilesAfterEnv: ['jest-extended'],
     testPathIgnorePatterns: ['public'], // zmienione (z dist)
 

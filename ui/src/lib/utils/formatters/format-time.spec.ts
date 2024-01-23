@@ -1,4 +1,3 @@
-import '../../global/dayjs-import'
 import { DurationFormatFlag, formatDuration } from './format-time'
 
 describe('formatDuration - wersja z obiektem Duration (from / to)', () => {
