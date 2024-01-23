@@ -23,7 +23,7 @@ describe('calculateEnergy', () => {
                 ...values,
             },
             plantProperties: {
-                // nieistone
+                // nieistotne
                 installationPower: 1,
                 energyInWarehouseFactor: 1,
             },
@@ -62,7 +62,7 @@ describe('calculateEnergy', () => {
             from: metersHelper.getMeterInitialValuesAsCompleteRecord(1),
             to: values[0],
             plantProperties: {
-                // nieistone
+                // nieistotne
                 installationPower: 1,
                 energyInWarehouseFactor: 1,
             },
@@ -90,7 +90,7 @@ describe('calculateEnergy', () => {
                 donated: 150,
             },
             plantProperties: {
-                installationPower: 1, // nieistone
+                installationPower: 1, // nieistotne
                 energyInWarehouseFactor: 0.8,
             },
         }
@@ -98,7 +98,7 @@ describe('calculateEnergy', () => {
         const result = calculateEnergy(input)
         expect(result.fulfillNeeds).toEqual(true)
         expect(result.savedEnergy).toEqual(120)
-        expect(result.needsFulfilmentPercent).toEqual(1)
+        expect(result.demandFulfillmentPercent).toEqual(1)
         expect(result.energyToBuy).toEqual(0)
         expect(result.energyToCharge).toEqual(0)
         expect(result.energyToChargeOrBuy).toEqual(0)
@@ -121,7 +121,7 @@ describe('calculateEnergy', () => {
                 donated: 0,
             },
             plantProperties: {
-                installationPower: 1, // nieistone
+                installationPower: 1, // nieistotne
                 energyInWarehouseFactor: 0.8,
             },
         }
@@ -129,7 +129,7 @@ describe('calculateEnergy', () => {
         const result = calculateEnergy(input)
         expect(result.fulfillNeeds).toEqual(true)
         expect(result.savedEnergy).toEqual(150)
-        expect(result.needsFulfilmentPercent).toEqual(1)
+        expect(result.demandFulfillmentPercent).toEqual(1)
         expect(result.energyToBuy).toEqual(0)
         expect(result.energyToCharge).toEqual(0)
         expect(result.energyToChargeOrBuy).toEqual(0)
@@ -152,7 +152,7 @@ describe('calculateEnergy', () => {
                 donated: 150, // 120 dostępne do pobrania
             },
             plantProperties: {
-                installationPower: 1, // nieistone
+                installationPower: 1, // nieistotne
                 energyInWarehouseFactor: 0.8,
             },
         }
@@ -160,7 +160,7 @@ describe('calculateEnergy', () => {
         const result = calculateEnergy(input)
         expect(result.fulfillNeeds).toEqual(true)
         expect(result.savedEnergy).toEqual(100)
-        expect(result.needsFulfilmentPercent).toEqual(1)
+        expect(result.demandFulfillmentPercent).toEqual(1)
         expect(result.energyToBuy).toEqual(0)
         expect(result.energyToCharge).toEqual(20)
         expect(result.energyToChargeOrBuy).toEqual(20)
@@ -210,7 +210,7 @@ describe('calculateEnergy', () => {
                 from: metersHelper.getMeterInitialValuesAsCompleteRecord(1),
                 to: values[1],
                 plantProperties: {
-                    installationPower: 1, // nieistone
+                    installationPower: 1, // nieistotne
                     energyInWarehouseFactor: 0.8,
                 },
                 // brak metersHelper
@@ -263,7 +263,7 @@ describe('calculateEnergy', () => {
                 from: metersHelper.getMeterInitialValuesAsCompleteRecord(1),
                 to: values[1],
                 plantProperties: {
-                    installationPower: 1, // nieistone
+                    installationPower: 1, // nieistotne
                     energyInWarehouseFactor: 0.8,
                 },
                 metersHelper: metersHelper,
@@ -335,7 +335,7 @@ describe('calculateEnergy', () => {
             from: metersHelper.getMeterInitialValuesAsCompleteRecord(1),
             to: values[2],
             plantProperties: {
-                installationPower: 1, // nieistone
+                installationPower: 1, // nieistotne
                 energyInWarehouseFactor: 0.8,
             },
             metersHelper: metersHelper,

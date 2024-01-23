@@ -65,7 +65,7 @@ export interface EnergyCalculationResult {
     savedEnergy: number
 
     // procent spełnienia zapotrzebowania przez energię wyprodukowaną (wartości 0-1)
-    needsFulfilmentPercent: number
+    demandFulfillmentPercent: number
 
     // ilość energii, którą pomimo bilansowania należy zakupić
     energyToBuy: number
@@ -222,7 +222,7 @@ export function calculateEnergy(
 
         fulfillNeeds,
         savedEnergy,
-        needsFulfilmentPercent,
+        demandFulfillmentPercent: needsFulfilmentPercent,
         energyToBuy,
         energyToCharge,
         energyToChargeOrBuy,
