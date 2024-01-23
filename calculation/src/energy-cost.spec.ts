@@ -124,7 +124,7 @@ describe('calculateEnergyCost', () => {
         let input: EnergyCostCalculationInput
 
         function expectCalculationErrorWithCorrectMessageIsThrown() {
-            expect(() => calculateEnergyCost(input)).toThrowError(
+            expect(() => calculateEnergyCost(input)).toThrow(
                 new CalculationError(
                     'Brak parametrów pozycji taryfy dla zadanego zakresu czasowego',
                 ),
@@ -194,7 +194,7 @@ describe('calculateEnergyCost', () => {
         it('gdy brak wartości stawki VAT', () => {
             input.tariff.setVatRates([])
 
-            expect(() => calculateEnergyCost(input)).toThrowError(
+            expect(() => calculateEnergyCost(input)).toThrow(
                 new CalculationError(
                     'Brak stawki VAT dla zadanego zakresu czasowego',
                 ),
