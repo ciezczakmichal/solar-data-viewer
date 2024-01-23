@@ -15,13 +15,7 @@ export class Month {
     constructor(date: string | Dayjs)
     constructor(year: number, month: number)
     constructor(dateOrYear: string | Dayjs | number, month?: number) {
-        this.setMonthImpl(dateOrYear, month)
-    }
-
-    setMonth(date: string | Dayjs): void
-    setMonth(year: number, month: number): void
-    setMonth(dateOrYear: string | Dayjs | number, month?: number): void {
-        this.setMonthImpl(dateOrYear, month)
+        this.setMonth(dateOrYear, month)
     }
 
     firstDayOfMonth(): Dayjs {
@@ -33,6 +27,10 @@ export class Month {
         return day.date(day.daysInMonth())
     }
 
+    /**
+     * Zwraca obiekt reprezentujący zakres dni od początku do końcu miesiąca.
+     * @returns Obiekt reprezentujący zakres dni
+     */
     dateRange(): DateRange {
         return {
             from: this.firstDayOfMonth(),
@@ -40,7 +38,7 @@ export class Month {
         }
     }
 
-    private setMonthImpl(
+    private setMonth(
         dateOrYear: string | Dayjs | number,
         month?: number,
     ): void {
