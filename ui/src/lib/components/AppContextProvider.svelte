@@ -1,13 +1,13 @@
 <script lang="ts">
     import { isCompleteRecord, type SolarData } from 'schema'
-    import { MetersDataHelper, TimeVaryingValuesHelper } from 'calculation'
+    import { MetersDataHelper, Tariff } from 'calculation'
     import { setAppContext } from '$lib/global/app-context'
 
     export let data: SolarData
     export let url: string
 
     const metersHelper = new MetersDataHelper(data)
-    const timeVaryingHelper = new TimeVaryingValuesHelper(data)
+    const tariff = new Tariff(data.tariff, data.vatRates)
 
     const { values } = data
 
@@ -27,7 +27,7 @@
         from,
         to,
         metersHelper,
-        timeVaryingHelper,
+        tariff,
     })
 </script>
 

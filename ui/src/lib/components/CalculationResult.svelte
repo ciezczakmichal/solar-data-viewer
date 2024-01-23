@@ -6,8 +6,8 @@
         calculateFixedCost,
         calculateInvestment,
         calculateSavings,
-        Month,
         type EnergyCalculationResult,
+        parseDate,
     } from 'calculation'
     import { getAppContext } from '$lib/global/app-context'
     import { getCompleteValueCloseToYear } from '$lib/computation/value-close-to-year'
@@ -24,7 +24,7 @@
     import Item from './Item.svelte'
     import EnergyCountItem from './EnergyCountItem.svelte'
 
-    const { data, from, to, metersHelper, timeVaryingHelper } = getAppContext()
+    const { data, from, to, metersHelper, tariff } = getAppContext()
     const { values, plantProperties } = data
 
     const rangeString = `${formatDate(from.date)} - ${formatDate(to.date)}`
@@ -61,19 +61,14 @@
         values: values.filter(isCompleteRecord),
         plantProperties,
         metersHelper,
-        timeVaryingHelper,
+        tariff,
     })
 
     const dailySaving = savings.divide(days)
 
-    const currentEnergyCost = calculateEnergyCostAtDay(
-        timeVaryingHelper,
-        to.date,
-    )
-    const currentFixedCost = calculateFixedCost(
-        timeVaryingHelper,
-        new Month(to.date),
-    )
+    const date = parseDate(to.date)
+    const currentEnergyCost = calculateEnergyCostAtDay(tariff, date)
+    const currentFixedCost = calculateFixedCost(tariff, date)
 
     const valueCloseToYear = getCompleteValueCloseToYear(values)
     let lastYearCalculationResult: EnergyCalculationResult | null = null

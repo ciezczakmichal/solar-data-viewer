@@ -7,7 +7,7 @@ import {
 } from './energy'
 import { calculateEnergyCost } from './energy-cost'
 import { MetersDataHelper } from './meters-data-helper'
-import { TimeVaryingValuesHelper } from './time-varying-values-helper'
+import { Tariff } from './tariff/tariff'
 import { CurrencyZloty } from './utils/currency-zloty'
 import { parseDate } from './utils/date'
 
@@ -18,7 +18,7 @@ export interface SavingsCalculationInput {
     // wymagany, gdyż pozwala uwzględnić dane początkowe licznika
     metersHelper: MetersDataHelper
 
-    timeVaryingHelper: TimeVaryingValuesHelper
+    tariff: Tariff
 }
 
 export interface SavingsCalculationResult {
@@ -38,14 +38,14 @@ export interface SavingsCalculationResult {
 export function calculateSavings(
     input: SavingsCalculationInput,
 ): SavingsCalculationResult {
-    const { plantProperties, metersHelper, timeVaryingHelper } = input
+    const { plantProperties, metersHelper, tariff } = input
 
     const initialValue = metersHelper.getMeterInitialValuesAsCompleteRecord(
         metersHelper.getFirstMeterId(),
     )
     const values = [initialValue, ...input.values]
 
-    const daysOfChange = timeVaryingHelper.getDaysOfChangeForEnergyCost()
+    const daysOfChange = tariff.getValueChangeDatesForEnergyCost()
 
     let accurate = true
     let savings = new CurrencyZloty()
@@ -88,9 +88,8 @@ export function calculateSavings(
         countedSavedEnergy = savedEnergy
 
         const rangeSavings = calculateEnergyCost({
-            timeVaryingHelper,
-            from: parseDate(from.date).add(1, 'day'), // from dla funkcji zawiera się w zakresie
-            to: to.date,
+            tariff,
+            date: parseDate(to.date),
             energy: savedEnergyAtRange,
         })
 

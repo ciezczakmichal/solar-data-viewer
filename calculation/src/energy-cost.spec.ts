@@ -1,64 +1,69 @@
-import { UnitOfMeasure } from 'schema'
+import { TariffItem, UnitOfMeasure, VatRateItem } from 'schema'
 import {
+    EnergyCostCalculationInput,
     calculateEnergyCost,
     calculateFixedCost,
-    EnergyCostCalculationInput,
 } from './energy-cost'
 import { CalculationError } from './error'
-import { TimeVaryingValuesHelper } from './time-varying-values-helper'
-import { Month } from './utils/month'
+import { Tariff } from './tariff/tariff'
+import { parseDate } from './utils/date'
+import { dayJsInstance } from './utils/tests-utils'
 
 describe('calculateEnergyCost', () => {
     describe('testy na minimalnej liczbie danych', () => {
-        let input: EnergyCostCalculationInput
+        let tariffItems: TariffItem[]
+        let vatRates: VatRateItem[]
 
         beforeEach(() => {
-            input = {
-                timeVaryingHelper: new TimeVaryingValuesHelper({
-                    tariff: [
-                        {
-                            name: 'Pozycja #1',
-                            unitOfMeasure: UnitOfMeasure.kWh,
-                            values: [
-                                {
-                                    from: '2020-01-01',
-                                    value: 0.5,
-                                },
-                            ], // netto 50
-                        },
-                    ],
-                    vatRates: [
+            tariffItems = [
+                {
+                    name: 'Pozycja #1',
+                    unitOfMeasure: UnitOfMeasure.kWh,
+                    values: [
                         {
                             from: '2020-01-01',
-                            value: 25,
+                            value: 0.5,
                         },
-                    ],
-                }),
-                from: '2020-02-01',
-                to: '2020-02-01',
-                energy: 100,
-            }
+                    ], // netto 50
+                },
+            ]
+
+            vatRates = [
+                {
+                    from: '2020-01-01',
+                    value: 25,
+                },
+            ]
         })
 
         it('test obliczania dla jednej pozycji oraz jednej stawce VAT', () => {
+            const input: EnergyCostCalculationInput = {
+                tariff: new Tariff(tariffItems, vatRates),
+                date: dayJsInstance(2020, 2, 1),
+                energy: 100,
+            }
+
             const cost = calculateEnergyCost(input)
             expect(cost.value).toEqual(62.5)
         })
 
         it('funkcja ignoruje pozycje, które posiadają jednostkę inną niż kWh', () => {
-            input.timeVaryingHelper.setTariff([
-                ...input.timeVaryingHelper.tariff(),
-                {
-                    name: 'Pozycja miesięczna',
-                    unitOfMeasure: UnitOfMeasure.zlMies,
-                    values: [
-                        {
-                            from: '2020-01-01',
-                            value: 0.99,
-                        },
-                    ],
-                },
-            ])
+            tariffItems.push({
+                name: 'Pozycja miesięczna',
+                unitOfMeasure: UnitOfMeasure.zlMies,
+                values: [
+                    {
+                        from: '2020-01-01',
+                        value: 0.99,
+                    },
+                ],
+            })
+
+            const input: EnergyCostCalculationInput = {
+                tariff: new Tariff(tariffItems, vatRates),
+                date: dayJsInstance(2020, 2, 1),
+                energy: 100,
+            }
 
             const cost = calculateEnergyCost(input)
             expect(cost.value).toEqual(62.5)
@@ -67,8 +72,8 @@ describe('calculateEnergyCost', () => {
 
     it('test obliczania dla pierwszych dni z nowymi wartościami', () => {
         const baseInput: EnergyCostCalculationInput = {
-            timeVaryingHelper: new TimeVaryingValuesHelper({
-                tariff: [
+            tariff: new Tariff(
+                [
                     {
                         name: 'Pozycja #1',
                         unitOfMeasure: UnitOfMeasure.kWh,
@@ -84,7 +89,7 @@ describe('calculateEnergyCost', () => {
                         ],
                     },
                 ],
-                vatRates: [
+                [
                     {
                         from: '2020-01-01',
                         value: 25,
@@ -94,16 +99,13 @@ describe('calculateEnergyCost', () => {
                         value: 50,
                     },
                 ],
-            }),
-            from: 'X',
-            to: 'X',
+            ),
+            date: parseDate('2020-01-01'),
             energy: 100,
         }
 
         const input1: EnergyCostCalculationInput = {
             ...baseInput,
-            from: '2020-01-01',
-            to: '2020-01-01',
         }
 
         const cost1 = calculateEnergyCost(input1)
@@ -111,8 +113,7 @@ describe('calculateEnergyCost', () => {
 
         const input2: EnergyCostCalculationInput = {
             ...baseInput,
-            from: '2020-05-01',
-            to: '2020-05-01',
+            date: parseDate('2020-05-01'),
         }
 
         const cost2 = calculateEnergyCost(input2)
@@ -132,8 +133,8 @@ describe('calculateEnergyCost', () => {
 
         beforeEach(() => {
             input = {
-                timeVaryingHelper: new TimeVaryingValuesHelper({
-                    tariff: [
+                tariff: new Tariff(
+                    [
                         {
                             name: 'Pozycja #1',
                             unitOfMeasure: UnitOfMeasure.kWh,
@@ -145,32 +146,36 @@ describe('calculateEnergyCost', () => {
                             ],
                         },
                     ],
-                    vatRates: [
+                    [
                         {
                             from: '2020-01-01',
                             value: 25,
                         },
                     ],
-                }),
-                from: '2020-02-01',
-                to: '2020-02-01',
+                ),
+                date: dayJsInstance(2020, 2, 1),
                 energy: 100,
             }
         })
 
         it('gdy brak pozycji taryfy oraz stawki VAT', () => {
-            input.timeVaryingHelper.setTariff([])
-            input.timeVaryingHelper.setVatRates([])
+            input.tariff.setTariff([])
+            input.tariff.setVatRates([])
             expectCalculationErrorWithCorrectMessageIsThrown()
         })
 
         it('gdy brak pozycji taryfy', () => {
-            input.timeVaryingHelper.setTariff([])
+            input.tariff.setTariff([])
+            expectCalculationErrorWithCorrectMessageIsThrown()
+        })
+
+        it('gdy brak pozycji taryfy ze względu na użytą datę', () => {
+            input.date = dayJsInstance(2019, 3, 1)
             expectCalculationErrorWithCorrectMessageIsThrown()
         })
 
         it('gdy brak pozycji taryfy, które posiadają jednostkę kWh', () => {
-            input.timeVaryingHelper.setTariff([
+            input.tariff.setTariff([
                 {
                     name: 'Pozycja miesięczna',
                     unitOfMeasure: UnitOfMeasure.zlMies,
@@ -187,7 +192,7 @@ describe('calculateEnergyCost', () => {
         })
 
         it('gdy brak wartości stawki VAT', () => {
-            input.timeVaryingHelper.setVatRates([])
+            input.tariff.setVatRates([])
 
             expect(() => calculateEnergyCost(input)).toThrowError(
                 new CalculationError(
@@ -195,48 +200,13 @@ describe('calculateEnergyCost', () => {
                 ),
             )
         })
-
-        it('gdy są pozycje, ale zakres dat obejmuje dni bez dostępnych parametrów', () => {
-            const input: EnergyCostCalculationInput = {
-                timeVaryingHelper: new TimeVaryingValuesHelper({
-                    tariff: [
-                        {
-                            name: 'Pozycja #1',
-                            unitOfMeasure: UnitOfMeasure.kWh,
-                            values: [
-                                {
-                                    from: '2020-01-01',
-                                    value: 0.5,
-                                },
-                            ],
-                        },
-                    ],
-                    vatRates: [
-                        {
-                            from: '2020-01-01',
-                            value: 25,
-                        },
-                    ],
-                }),
-                from: '2019-12-31',
-                to: '2020-01-01',
-                energy: 100,
-            }
-
-            expect(() => calculateEnergyCost(input)).toThrowError(
-                new CalculationError(
-                    'Zakres czasowy obejmuje okres, w którym brak wartości pozycji "Pozycja #1"',
-                ),
-            )
-        })
     })
 })
 
 describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21', () => {
-    // daty "from" i "to" nie mają znaczenia, byle były później niż wartości współczynników
     const input: EnergyCostCalculationInput = {
-        timeVaryingHelper: new TimeVaryingValuesHelper({
-            tariff: [
+        tariff: new Tariff(
+            [
                 {
                     name: 'Energia czynna',
                     unitOfMeasure: UnitOfMeasure.kWh,
@@ -329,15 +299,14 @@ describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21
                     ],
                 },
             ],
-            vatRates: [
+            [
                 {
                     from: '2021-01-01',
                     value: 23,
                 },
             ],
-        }),
-        from: '2021-03-01',
-        to: '2021-03-31',
+        ),
+        date: dayJsInstance(2021, 3, 31),
         energy: 290,
     }
 
@@ -345,6 +314,6 @@ describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21
     let cost = calculateEnergyCost(input)
     expect(cost.value).toEqual(170.76)
 
-    cost = calculateFixedCost(input.timeVaryingHelper, new Month(2021, 2))
+    cost = calculateFixedCost(input.tariff, dayJsInstance(2021, 2, 1))
     expect(cost.value).toEqual(19.36)
 })

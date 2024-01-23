@@ -7,7 +7,7 @@ import {
 } from 'schema'
 import { MetersDataHelper } from './meters-data-helper'
 import { SavingsCalculationInput, calculateSavings } from './savings'
-import { TimeVaryingValuesHelper } from './time-varying-values-helper'
+import { Tariff } from './tariff/tariff'
 
 describe('calculateSavings', () => {
     it('test obliczania oszczędności przy kilku zmiennych parametrach z danymi o pełni pasujących datach', () => {
@@ -57,7 +57,7 @@ describe('calculateSavings', () => {
             },
         ]
 
-        const tariff: TariffItem[] = [
+        const tariffItems: TariffItem[] = [
             {
                 name: 'Parametr #1',
                 unitOfMeasure: UnitOfMeasure.kWh,
@@ -102,10 +102,7 @@ describe('calculateSavings', () => {
                 energyInWarehouseFactor: 0.8,
             },
             metersHelper: new MetersDataHelper({ meters, values }),
-            timeVaryingHelper: new TimeVaryingValuesHelper({
-                tariff,
-                vatRates,
-            }),
+            tariff: new Tariff(tariffItems, vatRates),
         }
 
         const prepareInput = (recordCount: number): SavingsCalculationInput => {

@@ -1,4 +1,4 @@
-import type { MetersDataHelper, TimeVaryingValuesHelper } from 'calculation'
+import type { MetersDataHelper, Tariff } from 'calculation'
 import type { CompleteValuesRecord, SolarData } from 'schema'
 import { getContext, setContext } from 'svelte'
 
@@ -10,7 +10,7 @@ export interface AppContext {
     to: CompleteValuesRecord
 
     metersHelper: MetersDataHelper
-    timeVaryingHelper: TimeVaryingValuesHelper
+    tariff: Tariff
 }
 
 const key = Symbol()

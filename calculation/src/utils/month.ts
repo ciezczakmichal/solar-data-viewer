@@ -1,10 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs'
 import { parseDate } from './date'
-
-export interface DateRange {
-    from: Dayjs
-    to: Dayjs
-}
+import { DateRange } from './date-range'
 
 export class Month {
     private year!: number
@@ -31,7 +27,7 @@ export class Month {
      * Zwraca obiekt reprezentujący zakres dni od początku do końcu miesiąca.
      * @returns Obiekt reprezentujący zakres dni
      */
-    dateRange(): DateRange {
+    asDateRange(): DateRange {
         return {
             from: this.firstDayOfMonth(),
             to: this.lastDayOfMonth(),

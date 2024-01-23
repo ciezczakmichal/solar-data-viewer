@@ -1,29 +1,20 @@
 import currency from 'currency.js'
 import { Dayjs } from 'dayjs'
 import { CalculationError } from './error'
-import { TimeVaryingValuesHelper } from './time-varying-values-helper'
+import { Tariff } from './tariff/tariff'
 import { CurrencyZloty } from './utils/currency-zloty'
-import { parseDate } from './utils/date'
-import { Month } from './utils/month'
 
 export interface EnergyCostCalculationInput {
-    timeVaryingHelper: TimeVaryingValuesHelper
-
-    // pierwszy dzień poboru energii
-    from: string | Dayjs
-
-    // ostatni dzień poboru energii
-    to: string | Dayjs
+    tariff: Tariff
+    date: Dayjs
 
     // wartość energii pobranej (kWh)
     energy: number
 }
 
 /**
- * Zwraca koszt pobrania (zakupu) podanej ilości energii w określonym zakresie czasowym.
+ * Zwraca koszt pobrania (zakupu) podanej ilości energii przy użyciu taryfy we wskazanym dniu.
  * Uwzględniane są wyłącznie opłaty zmienne, zależne od ilości energii.
- * Zakres czasowy nie może obejmować dnia zmiany lub wprowadzenia wartości taryfy (w takiej sytuacji jest rzucany wyjątek),
- * gdyż funkcja nie ma informacji jaką część energii obliczać poszczególnymi parametrami.
  * W celu obliczenia kosztu potrzebny jest minimum jeden parametr taryfy oraz stawka VAT.
  * @param input Dane niezbędne do obliczenia kosztu
  * @returns Koszt zakupu energii
@@ -31,14 +22,8 @@ export interface EnergyCostCalculationInput {
 export function calculateEnergyCost(
     input: EnergyCostCalculationInput,
 ): currency {
-    const { timeVaryingHelper, from: inputFrom, to: inputTo, energy } = input
-    const from = parseDate(inputFrom)
-    const to = parseDate(inputTo)
-
-    const tariffValues = timeVaryingHelper.getTariffValuesForEnergyCost(
-        from,
-        to,
-    )
+    const { tariff, date, energy } = input
+    const tariffValues = tariff.getValuesForEnergyCost(date)
 
     if (tariffValues.length === 0) {
         throw new CalculationError(
@@ -46,12 +31,12 @@ export function calculateEnergyCost(
         )
     }
 
-    const rate = timeVaryingHelper.getVatTaxRate(from, to)
+    const rate = tariff.getVatTaxRate(date)
     let result = new CurrencyZloty()
 
-    for (const itemValue of tariffValues) {
+    for (const value of tariffValues) {
         // biblioteka zastosuje zaokrąglenie do pełnych groszy
-        result = result.add(itemValue.value * energy)
+        result = result.add(value * energy)
     }
 
     return addVatTax(result, rate)
@@ -61,37 +46,27 @@ export function calculateEnergyCost(
  * Zwraca koszt zakupu 1 kWh energii w podanym dniu.
  * Uwzględniane są wyłącznie opłaty zmienne, zależne od ilości energii.
  * @see calculateEnergyCost()
- * @param timeVaryingHelper Obiekt pomocniczy, dostarczający dane o taryfie i stawce VAT
- * @param date Dzień, dla którego wyliczyć dane
+ * @param tariff Dane dotyczące taryfy i stawki VAT
+ * @param date Dzień, dla którego obliczyć dane
  * @returns Koszt zakupu energii
  */
 export function calculateEnergyCostAtDay(
-    timeVaryingHelper: TimeVaryingValuesHelper,
-    date: string | Dayjs,
+    tariff: Tariff,
+    date: Dayjs,
 ): currency {
-    const day = parseDate(date)
-
-    return calculateEnergyCost({
-        timeVaryingHelper,
-        from: day,
-        to: day,
-        energy: 1,
-    })
+    return calculateEnergyCost({ tariff, date, energy: 1 })
 }
 
 /**
- * Zwraca kwotę opłat stałych za prąd (niezależnych od ilości pobranej energii) ponoszonych
- * we wskazanym miesiącu.
- * @param timeVaryingHelper Obiekt pomocniczy, dostarczający dane o taryfie i stawce VAT
- * @param month Miesiąc, dla którego pobrać dane
+ * Zwraca kwotę opłat stałych za prąd (niezależnych od ilości pobranej energii) przy użyciu taryfy we wskazanym dniu.
+ * W celu obliczenia kosztu potrzebny jest minimum jeden parametr taryfy oraz stawka VAT.
+ * @param tariff Dane dotyczące taryfy i stawki VAT
+ * @param date Dzień, dla którego obliczyć dane
  * @returns Kwota opłat stałych w miesiącu
  * @todo testy jednostkowe - na wzór calculateEnergyCost()
  */
-export function calculateFixedCost(
-    timeVaryingHelper: TimeVaryingValuesHelper,
-    month: Month,
-): currency {
-    const tariffValues = timeVaryingHelper.getTariffValuesForFixedCost(month)
+export function calculateFixedCost(tariff: Tariff, date: Dayjs): currency {
+    const tariffValues = tariff.getValuesForFixedCost(date)
 
     if (tariffValues.length === 0) {
         throw new CalculationError(
@@ -99,12 +74,12 @@ export function calculateFixedCost(
         )
     }
 
-    const rate = timeVaryingHelper.getVatTaxRate(month.lastDayOfMonth())
+    const rate = tariff.getVatTaxRate(date)
     let result = new CurrencyZloty()
 
-    for (const itemValue of tariffValues) {
+    for (const value of tariffValues) {
         // biblioteka zastosuje zaokrąglenie do pełnych groszy
-        result = result.add(itemValue.value)
+        result = result.add(value)
     }
 
     return addVatTax(result, rate)
