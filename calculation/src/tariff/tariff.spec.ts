@@ -1,9 +1,6 @@
 import { TariffItem, UnitOfMeasure, VatRateItem } from 'schema'
 import { CalculationError } from '../error'
-import {
-    dayJsInstance,
-    dayJsInstanceWithExtraProperty,
-} from '../utils/tests-utils'
+import { dayJsDate, dayJsDateWithProperty } from '../utils/tests-utils'
 import { Tariff } from './tariff'
 
 describe('Tariff', () => {
@@ -11,7 +8,7 @@ describe('Tariff', () => {
         it('funkcja rzuca wyjątek, jeśli dla wskazanego dnia nie ma dostępnej stawki VAT', () => {
             const vatRates: VatRateItem[] = [
                 {
-                    from: dayJsInstance(2020, 1, 1),
+                    from: dayJsDate(2020, 1, 1),
                     value: 23,
                 },
             ]
@@ -22,11 +19,11 @@ describe('Tariff', () => {
             )
 
             expect(() =>
-                instance.getVatTaxRate(dayJsInstance(2010, 5, 13)),
+                instance.getVatTaxRate(dayJsDate(2010, 5, 13)),
             ).toThrow(error)
 
             expect(() =>
-                instance.getVatTaxRate(dayJsInstance(2019, 12, 31)),
+                instance.getVatTaxRate(dayJsDate(2019, 12, 31)),
             ).toThrow(error)
         })
     })
@@ -39,7 +36,7 @@ describe('Tariff', () => {
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: dayJsInstance(2020, 1, 1),
+                            from: dayJsDate(2020, 1, 1),
                             value: 0.7,
                         },
                     ],
@@ -49,11 +46,11 @@ describe('Tariff', () => {
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: dayJsInstance(2020, 5, 1),
+                            from: dayJsDate(2020, 5, 1),
                             value: 0.2,
                         },
                         {
-                            from: dayJsInstance(2022, 1, 1),
+                            from: dayJsDate(2022, 1, 1),
                             value: 0.005,
                         },
                     ],
@@ -63,7 +60,7 @@ describe('Tariff', () => {
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: dayJsInstance(2023, 7, 12),
+                            from: dayJsDate(2023, 7, 12),
                             value: 0.12,
                         },
                     ],
@@ -73,10 +70,10 @@ describe('Tariff', () => {
             const instance = new Tariff(tariffItems)
 
             expect(instance.getValueChangeDatesForEnergyCost()).toEqual([
-                dayJsInstanceWithExtraProperty(2020, 1, 1),
-                dayJsInstanceWithExtraProperty(2020, 5, 1),
-                dayJsInstanceWithExtraProperty(2022, 1, 1),
-                dayJsInstanceWithExtraProperty(2023, 7, 12),
+                dayJsDateWithProperty(2020, 1, 1),
+                dayJsDateWithProperty(2020, 5, 1),
+                dayJsDateWithProperty(2022, 1, 1),
+                dayJsDateWithProperty(2023, 7, 12),
             ])
         })
 
@@ -87,7 +84,7 @@ describe('Tariff', () => {
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: dayJsInstance(2020, 1, 1),
+                            from: dayJsDate(2020, 1, 1),
                             value: 0.7,
                         },
                     ],
@@ -96,11 +93,11 @@ describe('Tariff', () => {
 
             const vatRates: VatRateItem[] = [
                 {
-                    from: dayJsInstance(2019, 1, 23),
+                    from: dayJsDate(2019, 1, 23),
                     value: 23,
                 },
                 {
-                    from: dayJsInstance(2021, 1, 5),
+                    from: dayJsDate(2021, 1, 5),
                     value: 5,
                 },
             ]
@@ -108,9 +105,9 @@ describe('Tariff', () => {
             const instance = new Tariff(tariffItems, vatRates)
 
             expect(instance.getValueChangeDatesForEnergyCost()).toEqual([
-                dayJsInstanceWithExtraProperty(2019, 1, 23),
-                dayJsInstanceWithExtraProperty(2020, 1, 1),
-                dayJsInstanceWithExtraProperty(2021, 1, 5),
+                dayJsDateWithProperty(2019, 1, 23),
+                dayJsDateWithProperty(2020, 1, 1),
+                dayJsDateWithProperty(2021, 1, 5),
             ])
         })
 
@@ -121,11 +118,11 @@ describe('Tariff', () => {
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: dayJsInstance(2020, 1, 1),
+                            from: dayJsDate(2020, 1, 1),
                             value: 0.7,
                         },
                         {
-                            from: dayJsInstance(2022, 1, 5),
+                            from: dayJsDate(2022, 1, 5),
                             value: 0.005,
                         },
                     ],
@@ -135,11 +132,11 @@ describe('Tariff', () => {
                     unitOfMeasure: UnitOfMeasure.zlMies,
                     values: [
                         {
-                            from: dayJsInstance(2021, 1, 1),
+                            from: dayJsDate(2021, 1, 1),
                             value: 0.13,
                         },
                         {
-                            from: dayJsInstance(2021, 6, 13),
+                            from: dayJsDate(2021, 6, 13),
                             value: 0.55,
                         },
                     ],
@@ -149,8 +146,8 @@ describe('Tariff', () => {
             const instance = new Tariff(tariffItems)
 
             expect(instance.getValueChangeDatesForEnergyCost()).toEqual([
-                dayJsInstanceWithExtraProperty(2020, 1, 1),
-                dayJsInstanceWithExtraProperty(2022, 1, 5),
+                dayJsDateWithProperty(2020, 1, 1),
+                dayJsDateWithProperty(2022, 1, 5),
             ])
         })
 
@@ -161,11 +158,11 @@ describe('Tariff', () => {
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: dayJsInstance(2020, 1, 1),
+                            from: dayJsDate(2020, 1, 1),
                             value: 0.7,
                         },
                         {
-                            from: dayJsInstance(2022, 1, 1),
+                            from: dayJsDate(2022, 1, 1),
                             value: 0.005,
                         },
                     ],
@@ -175,11 +172,11 @@ describe('Tariff', () => {
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: dayJsInstance(2021, 1, 1),
+                            from: dayJsDate(2021, 1, 1),
                             value: 0.13,
                         },
                         {
-                            from: dayJsInstance(2022, 1, 1),
+                            from: dayJsDate(2022, 1, 1),
                             value: 0.55,
                         },
                     ],
@@ -188,11 +185,11 @@ describe('Tariff', () => {
 
             const vatRates: VatRateItem[] = [
                 {
-                    from: dayJsInstance(2020, 1, 1),
+                    from: dayJsDate(2020, 1, 1),
                     value: 23,
                 },
                 {
-                    from: dayJsInstance(2021, 1, 1),
+                    from: dayJsDate(2021, 1, 1),
                     value: 5,
                 },
             ]
@@ -200,9 +197,9 @@ describe('Tariff', () => {
             const instance = new Tariff(tariffItems, vatRates)
 
             expect(instance.getValueChangeDatesForEnergyCost()).toEqual([
-                dayJsInstanceWithExtraProperty(2020, 1, 1),
-                dayJsInstanceWithExtraProperty(2021, 1, 1),
-                dayJsInstanceWithExtraProperty(2022, 1, 1),
+                dayJsDateWithProperty(2020, 1, 1),
+                dayJsDateWithProperty(2021, 1, 1),
+                dayJsDateWithProperty(2022, 1, 1),
             ])
         })
 
@@ -214,19 +211,19 @@ describe('Tariff', () => {
                     // dane są posortowane niezgodnie z oczekiwaniami, co ma udowadniać zastosowanie sortowania
                     values: [
                         {
-                            from: dayJsInstance(2022, 7, 21),
+                            from: dayJsDate(2022, 7, 21),
                             value: 22,
                         },
                         {
-                            from: dayJsInstance(2019, 5, 9),
+                            from: dayJsDate(2019, 5, 9),
                             value: 19,
                         },
                         {
-                            from: dayJsInstance(2035, 2, 25),
+                            from: dayJsDate(2035, 2, 25),
                             value: 35,
                         },
                         {
-                            from: dayJsInstance(2010, 8, 13),
+                            from: dayJsDate(2010, 8, 13),
                             value: 10,
                         },
                     ],
@@ -236,10 +233,10 @@ describe('Tariff', () => {
             const instance = new Tariff(tariffItems)
 
             expect(instance.getValueChangeDatesForEnergyCost()).toEqual([
-                dayJsInstanceWithExtraProperty(2010, 8, 13),
-                dayJsInstanceWithExtraProperty(2019, 5, 9),
-                dayJsInstanceWithExtraProperty(2022, 7, 21),
-                dayJsInstanceWithExtraProperty(2035, 2, 25),
+                dayJsDateWithProperty(2010, 8, 13),
+                dayJsDateWithProperty(2019, 5, 9),
+                dayJsDateWithProperty(2022, 7, 21),
+                dayJsDateWithProperty(2035, 2, 25),
             ])
         })
     })

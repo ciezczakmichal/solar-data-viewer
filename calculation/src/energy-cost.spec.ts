@@ -6,7 +6,7 @@ import {
 } from './energy-cost'
 import { CalculationError } from './error'
 import { Tariff } from './tariff/tariff'
-import { dayJsInstance } from './utils/tests-utils'
+import { dayJsDate } from './utils/tests-utils'
 
 describe('calculateEnergyCost', () => {
     describe('testy na minimalnej liczbie danych', () => {
@@ -20,7 +20,7 @@ describe('calculateEnergyCost', () => {
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: dayJsInstance(2020, 1, 1),
+                            from: dayJsDate(2020, 1, 1),
                             value: 0.5,
                         },
                     ], // netto 50
@@ -29,7 +29,7 @@ describe('calculateEnergyCost', () => {
 
             vatRates = [
                 {
-                    from: dayJsInstance(2020, 1, 1),
+                    from: dayJsDate(2020, 1, 1),
                     value: 25,
                 },
             ]
@@ -38,7 +38,7 @@ describe('calculateEnergyCost', () => {
         it('test obliczania dla jednej pozycji oraz jednej stawce VAT', () => {
             const input: EnergyCostCalculationInput = {
                 tariff: new Tariff(tariffItems, vatRates),
-                date: dayJsInstance(2020, 2, 1),
+                date: dayJsDate(2020, 2, 1),
                 energy: 100,
             }
 
@@ -52,7 +52,7 @@ describe('calculateEnergyCost', () => {
                 unitOfMeasure: UnitOfMeasure.zlMies,
                 values: [
                     {
-                        from: dayJsInstance(2020, 1, 1),
+                        from: dayJsDate(2020, 1, 1),
                         value: 0.99,
                     },
                 ],
@@ -60,7 +60,7 @@ describe('calculateEnergyCost', () => {
 
             const input: EnergyCostCalculationInput = {
                 tariff: new Tariff(tariffItems, vatRates),
-                date: dayJsInstance(2020, 2, 1),
+                date: dayJsDate(2020, 2, 1),
                 energy: 100,
             }
 
@@ -78,11 +78,11 @@ describe('calculateEnergyCost', () => {
                         unitOfMeasure: UnitOfMeasure.kWh,
                         values: [
                             {
-                                from: dayJsInstance(2020, 1, 1),
+                                from: dayJsDate(2020, 1, 1),
                                 value: 0.3,
                             }, // netto 30
                             {
-                                from: dayJsInstance(2020, 5, 1),
+                                from: dayJsDate(2020, 5, 1),
                                 value: 0.6,
                             }, // netto 60
                         ],
@@ -90,16 +90,16 @@ describe('calculateEnergyCost', () => {
                 ],
                 [
                     {
-                        from: dayJsInstance(2020, 1, 1),
+                        from: dayJsDate(2020, 1, 1),
                         value: 25,
                     },
                     {
-                        from: dayJsInstance(2020, 5, 1),
+                        from: dayJsDate(2020, 5, 1),
                         value: 50,
                     },
                 ],
             ),
-            date: dayJsInstance(2020, 1, 1),
+            date: dayJsDate(2020, 1, 1),
             energy: 100,
         }
 
@@ -112,7 +112,7 @@ describe('calculateEnergyCost', () => {
 
         const input2: EnergyCostCalculationInput = {
             ...baseInput,
-            date: dayJsInstance(2020, 5, 1),
+            date: dayJsDate(2020, 5, 1),
         }
 
         const cost2 = calculateEnergyCost(input2)
@@ -139,7 +139,7 @@ describe('calculateEnergyCost', () => {
                             unitOfMeasure: UnitOfMeasure.kWh,
                             values: [
                                 {
-                                    from: dayJsInstance(2020, 1, 1),
+                                    from: dayJsDate(2020, 1, 1),
                                     value: 0.5,
                                 },
                             ],
@@ -147,12 +147,12 @@ describe('calculateEnergyCost', () => {
                     ],
                     [
                         {
-                            from: dayJsInstance(2020, 1, 1),
+                            from: dayJsDate(2020, 1, 1),
                             value: 25,
                         },
                     ],
                 ),
-                date: dayJsInstance(2020, 2, 1),
+                date: dayJsDate(2020, 2, 1),
                 energy: 100,
             }
         })
@@ -169,7 +169,7 @@ describe('calculateEnergyCost', () => {
         })
 
         it('gdy brak pozycji taryfy ze względu na użytą datę', () => {
-            input.date = dayJsInstance(2019, 3, 1)
+            input.date = dayJsDate(2019, 3, 1)
             expectCalculationErrorWithCorrectMessageIsThrown()
         })
 
@@ -180,7 +180,7 @@ describe('calculateEnergyCost', () => {
                     unitOfMeasure: UnitOfMeasure.zlMies,
                     values: [
                         {
-                            from: dayJsInstance(2020, 1, 1),
+                            from: dayJsDate(2020, 1, 1),
                             value: 0.99,
                         },
                     ],
@@ -211,7 +211,7 @@ describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: dayJsInstance(2021, 1, 1),
+                            from: dayJsDate(2021, 1, 1),
                             value: 0.3015, // inna niż w bazie
                         },
                     ], // netto 87,44
@@ -221,7 +221,7 @@ describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: dayJsInstance(2021, 1, 1),
+                            from: dayJsDate(2021, 1, 1),
                             value: 0.0102,
                         },
                     ], // netto 2,96
@@ -231,7 +231,7 @@ describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: dayJsInstance(2021, 1, 1),
+                            from: dayJsDate(2021, 1, 1),
                             value: 0.1648,
                         },
                     ], // netto 47,79
@@ -241,7 +241,7 @@ describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: dayJsInstance(2021, 1, 1),
+                            from: dayJsDate(2021, 1, 1),
                             value: 0.0022,
                         },
                     ], // netto 0,64
@@ -251,7 +251,7 @@ describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: dayJsInstance(2021, 1, 1),
+                            from: dayJsDate(2021, 1, 1),
                             value: 0,
                         },
                     ],
@@ -262,7 +262,7 @@ describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21
                     unitOfMeasure: UnitOfMeasure.zlMies,
                     values: [
                         {
-                            from: dayJsInstance(2021, 1, 1),
+                            from: dayJsDate(2021, 1, 1),
                             value: 6.02,
                         },
                     ],
@@ -272,7 +272,7 @@ describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21
                     unitOfMeasure: UnitOfMeasure.zlMies,
                     values: [
                         {
-                            from: dayJsInstance(2021, 1, 1),
+                            from: dayJsDate(2021, 1, 1),
                             value: 0.33,
                         },
                     ],
@@ -282,7 +282,7 @@ describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21
                     unitOfMeasure: UnitOfMeasure.zlMies,
                     values: [
                         {
-                            from: dayJsInstance(2021, 1, 1),
+                            from: dayJsDate(2021, 1, 1),
                             value: 7.47,
                         },
                     ],
@@ -292,7 +292,7 @@ describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21
                     unitOfMeasure: UnitOfMeasure.zlMies,
                     values: [
                         {
-                            from: dayJsInstance(2021, 1, 1),
+                            from: dayJsDate(2021, 1, 1),
                             value: 1.92,
                         },
                     ],
@@ -300,12 +300,12 @@ describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21
             ],
             [
                 {
-                    from: dayJsInstance(2021, 1, 1),
+                    from: dayJsDate(2021, 1, 1),
                     value: 23,
                 },
             ],
         ),
-        date: dayJsInstance(2021, 3, 31),
+        date: dayJsDate(2021, 3, 31),
         energy: 290,
     }
 
@@ -313,6 +313,6 @@ describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21
     let cost = calculateEnergyCost(input)
     expect(cost.value).toEqual(170.76)
 
-    cost = calculateFixedCost(input.tariff, dayJsInstance(2021, 2, 1))
+    cost = calculateFixedCost(input.tariff, dayJsDate(2021, 2, 1))
     expect(cost.value).toEqual(19.36)
 })
