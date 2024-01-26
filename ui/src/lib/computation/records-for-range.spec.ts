@@ -1,5 +1,6 @@
 import { dayJsDate, dayJsDateWithProperty } from 'calculation'
 import type { ValuesRecord } from 'schema'
+import { describe, expect, test } from 'vitest'
 import {
     DataRange,
     getCompleteRecordsForRange,
@@ -49,7 +50,7 @@ describe('records-for-range', () => {
             },
         ]
 
-        it('tygodniowy zakres danych', () => {
+        test('tygodniowy zakres danych', () => {
             const actual = getRecordsForRange(values, DataRange.Week)
 
             expect(actual).toEqual([
@@ -100,7 +101,7 @@ describe('records-for-range', () => {
             ])
         })
 
-        it('miesięczny zakres danych', () => {
+        test('miesięczny zakres danych', () => {
             const actual = getRecordsForRange(values, DataRange.Month)
             expect(actual).toEqual([
                 {
@@ -167,7 +168,7 @@ describe('records-for-range', () => {
             },
         ]
 
-        it('getYieldRecordsForRange - tygodniowy zakres danych', () => {
+        test('getYieldRecordsForRange - tygodniowy zakres danych', () => {
             const actual = getYieldRecordsForRange(values, DataRange.Week)
             expect(actual).toEqual([
                 {
@@ -205,7 +206,7 @@ describe('records-for-range', () => {
             ])
         })
 
-        it('getYieldRecordsForRange - miesięczny zakres danych', () => {
+        test('getYieldRecordsForRange - miesięczny zakres danych', () => {
             const actual = getYieldRecordsForRange(values, DataRange.Month)
             expect(actual).toEqual([
                 {
@@ -229,7 +230,7 @@ describe('records-for-range', () => {
             ])
         })
 
-        it('getCompleteRecordsForRange - tygodniowy zakres danych', () => {
+        test('getCompleteRecordsForRange - tygodniowy zakres danych', () => {
             const actual = getCompleteRecordsForRange(values, DataRange.Week)
             expect(actual).toEqual([
                 {
@@ -263,7 +264,7 @@ describe('records-for-range', () => {
             ])
         })
 
-        it('getCompleteRecordsForRange - miesięczny zakres danych', () => {
+        test('getCompleteRecordsForRange - miesięczny zakres danych', () => {
             const actual = getCompleteRecordsForRange(values, DataRange.Month)
             expect(actual).toEqual([
                 // nie zawiera w ogóle danych dla stycznia, gdyż rekord dla 31.01 nie jest typu Complete

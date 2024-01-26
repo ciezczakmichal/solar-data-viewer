@@ -12,8 +12,7 @@
         "prettier"
     ],
     "env": {
-        "node": true,
-        "jest": true
+        "node": true
     },
     "rules": {
         "no-duplicate-imports": 2,

@@ -1,11 +1,12 @@
 import { TariffItem, UnitOfMeasure, VatRateItem } from 'schema'
+import { describe, expect, test } from 'vitest'
 import { CalculationError } from '../error'
 import { dayJsDate, dayJsDateWithProperty } from '../utils/tests-utils'
 import { Tariff } from './tariff'
 
 describe('Tariff', () => {
     describe('getVatTaxRate', () => {
-        it('funkcja rzuca wyjątek, jeśli dla wskazanego dnia nie ma dostępnej stawki VAT', () => {
+        test('funkcja rzuca wyjątek, jeśli dla wskazanego dnia nie ma dostępnej stawki VAT', () => {
             const vatRates: VatRateItem[] = [
                 {
                     from: dayJsDate(2020, 1, 1),
@@ -29,7 +30,7 @@ describe('Tariff', () => {
     })
 
     describe('getValueChangeDatesForEnergyCost', () => {
-        it('zwraca wszystkie dni parametrów kWh', () => {
+        test('zwraca wszystkie dni parametrów kWh', () => {
             const tariffItems: TariffItem[] = [
                 {
                     name: 'Pozycja #1',
@@ -77,7 +78,7 @@ describe('Tariff', () => {
             ])
         })
 
-        it('uwzględnia dni zmiany stawki VAT', () => {
+        test('uwzględnia dni zmiany stawki VAT', () => {
             const tariffItems: TariffItem[] = [
                 {
                     name: 'Pozycja #1',
@@ -111,7 +112,7 @@ describe('Tariff', () => {
             ])
         })
 
-        it('uwzględnia wyłącznie pozycje o jednostce kWh', () => {
+        test('uwzględnia wyłącznie pozycje o jednostce kWh', () => {
             const tariffItems: TariffItem[] = [
                 {
                     name: 'Pozycja #1',
@@ -151,7 +152,7 @@ describe('Tariff', () => {
             ])
         })
 
-        it('nie zwraca duplikatów dat', () => {
+        test('nie zwraca duplikatów dat', () => {
             const tariffItems: TariffItem[] = [
                 {
                     name: 'Pozycja #1',
@@ -203,7 +204,7 @@ describe('Tariff', () => {
             ])
         })
 
-        it('sortuje daty rosnąco', () => {
+        test('sortuje daty rosnąco', () => {
             const tariffItems: TariffItem[] = [
                 {
                     name: 'Pozycja #1',

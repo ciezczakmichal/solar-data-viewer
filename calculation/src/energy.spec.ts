@@ -1,11 +1,12 @@
 import { CompleteValuesRecord, MeterRecord } from 'schema'
+import { describe, expect, test } from 'vitest'
 import { EnergyCalculationInput, calculateEnergy } from './energy'
 import { CalculationError } from './error'
 import { MetersDataHelper } from './meters-data-helper'
 import { dayJsDate } from './utils/tests-utils'
 
 describe('calculateEnergy', () => {
-    it('test obliczania liczby dni', () => {
+    test('test obliczania liczby dni', () => {
         const values = {
             totalYield: 0,
             charged: 0,
@@ -34,7 +35,7 @@ describe('calculateEnergy', () => {
         expect(result.days).toEqual(7)
     })
 
-    it('test obliczania liczby dni - gdy zdefiniowano licznik', () => {
+    test('test obliczania liczby dni - gdy zdefiniowano licznik', () => {
         const meters: MeterRecord[] = [
             {
                 id: 1,
@@ -74,7 +75,7 @@ describe('calculateEnergy', () => {
         expect(result.days).toEqual(2)
     })
 
-    it('test pełnego bilansowania - wersja z 0% autokonsumpcji', () => {
+    test('test pełnego bilansowania - wersja z 0% autokonsumpcji', () => {
         const input: EnergyCalculationInput = {
             from: {
                 meterId: 1,
@@ -105,7 +106,7 @@ describe('calculateEnergy', () => {
         expect(result.energyToChargeOrBuy).toEqual(0)
     })
 
-    it('test pełnego bilansowania - wersja z 100% autokonsumpcji', () => {
+    test('test pełnego bilansowania - wersja z 100% autokonsumpcji', () => {
         const input: EnergyCalculationInput = {
             from: {
                 meterId: 1,
@@ -136,7 +137,7 @@ describe('calculateEnergy', () => {
         expect(result.energyToChargeOrBuy).toEqual(0)
     })
 
-    it('test liczenia nadwyżki', () => {
+    test('test liczenia nadwyżki', () => {
         const input: EnergyCalculationInput = {
             from: {
                 meterId: 1,
@@ -168,7 +169,7 @@ describe('calculateEnergy', () => {
     })
 
     describe('obsługa liczników', () => {
-        it('jeśli dane pochodzą z dwóch liczników, a brak obiektu helper-a, rzucany jest wyjątek', () => {
+        test('jeśli dane pochodzą z dwóch liczników, a brak obiektu helper-a, rzucany jest wyjątek', () => {
             const meters: MeterRecord[] = [
                 {
                     id: 1,
@@ -220,7 +221,7 @@ describe('calculateEnergy', () => {
             expect(() => calculateEnergy(input)).toThrow(CalculationError)
         })
 
-        it('test obsługi dwóch liczników - każdy z wartościami początkowymi != 0', () => {
+        test('test obsługi dwóch liczników - każdy z wartościami początkowymi != 0', () => {
             const meters: MeterRecord[] = [
                 {
                     id: 1,
@@ -277,7 +278,7 @@ describe('calculateEnergy', () => {
         })
     })
 
-    it('test obsługi trzech liczników - każdy z różnymi, wybranymi wartościami', () => {
+    test('test obsługi trzech liczników - każdy z różnymi, wybranymi wartościami', () => {
         const meters: MeterRecord[] = [
             {
                 id: 1,

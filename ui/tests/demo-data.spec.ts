@@ -2,6 +2,7 @@ import { readFile } from 'fs/promises'
 import { dirname, join } from 'path'
 import { validateSolarData } from 'schema'
 import { fileURLToPath } from 'url'
+import { test } from 'vitest'
 
 const filename = fileURLToPath(import.meta.url)
 const dir = dirname(filename)
@@ -12,6 +13,6 @@ async function getData(): Promise<Record<string, any>> {
     return JSON.parse(json)
 }
 
-it('plik demo-data.json zawiera dane zgodne ze schemą', async () => {
+test('plik demo-data.json zawiera dane zgodne ze schemą', async () => {
     await validateSolarData(await getData())
 })

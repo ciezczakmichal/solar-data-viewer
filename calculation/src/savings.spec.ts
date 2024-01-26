@@ -5,13 +5,14 @@ import {
     UnitOfMeasure,
     VatRateItem,
 } from 'schema'
+import { describe, expect, test } from 'vitest'
 import { MetersDataHelper } from './meters-data-helper'
 import { SavingsCalculationInput, calculateSavings } from './savings'
 import { Tariff } from './tariff/tariff'
 import { dayJsDate } from './utils/tests-utils'
 
 describe('calculateSavings', () => {
-    it('test obliczania oszczędności przy kilku zmiennych parametrach z danymi o pełni pasujących datach', () => {
+    test('test obliczania oszczędności przy kilku zmiennych parametrach z danymi o pełni pasujących datach', () => {
         const meters: MeterRecord[] = [
             {
                 id: 1,

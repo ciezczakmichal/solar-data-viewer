@@ -1,9 +1,10 @@
 import { dayJsDate } from 'calculation'
+import { describe, expect, test } from 'vitest'
 import { DurationFormatFlag, formatDuration } from './format-time'
 
 describe('formatDuration - wersja z obiektem DateRange (from / to)', () => {
     describe('zwraca poprawną wartość dla następujących po sobie dat', () => {
-        it('w środku miesiąca', () => {
+        test('w środku miesiąca', () => {
             const data = {
                 from: dayJsDate(2022, 3, 22),
                 to: dayJsDate(2022, 3, 23),
@@ -11,7 +12,7 @@ describe('formatDuration - wersja z obiektem DateRange (from / to)', () => {
             expect(formatDuration(data)).toEqual('1 dzień')
         })
 
-        it('na przełomie miesiąca', () => {
+        test('na przełomie miesiąca', () => {
             const data = {
                 from: dayJsDate(2022, 2, 28),
                 to: dayJsDate(2022, 3, 1),
@@ -20,7 +21,7 @@ describe('formatDuration - wersja z obiektem DateRange (from / to)', () => {
         })
     })
 
-    it('zwraca wyłącznie liczbę dni, gdy nie ma pełnego miesiąca', () => {
+    test('zwraca wyłącznie liczbę dni, gdy nie ma pełnego miesiąca', () => {
         let data = {
             from: dayJsDate(2021, 10, 12),
             to: dayJsDate(2021, 10, 17),
@@ -34,7 +35,7 @@ describe('formatDuration - wersja z obiektem DateRange (from / to)', () => {
         expect(formatDuration(data)).toEqual('30 dni')
     })
 
-    it('zwraca wyłącznie ilość miesięcy dla dat o tym samym dniu w miesiącu', () => {
+    test('zwraca wyłącznie ilość miesięcy dla dat o tym samym dniu w miesiącu', () => {
         let data = {
             from: dayJsDate(2021, 2, 23),
             to: dayJsDate(2021, 3, 23),
@@ -54,7 +55,7 @@ describe('formatDuration - wersja z obiektem DateRange (from / to)', () => {
         expect(formatDuration(data)).toEqual('11 miesięcy')
     })
 
-    it('zwraca poprawną wartość, gdy brakuje kilku dni do pełnego roku', () => {
+    test('zwraca poprawną wartość, gdy brakuje kilku dni do pełnego roku', () => {
         let data = {
             from: dayJsDate(2021, 6, 15),
             to: dayJsDate(2022, 6, 10),
@@ -70,7 +71,7 @@ describe('formatDuration - wersja z obiektem DateRange (from / to)', () => {
 
     // @todo test gdy brakuje dnia do pełnej liczby miesięcy (sprawdzić liczenie w zależności od długości miesiąca)
 
-    it('zwraca wyłącznie liczbę lat dla identycznych dat poza numerem roku', () => {
+    test('zwraca wyłącznie liczbę lat dla identycznych dat poza numerem roku', () => {
         let data = {
             from: dayJsDate(2020, 7, 5),
             to: dayJsDate(2021, 7, 5),
@@ -86,7 +87,7 @@ describe('formatDuration - wersja z obiektem DateRange (from / to)', () => {
         // @todo testy - początek miesiąca, środek oraz koniec
     })
 
-    it('zwraca poprawne wartości dla różnych lat, miesięcy i dni', () => {
+    test('zwraca poprawne wartości dla różnych lat, miesięcy i dni', () => {
         let data = {
             from: dayJsDate(2021, 10, 12),
             to: dayJsDate(2022, 6, 20),
@@ -106,7 +107,7 @@ describe('formatDuration - wersja z obiektem DateRange (from / to)', () => {
         expect(formatDuration(data)).toEqual('18 lat, 2 miesiące, 18 dni')
     })
 
-    it('gdy pominięto liczenie dni - zwraca poprawne wartości dla różnych lat, miesięcy i dni', () => {
+    test('gdy pominięto liczenie dni - zwraca poprawne wartości dla różnych lat, miesięcy i dni', () => {
         const flag = DurationFormatFlag.OmitDays
 
         let data = {

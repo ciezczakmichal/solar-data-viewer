@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, test } from 'vitest'
 import { DateRange } from '../utils/date-range'
 import { dayJsDate, dayJsDateWithProperty } from '../utils/tests-utils'
 import { ValueItem, VariableValueHolder } from './variable-value-holder'
@@ -24,7 +25,7 @@ describe('VariableValueHolder', () => {
         instance = new VariableValueHolder(items)
     })
 
-    it('valueForDate', () => {
+    test('valueForDate', () => {
         let result: number | null
 
         result = instance.valueForDate(dayJsDate(2010, 2, 3))
@@ -52,7 +53,7 @@ describe('VariableValueHolder', () => {
         expect(result).toEqual(35)
     })
 
-    it('valueChangeDates', () => {
+    test('valueChangeDates', () => {
         expect(instance.valueChangeDates()).toEqual([
             dayJsDateWithProperty(2020, 1, 1),
             dayJsDateWithProperty(2020, 6, 1),
@@ -60,7 +61,7 @@ describe('VariableValueHolder', () => {
         ])
     })
 
-    it('changesWithinRange', () => {
+    test('changesWithinRange', () => {
         let range: DateRange
 
         range = {

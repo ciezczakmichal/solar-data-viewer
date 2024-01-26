@@ -18,7 +18,7 @@
         "build:schema": "yarn schema build",
         "build:ui": "yarn ui build",
         "dev": "yarn build:core && yarn ui dev",
-        "test": "yarn build:core && yarn schema test && yarn calculation test && yarn ui test",
+        "test": "yarn build:core && yarn schema test --run && yarn calculation test --run && yarn ui test --run",
         "lint": "prettier --check *.* && yarn schema lint && yarn calculation lint && yarn ui lint",
         "format": "prettier --write *.* && yarn schema format && yarn calculation format && yarn ui format",
         "ncu": "node scripts/ncu-upgrade.mjs"

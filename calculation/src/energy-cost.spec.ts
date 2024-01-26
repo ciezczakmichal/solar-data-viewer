@@ -1,4 +1,5 @@
 import { TariffItem, UnitOfMeasure, VatRateItem } from 'schema'
+import { beforeEach, describe, expect, test } from 'vitest'
 import {
     EnergyCostCalculationInput,
     calculateEnergyCost,
@@ -35,7 +36,7 @@ describe('calculateEnergyCost', () => {
             ]
         })
 
-        it('test obliczania dla jednej pozycji oraz jednej stawce VAT', () => {
+        test('test obliczania dla jednej pozycji oraz jednej stawce VAT', () => {
             const input: EnergyCostCalculationInput = {
                 tariff: new Tariff(tariffItems, vatRates),
                 date: dayJsDate(2020, 2, 1),
@@ -46,7 +47,7 @@ describe('calculateEnergyCost', () => {
             expect(cost.value).toEqual(62.5)
         })
 
-        it('funkcja ignoruje pozycje, które posiadają jednostkę inną niż kWh', () => {
+        test('funkcja ignoruje pozycje, które posiadają jednostkę inną niż kWh', () => {
             tariffItems.push({
                 name: 'Pozycja miesięczna',
                 unitOfMeasure: UnitOfMeasure.zlMies,
@@ -69,7 +70,7 @@ describe('calculateEnergyCost', () => {
         })
     })
 
-    it('test obliczania dla pierwszych dni z nowymi wartościami', () => {
+    test('test obliczania dla pierwszych dni z nowymi wartościami', () => {
         const baseInput: EnergyCostCalculationInput = {
             tariff: new Tariff(
                 [
@@ -157,23 +158,23 @@ describe('calculateEnergyCost', () => {
             }
         })
 
-        it('gdy brak pozycji taryfy oraz stawki VAT', () => {
+        test('gdy brak pozycji taryfy oraz stawki VAT', () => {
             input.tariff.setTariff([])
             input.tariff.setVatRates([])
             expectCalculationErrorWithCorrectMessageIsThrown()
         })
 
-        it('gdy brak pozycji taryfy', () => {
+        test('gdy brak pozycji taryfy', () => {
             input.tariff.setTariff([])
             expectCalculationErrorWithCorrectMessageIsThrown()
         })
 
-        it('gdy brak pozycji taryfy ze względu na użytą datę', () => {
+        test('gdy brak pozycji taryfy ze względu na użytą datę', () => {
             input.date = dayJsDate(2019, 3, 1)
             expectCalculationErrorWithCorrectMessageIsThrown()
         })
 
-        it('gdy brak pozycji taryfy, które posiadają jednostkę kWh', () => {
+        test('gdy brak pozycji taryfy, które posiadają jednostkę kWh', () => {
             input.tariff.setTariff([
                 {
                     name: 'Pozycja miesięczna',
@@ -190,7 +191,7 @@ describe('calculateEnergyCost', () => {
             expectCalculationErrorWithCorrectMessageIsThrown()
         })
 
-        it('gdy brak wartości stawki VAT', () => {
+        test('gdy brak wartości stawki VAT', () => {
             input.tariff.setVatRates([])
 
             expect(() => calculateEnergyCost(input)).toThrow(
@@ -202,7 +203,7 @@ describe('calculateEnergyCost', () => {
     })
 })
 
-describe('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21', () => {
+test('calculateXXX - test obliczania na podstawie faktury P/22215359/0004/21', () => {
     const input: EnergyCostCalculationInput = {
         tariff: new Tariff(
             [

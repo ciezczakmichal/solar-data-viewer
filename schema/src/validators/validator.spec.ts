@@ -1,5 +1,6 @@
 import { readFile } from 'fs/promises'
 import { basename } from 'path'
+import { beforeEach, describe, expect, test } from 'vitest'
 import { InvalidSolarDataSchemaError } from '../error'
 import { validateSolarData } from './validator'
 
@@ -21,35 +22,35 @@ describe('validateSolarData', () => {
     }
 
     describe('testy błędnych, prostych wartości', () => {
-        it('null nie jest poprawnym formatem danych', async () => {
+        test('null nie jest poprawnym formatem danych', async () => {
             await testThrowsErrorWithValue(null)
         })
 
-        it('undefined nie jest poprawnym formatem danych', async () => {
+        test('undefined nie jest poprawnym formatem danych', async () => {
             await testThrowsErrorWithValue(undefined)
         })
 
-        it('boolean nie jest poprawnym formatem danych', async () => {
+        test('boolean nie jest poprawnym formatem danych', async () => {
             await testThrowsErrorWithValue(false)
             await testThrowsErrorWithValue(true)
         })
 
-        it('liczba nie jest poprawnym formatem danych', async () => {
+        test('liczba nie jest poprawnym formatem danych', async () => {
             await testThrowsErrorWithValue(0)
             await testThrowsErrorWithValue(1.23)
         })
 
-        it('string nie jest poprawnym formatem danych', async () => {
+        test('string nie jest poprawnym formatem danych', async () => {
             await testThrowsErrorWithValue('')
             await testThrowsErrorWithValue(' ')
             await testThrowsErrorWithValue('test')
         })
 
-        it('tablica nie jest poprawnym formatem danych', async () => {
+        test('tablica nie jest poprawnym formatem danych', async () => {
             await testThrowsErrorWithValue([])
         })
 
-        it('pusty obiekt nie jest poprawnym formatem danych', async () => {
+        test('pusty obiekt nie jest poprawnym formatem danych', async () => {
             await testThrowsErrorWithValue({})
         })
     })
@@ -63,11 +64,11 @@ describe('validateSolarData', () => {
             data = await getExampleSmallestData()
         })
 
-        it('przykładowy plik z minimalną ilością danych jest traktowany jako poprawny', async () => {
+        test('przykładowy plik z minimalną ilością danych jest traktowany jako poprawny', async () => {
             await validateSolarData(data)
         })
 
-        it('usunięcie dowolnej właściwości z minimalnych danych skutkuje odrzuceniem danych', async () => {
+        test('usunięcie dowolnej właściwości z minimalnych danych skutkuje odrzuceniem danych', async () => {
             for (const property in data) {
                 if (Object.prototype.hasOwnProperty.call(data, property)) {
                     const changedData = await getExampleSmallestData()
