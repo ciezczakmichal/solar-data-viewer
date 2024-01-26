@@ -179,7 +179,7 @@ export function calculateEnergy(
     const monthlyConsumption = dailyConsumption * (365 / 12)
 
     let savedEnergy: number,
-        needsFulfilmentPercent: number,
+        demandFulfillmentPercent: number,
         energyToBuy: number,
         energyToCharge: number,
         energyToChargeOrBuy: number
@@ -188,7 +188,7 @@ export function calculateEnergy(
 
     if (fulfillNeeds) {
         savedEnergy = totalConsumption
-        needsFulfilmentPercent = 1
+        demandFulfillmentPercent = 1
         energyToBuy = 0
         energyToCharge = donatedToUse - charged
         energyToChargeOrBuy = energyToCharge
@@ -198,7 +198,7 @@ export function calculateEnergy(
         energyToChargeOrBuy = -energyToBuy
 
         savedEnergy = charged - energyToBuy + selfConsumption
-        needsFulfilmentPercent =
+        demandFulfillmentPercent =
             (totalConsumption - energyToBuy) / totalConsumption
     }
 
@@ -218,7 +218,7 @@ export function calculateEnergy(
 
         fulfillNeeds,
         savedEnergy,
-        demandFulfillmentPercent: needsFulfilmentPercent,
+        demandFulfillmentPercent,
         energyToBuy,
         energyToCharge,
         energyToChargeOrBuy,

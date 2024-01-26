@@ -49,9 +49,9 @@ export function formatDuration(
         values[2] = 0 // liczba dni = 0
     }
 
-    const formaters = [yearFormat.format, monthFormat.format, formatDays]
+    const formatters = [yearFormat.format, monthFormat.format, formatDays]
     const parts = values
-        .map((value, index) => (value > 0 ? formaters[index](value) : ''))
+        .map((value, index) => (value > 0 ? formatters[index](value) : ''))
         .filter(text => text !== '')
 
     return parts.join(', ')
