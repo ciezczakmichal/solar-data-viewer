@@ -8,13 +8,14 @@ import {
 import { MetersDataHelper } from './meters-data-helper'
 import { SavingsCalculationInput, calculateSavings } from './savings'
 import { Tariff } from './tariff/tariff'
+import { dayJsInstance } from './utils/tests-utils'
 
 describe('calculateSavings', () => {
     it('test obliczania oszczędności przy kilku zmiennych parametrach z danymi o pełni pasujących datach', () => {
         const meters: MeterRecord[] = [
             {
                 id: 1,
-                installationDate: '2020-05-17',
+                installationDate: dayJsInstance(2020, 5, 17),
                 initialValues: {
                     totalYield: 0,
                     charged: 0,
@@ -27,7 +28,7 @@ describe('calculateSavings', () => {
         const values: CompleteValuesRecord[] = [
             {
                 meterId: 1,
-                date: '2020-09-30',
+                date: dayJsInstance(2020, 9, 30),
                 totalYield: 800,
                 charged: 300,
                 donated: 700,
@@ -37,7 +38,7 @@ describe('calculateSavings', () => {
             },
             {
                 meterId: 1,
-                date: '2020-12-31',
+                date: dayJsInstance(2020, 12, 31),
                 totalYield: 1000,
                 charged: 500,
                 donated: 800, // 640 do pobrania; pobrano mniej
@@ -47,7 +48,7 @@ describe('calculateSavings', () => {
             },
             {
                 meterId: 1,
-                date: '2021-03-12', // dowolna data w 2021
+                date: dayJsInstance(2021, 3, 12), // dowolna data w 2021
                 totalYield: 1250,
                 charged: 800,
                 donated: 900, // 720 do pobrania; pobrano więcej
@@ -63,11 +64,11 @@ describe('calculateSavings', () => {
                 unitOfMeasure: UnitOfMeasure.kWh,
                 values: [
                     {
-                        from: '2020-01-01',
+                        from: dayJsInstance(2020, 1, 1),
                         value: 0.3,
                     },
                     {
-                        from: '2021-01-01',
+                        from: dayJsInstance(2021, 1, 1),
                         value: 0.5,
                     },
                 ],
@@ -77,7 +78,7 @@ describe('calculateSavings', () => {
                 unitOfMeasure: UnitOfMeasure.kWh,
                 values: [
                     {
-                        from: '2020-10-01',
+                        from: dayJsInstance(2020, 10, 1),
                         value: 0.15,
                     },
                 ],
@@ -86,11 +87,11 @@ describe('calculateSavings', () => {
 
         const vatRates: VatRateItem[] = [
             {
-                from: '2020-01-01',
+                from: dayJsInstance(2020, 1, 1),
                 value: 5,
             },
             {
-                from: '2021-01-01',
+                from: dayJsInstance(2021, 1, 1),
                 value: 23,
             },
         ]

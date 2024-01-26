@@ -1,4 +1,3 @@
-import { parseDate } from 'calculation'
 import type { Dayjs } from 'dayjs'
 import {
     isCompleteRecord,
@@ -7,7 +6,7 @@ import {
 } from 'schema'
 
 /**
- * Zwraca wartość posiadajacą komplet danych, która datowana jest na rok wcześniej
+ * Zwraca wartość posiadającą komplet danych, która datowana jest na rok wcześniej
  * niż najnowsza kompletna wartość przekazanego zestawu danych (tj. ostatnia wartość tablicy).
  * Funkcja wykazuje 1 miesiąc tolerancji przy wskazaniu danych.
  * Funkcja zwróci NULL, jeśli dane nie obejmują rocznego zakresu, lub założona tolerancja
@@ -34,7 +33,7 @@ export function getCompleteValueCloseToYear(
 
         if (lastValue === null) {
             lastValue = value
-            lastValueDate = parseDate(lastValue.date)
+            lastValueDate = lastValue.date
             continue
         }
 
@@ -42,7 +41,7 @@ export function getCompleteValueCloseToYear(
         const lastDateCasted = lastValueDate as unknown as Dayjs
 
         const currentDaysDiff = Math.abs(
-            365 - lastDateCasted.diff(parseDate(value.date), 'days'),
+            365 - lastDateCasted.diff(value.date, 'days'),
         )
 
         if (currentDaysDiff <= 30 && currentDaysDiff < daysDiff) {

@@ -1,10 +1,10 @@
 import { JSONSchemaType } from 'ajv'
 import { MessageType } from './message'
-import { SolarData, SolarDataVersion } from './solar-data'
+import { SolarDataSchema, SolarDataVersion } from './solar-data'
 import { UnitOfMeasure } from './tariff-item'
 
 // JSON Schema draft-07
-export const SolarDataSchema: JSONSchemaType<SolarData> = {
+export const SolarDataAjvSchema: JSONSchemaType<SolarDataSchema> = {
     definitions: {
         ISO8601Date: {
             type: 'string',

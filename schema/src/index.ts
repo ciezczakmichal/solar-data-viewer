@@ -9,6 +9,9 @@ export * from './definitions/values-record'
 export * from './definitions/vat-rate-item'
 export * from './definitions/yield-forecast-record'
 
+export * from './utils/date'
+export * from './utils/dayjs-import'
+
 export * from './validators/validator'
 
 // pozostałe pliki prywatne

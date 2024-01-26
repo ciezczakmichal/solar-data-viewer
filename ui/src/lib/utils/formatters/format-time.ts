@@ -1,5 +1,5 @@
-import { parseDate } from 'calculation'
-import dayjs from 'dayjs'
+import type { DateRange } from 'calculation'
+import dayjs, { type Dayjs } from 'dayjs'
 import { Locale } from './locale'
 
 const yearFormat = new Intl.NumberFormat(Locale, {
@@ -14,8 +14,7 @@ const monthFormat = new Intl.NumberFormat(Locale, {
     unitDisplay: 'long',
 })
 
-export function formatDate(value: string): string {
-    const date = parseDate(value)
+export function formatDate(date: Dayjs): string {
     return date.format('L')
 }
 
@@ -29,18 +28,13 @@ export enum DurationFormatFlag {
     OmitDays,
 }
 
-export interface Duration {
-    from: string
-    to: string
-}
-
 export function formatDuration(days: number, flag?: DurationFormatFlag): string
 export function formatDuration(
-    duration: Duration,
+    duration: DateRange,
     flag?: DurationFormatFlag,
 ): string
 export function formatDuration(
-    input: number | Duration,
+    input: number | DateRange,
     flag = DurationFormatFlag.None,
 ): string {
     let values: number[]
@@ -63,9 +57,8 @@ export function formatDuration(
     return parts.join(', ')
 }
 
-function getValuesForDuration(duration: Duration): number[] {
-    const from = parseDate(duration.from)
-    const to = parseDate(duration.to)
+function getValuesForDuration(duration: DateRange): number[] {
+    const { from, to } = duration
 
     let months = to.month() - from.month()
 

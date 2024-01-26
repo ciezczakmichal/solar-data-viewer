@@ -1,7 +1,7 @@
 import Ajv from 'ajv'
 import standaloneCode from 'ajv/dist/standalone/index.js'
 import { writeFileSync } from 'fs'
-import { SolarDataSchema } from '../src/definitions/solar-data-schema'
+import { SolarDataAjvSchema } from '../src/definitions/solar-data-ajv-schema'
 
 const ajv = new Ajv({
     messages: false, // ze względu na użycie ajv-i18n
@@ -11,7 +11,7 @@ const ajv = new Ajv({
     },
 })
 
-const validate = ajv.compile(SolarDataSchema)
+const validate = ajv.compile(SolarDataAjvSchema)
 let moduleCode = standaloneCode(ajv, validate)
 
 /*

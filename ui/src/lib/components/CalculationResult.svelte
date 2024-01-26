@@ -7,7 +7,6 @@
         calculateInvestment,
         calculateSavings,
         type EnergyCalculationResult,
-        parseDate,
     } from 'calculation'
     import { getAppContext } from '$lib/global/app-context'
     import { getCompleteValueCloseToYear } from '$lib/computation/value-close-to-year'
@@ -66,9 +65,8 @@
 
     const dailySaving = savings.divide(days)
 
-    const date = parseDate(to.date)
-    const currentEnergyCost = calculateEnergyCostAtDay(tariff, date)
-    const currentFixedCost = calculateFixedCost(tariff, date)
+    const currentEnergyCost = calculateEnergyCostAtDay(tariff, to.date)
+    const currentFixedCost = calculateFixedCost(tariff, to.date)
 
     const valueCloseToYear = getCompleteValueCloseToYear(values)
     let lastYearCalculationResult: EnergyCalculationResult | null = null

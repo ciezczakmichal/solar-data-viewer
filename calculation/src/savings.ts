@@ -9,7 +9,6 @@ import { calculateEnergyCost } from './energy-cost'
 import { MetersDataHelper } from './meters-data-helper'
 import { Tariff } from './tariff/tariff'
 import { CurrencyZloty } from './utils/currency-zloty'
-import { parseDate } from './utils/date'
 
 export interface SavingsCalculationInput {
     values: CompleteValuesRecord[]
@@ -89,7 +88,7 @@ export function calculateSavings(
 
         const rangeSavings = calculateEnergyCost({
             tariff,
-            date: parseDate(to.date),
+            date: to.date,
             energy: savedEnergyAtRange,
         })
 
@@ -115,12 +114,10 @@ function getValuesForRange(
     currentStart: Dayjs,
     nextStart: Dayjs | null,
 ): ValuesForRange | null {
-    // @todo parsowanie dat oraz reverse wartości - optymalizacja - tylko raz
+    // @todo reverse wartości - optymalizacja - tylko raz
 
     const currentStartFrom = currentStart.add(-1, 'day')
-    const from = values.find(
-        value => !parseDate(value.date).isBefore(currentStartFrom),
-    )
+    const from = values.find(value => !value.date.isBefore(currentStartFrom))
 
     if (!from) {
         return null
@@ -132,7 +129,7 @@ function getValuesForRange(
     if (nextStart) {
         const foundTo = [...values]
             .reverse()
-            .find(value => parseDate(value.date).isBefore(nextStart))
+            .find(value => value.date.isBefore(nextStart))
 
         if (foundTo) {
             to = foundTo
@@ -140,11 +137,11 @@ function getValuesForRange(
     }
 
     const fromAccurate =
-        from === values[0] || parseDate(from.date).isSame(currentStartFrom)
+        from === values[0] || from.date.isSame(currentStartFrom)
     const toAccurate =
         to === lastValue ||
         !nextStart || // ten test tak naprawdę pokryty przez powyższe porównanie
-        parseDate(to.date).isSame(nextStart.add(-1, 'day'))
+        to.date.isSame(nextStart.add(-1, 'day'))
     const accurate = fromAccurate && toAccurate
 
     return {

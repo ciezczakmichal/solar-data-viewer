@@ -1,4 +1,3 @@
-import { parseDate } from 'calculation'
 import type { Dayjs } from 'dayjs'
 import {
     isCompleteRecord,
@@ -32,7 +31,7 @@ export function getRecordsForRange<T extends ValuesRecordProperties>(
     range: DataRange,
 ): RangeValuesRecord<T>[] {
     let presentValues: RangeValuesRecord<T>[] = values.map(item => ({
-        date: parseDate(item.date),
+        date: item.date,
         values: item,
     }))
     let getNextDateCallback: (date: Dayjs) => Dayjs

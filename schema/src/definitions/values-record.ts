@@ -1,3 +1,5 @@
+import { Dayjs } from 'dayjs'
+
 export interface BaseYieldValuesRecord {
     // uzysk - energia wyprodukowana
     totalYield: number
@@ -18,10 +20,15 @@ export type BaseValuesRecord =
     | BaseMeterValuesRecord
     | BaseCompleteValuesRecord
 
-export interface ValuesRecordProperties {
+export interface ValuesRecordPropertiesSchema {
     meterId: number
     date: string
     comment?: string
+}
+
+export interface ValuesRecordProperties
+    extends Omit<ValuesRecordPropertiesSchema, 'date'> {
+    date: Dayjs
 }
 
 export type YieldValuesRecord = ValuesRecordProperties & BaseYieldValuesRecord
@@ -32,6 +39,10 @@ export type ValuesRecord =
     | YieldValuesRecord
     | MeterValuesRecord
     | CompleteValuesRecord
+
+export type ValuesRecordSchema = Omit<ValuesRecord, 'date'> & {
+    date: string
+}
 
 export type ValuesRecordNumberProps = 'totalYield' | 'charged' | 'donated'
 

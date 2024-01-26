@@ -11,7 +11,6 @@ export * from './tariff/variable-value-holder'
 export * from './tariff/vat-rates-holder'
 
 export * from './utils/currency-zloty'
-export * from './utils/date'
 export * from './utils/date-range'
 export * from './utils/dayjs-import'
 export * from './utils/month'

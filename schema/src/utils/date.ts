@@ -1,5 +1,5 @@
 import dayjs, { type Dayjs } from 'dayjs'
-import { DateFormat } from 'schema'
+import { DateFormat } from '../definitions/date-format'
 
 export function parseDate(date: string | Dayjs): Dayjs {
     if (typeof date === 'string') {

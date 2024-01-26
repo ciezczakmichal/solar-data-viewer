@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from 'dayjs'
-import { parseDate } from './date'
+import { parseDate } from 'schema'
 import { DateRange } from './date-range'
 
 export class Month {

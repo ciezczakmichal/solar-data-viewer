@@ -8,7 +8,6 @@ import {
 } from 'schema'
 import { CalculationError } from './error'
 import { MetersDataHelper } from './meters-data-helper'
-import { parseDate } from './utils/date'
 
 export interface BaseEnergyParamsCalculationInputGeneric<
     T extends BaseValuesRecord,
@@ -166,10 +165,7 @@ export function calculateEnergy(
     const { totalYield, charged, donated } = calculateBaseEnergyParams(input)
 
     const kWhTokWp = totalYield / plantProperties.installationPower
-
-    const lastDate = parseDate(to.date)
-    const baseDate = parseDate(from.date)
-    const days = lastDate.diff(baseDate, 'days')
+    const days = to.date.diff(from.date, 'days')
 
     const donatedToUse = donated * plantProperties.energyInWarehouseFactor
 

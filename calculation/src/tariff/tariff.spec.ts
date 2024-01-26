@@ -1,7 +1,9 @@
 import { TariffItem, UnitOfMeasure, VatRateItem } from 'schema'
 import { CalculationError } from '../error'
-import { parseDate } from '../utils/date'
-import { dayJsInstanceWithExtraProperty } from '../utils/tests-utils'
+import {
+    dayJsInstance,
+    dayJsInstanceWithExtraProperty,
+} from '../utils/tests-utils'
 import { Tariff } from './tariff'
 
 describe('Tariff', () => {
@@ -9,7 +11,7 @@ describe('Tariff', () => {
         it('funkcja rzuca wyjątek, jeśli dla wskazanego dnia nie ma dostępnej stawki VAT', () => {
             const vatRates: VatRateItem[] = [
                 {
-                    from: '2020-01-01',
+                    from: dayJsInstance(2020, 1, 1),
                     value: 23,
                 },
             ]
@@ -20,11 +22,11 @@ describe('Tariff', () => {
             )
 
             expect(() =>
-                instance.getVatTaxRate(parseDate('2010-05-13')),
+                instance.getVatTaxRate(dayJsInstance(2010, 5, 13)),
             ).toThrow(error)
 
             expect(() =>
-                instance.getVatTaxRate(parseDate('2019-12-31')),
+                instance.getVatTaxRate(dayJsInstance(2019, 12, 31)),
             ).toThrow(error)
         })
     })
@@ -37,7 +39,7 @@ describe('Tariff', () => {
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: '2020-01-01',
+                            from: dayJsInstance(2020, 1, 1),
                             value: 0.7,
                         },
                     ],
@@ -47,11 +49,11 @@ describe('Tariff', () => {
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: '2020-05-01',
+                            from: dayJsInstance(2020, 5, 1),
                             value: 0.2,
                         },
                         {
-                            from: '2022-01-01',
+                            from: dayJsInstance(2022, 1, 1),
                             value: 0.005,
                         },
                     ],
@@ -61,7 +63,7 @@ describe('Tariff', () => {
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: '2023-07-12',
+                            from: dayJsInstance(2023, 7, 12),
                             value: 0.12,
                         },
                     ],
@@ -85,7 +87,7 @@ describe('Tariff', () => {
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: '2020-01-01',
+                            from: dayJsInstance(2020, 1, 1),
                             value: 0.7,
                         },
                     ],
@@ -94,11 +96,11 @@ describe('Tariff', () => {
 
             const vatRates: VatRateItem[] = [
                 {
-                    from: '2019-01-23',
+                    from: dayJsInstance(2019, 1, 23),
                     value: 23,
                 },
                 {
-                    from: '2021-01-05',
+                    from: dayJsInstance(2021, 1, 5),
                     value: 5,
                 },
             ]
@@ -119,11 +121,11 @@ describe('Tariff', () => {
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: '2020-01-01',
+                            from: dayJsInstance(2020, 1, 1),
                             value: 0.7,
                         },
                         {
-                            from: '2022-01-05',
+                            from: dayJsInstance(2022, 1, 5),
                             value: 0.005,
                         },
                     ],
@@ -133,11 +135,11 @@ describe('Tariff', () => {
                     unitOfMeasure: UnitOfMeasure.zlMies,
                     values: [
                         {
-                            from: '2021-01-01',
+                            from: dayJsInstance(2021, 1, 1),
                             value: 0.13,
                         },
                         {
-                            from: '2021-06-13',
+                            from: dayJsInstance(2021, 6, 13),
                             value: 0.55,
                         },
                     ],
@@ -159,11 +161,11 @@ describe('Tariff', () => {
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: '2020-01-01',
+                            from: dayJsInstance(2020, 1, 1),
                             value: 0.7,
                         },
                         {
-                            from: '2022-01-01',
+                            from: dayJsInstance(2022, 1, 1),
                             value: 0.005,
                         },
                     ],
@@ -173,11 +175,11 @@ describe('Tariff', () => {
                     unitOfMeasure: UnitOfMeasure.kWh,
                     values: [
                         {
-                            from: '2021-01-01',
+                            from: dayJsInstance(2021, 1, 1),
                             value: 0.13,
                         },
                         {
-                            from: '2022-01-01',
+                            from: dayJsInstance(2022, 1, 1),
                             value: 0.55,
                         },
                     ],
@@ -186,11 +188,11 @@ describe('Tariff', () => {
 
             const vatRates: VatRateItem[] = [
                 {
-                    from: '2020-01-01',
+                    from: dayJsInstance(2020, 1, 1),
                     value: 23,
                 },
                 {
-                    from: '2021-01-01',
+                    from: dayJsInstance(2021, 1, 1),
                     value: 5,
                 },
             ]
@@ -212,19 +214,19 @@ describe('Tariff', () => {
                     // dane są posortowane niezgodnie z oczekiwaniami, co ma udowadniać zastosowanie sortowania
                     values: [
                         {
-                            from: '2022-07-21',
+                            from: dayJsInstance(2022, 7, 21),
                             value: 22,
                         },
                         {
-                            from: '2019-05-09',
+                            from: dayJsInstance(2019, 5, 9),
                             value: 19,
                         },
                         {
-                            from: '2035-02-25',
+                            from: dayJsInstance(2035, 2, 25),
                             value: 35,
                         },
                         {
-                            from: '2010-08-13',
+                            from: dayJsInstance(2010, 8, 13),
                             value: 10,
                         },
                     ],

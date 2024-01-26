@@ -1,4 +1,3 @@
-import { parseDate } from 'calculation'
 import type { Dayjs } from 'dayjs'
 import type { ValuesRecord, ValuesRecordProperties } from 'schema'
 import { getMonthDisplayText } from '../utils/date'
@@ -87,7 +86,7 @@ function getBarChartData<
     calculationFn: ChartValueCalculationFunction<ReturnType, ValuesRecordType>,
 ): ChartData<ReturnType> {
     const firstItem: RangeValuesRecord<ValuesRecordType> = {
-        date: parseDate(from.date),
+        date: from.date,
         values: from,
     }
 

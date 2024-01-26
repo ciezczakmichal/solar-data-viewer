@@ -2,6 +2,7 @@ import { CompleteValuesRecord, MeterRecord } from 'schema'
 import { EnergyCalculationInput, calculateEnergy } from './energy'
 import { CalculationError } from './error'
 import { MetersDataHelper } from './meters-data-helper'
+import { dayJsInstance } from './utils/tests-utils'
 
 describe('calculateEnergy', () => {
     it('test obliczania liczby dni', () => {
@@ -14,12 +15,12 @@ describe('calculateEnergy', () => {
         const input: EnergyCalculationInput = {
             from: {
                 meterId: 1,
-                date: '2022-01-02', // niedziela
+                date: dayJsInstance(2022, 1, 2), // niedziela
                 ...values,
             },
             to: {
                 meterId: 1,
-                date: '2022-01-09', // niedziela
+                date: dayJsInstance(2022, 1, 9), // niedziela
                 ...values,
             },
             plantProperties: {
@@ -37,7 +38,7 @@ describe('calculateEnergy', () => {
         const meters: MeterRecord[] = [
             {
                 id: 1,
-                installationDate: '2022-05-13',
+                installationDate: dayJsInstance(2022, 5, 13),
                 initialValues: {
                     totalYield: 0,
                     charged: 0,
@@ -49,7 +50,7 @@ describe('calculateEnergy', () => {
         const values: CompleteValuesRecord[] = [
             {
                 meterId: 1,
-                date: '2022-05-15',
+                date: dayJsInstance(2022, 5, 15),
                 totalYield: 0,
                 charged: 0,
                 donated: 0,
@@ -77,14 +78,14 @@ describe('calculateEnergy', () => {
         const input: EnergyCalculationInput = {
             from: {
                 meterId: 1,
-                date: '2022-01-02',
+                date: dayJsInstance(2022, 1, 2),
                 totalYield: 0,
                 charged: 0,
                 donated: 0,
             },
             to: {
                 meterId: 1,
-                date: '2022-01-09',
+                date: dayJsInstance(2022, 1, 9),
                 totalYield: 150,
                 charged: 120,
                 donated: 150,
@@ -108,14 +109,14 @@ describe('calculateEnergy', () => {
         const input: EnergyCalculationInput = {
             from: {
                 meterId: 1,
-                date: '2022-01-02',
+                date: dayJsInstance(2022, 1, 2),
                 totalYield: 0,
                 charged: 0,
                 donated: 0,
             },
             to: {
                 meterId: 1,
-                date: '2022-01-09',
+                date: dayJsInstance(2022, 1, 9),
                 totalYield: 150,
                 charged: 0,
                 donated: 0,
@@ -139,14 +140,14 @@ describe('calculateEnergy', () => {
         const input: EnergyCalculationInput = {
             from: {
                 meterId: 1,
-                date: '2022-01-02',
+                date: dayJsInstance(2022, 1, 2),
                 totalYield: 0,
                 charged: 0,
                 donated: 0,
             },
             to: {
                 meterId: 1,
-                date: '2022-01-09',
+                date: dayJsInstance(2022, 1, 9),
                 totalYield: 150,
                 charged: 100,
                 donated: 150, // 120 dostępne do pobrania
@@ -171,7 +172,7 @@ describe('calculateEnergy', () => {
             const meters: MeterRecord[] = [
                 {
                     id: 1,
-                    installationDate: '2022-01-01',
+                    installationDate: dayJsInstance(2022, 1, 1),
                     initialValues: {
                         totalYield: 0,
                         charged: 0,
@@ -180,7 +181,7 @@ describe('calculateEnergy', () => {
                 },
                 {
                     id: 2,
-                    installationDate: '2022-02-01',
+                    installationDate: dayJsInstance(2022, 2, 1),
                     initialValues: {
                         totalYield: 0,
                     },
@@ -190,14 +191,14 @@ describe('calculateEnergy', () => {
             const values: CompleteValuesRecord[] = [
                 {
                     meterId: 1,
-                    date: '2022-02-01',
+                    date: dayJsInstance(2022, 2, 1),
                     totalYield: 10,
                     charged: 10,
                     donated: 10,
                 },
                 {
                     meterId: 2,
-                    date: '2022-02-15',
+                    date: dayJsInstance(2022, 2, 15),
                     totalYield: 20,
                     charged: 20,
                     donated: 20,
@@ -223,7 +224,7 @@ describe('calculateEnergy', () => {
             const meters: MeterRecord[] = [
                 {
                     id: 1,
-                    installationDate: '2022-01-01',
+                    installationDate: dayJsInstance(2022, 1, 1),
                     initialValues: {
                         totalYield: 0,
                         charged: 1000,
@@ -232,7 +233,7 @@ describe('calculateEnergy', () => {
                 },
                 {
                     id: 2,
-                    installationDate: '2022-02-01',
+                    installationDate: dayJsInstance(2022, 2, 1),
                     initialValues: {
                         charged: 50,
                         donated: 50,
@@ -243,14 +244,14 @@ describe('calculateEnergy', () => {
             const values: CompleteValuesRecord[] = [
                 {
                     meterId: 1,
-                    date: '2022-02-01',
+                    date: dayJsInstance(2022, 2, 1),
                     totalYield: 100,
                     charged: 1300,
                     donated: 170,
                 },
                 {
                     meterId: 2,
-                    date: '2022-02-15',
+                    date: dayJsInstance(2022, 2, 15),
                     totalYield: 200,
                     charged: 180,
                     donated: 220,
@@ -280,7 +281,7 @@ describe('calculateEnergy', () => {
         const meters: MeterRecord[] = [
             {
                 id: 1,
-                installationDate: '2022-01-01',
+                installationDate: dayJsInstance(2022, 1, 1),
                 initialValues: {
                     totalYield: 0,
                     charged: 20000,
@@ -289,7 +290,7 @@ describe('calculateEnergy', () => {
             },
             {
                 id: 2,
-                installationDate: '2022-02-01',
+                installationDate: dayJsInstance(2022, 2, 1),
                 initialValues: {
                     charged: 0,
                     donated: 0,
@@ -298,7 +299,7 @@ describe('calculateEnergy', () => {
             {
                 // nowy falownik
                 id: 3,
-                installationDate: '2022-03-01',
+                installationDate: dayJsInstance(2022, 3, 1),
                 initialValues: {
                     totalYield: 0,
                 },
@@ -308,21 +309,21 @@ describe('calculateEnergy', () => {
         const values: CompleteValuesRecord[] = [
             {
                 meterId: 1,
-                date: '2022-02-01',
+                date: dayJsInstance(2022, 2, 1),
                 totalYield: 500,
                 charged: 20300,
                 donated: 1400,
             },
             {
                 meterId: 2,
-                date: '2022-03-01',
+                date: dayJsInstance(2022, 3, 1),
                 totalYield: 800,
                 charged: 100,
                 donated: 200,
             },
             {
                 meterId: 3,
-                date: '2022-03-15',
+                date: dayJsInstance(2022, 3, 15),
                 totalYield: 300,
                 charged: 350,
                 donated: 400,

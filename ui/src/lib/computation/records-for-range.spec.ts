@@ -12,39 +12,39 @@ describe('records-for-range', () => {
         const values: ValuesRecord[] = [
             {
                 meterId: 1,
-                date: '2022-03-18', // piątek
+                date: dayJsInstance(2022, 3, 18), // piątek
                 totalYield: 100,
             },
             {
                 meterId: 1,
-                date: '2022-03-20', // niedziela
+                date: dayJsInstance(2022, 3, 20), // niedziela
                 totalYield: 123,
             },
             {
                 meterId: 1,
-                date: '2022-03-23', // środa
+                date: dayJsInstance(2022, 3, 23), // środa
                 charged: 1050,
                 donated: 12,
             },
             {
                 meterId: 1,
-                date: '2022-03-27', // niedziela
+                date: dayJsInstance(2022, 3, 27), // niedziela
                 totalYield: 150,
             },
             {
                 meterId: 1,
-                date: '2022-03-31', // czwartek
+                date: dayJsInstance(2022, 3, 31), // czwartek
                 charged: 1123,
                 donated: 120,
             },
             {
                 meterId: 1,
-                date: '2022-04-08', // piątek
+                date: dayJsInstance(2022, 4, 8), // piątek
                 totalYield: 170,
             },
             {
                 meterId: 1,
-                date: '2022-05-08', // niedziela
+                date: dayJsInstance(2022, 5, 8), // niedziela
                 totalYield: 270,
             },
         ]
@@ -57,7 +57,7 @@ describe('records-for-range', () => {
                     date: dayJsInstanceWithExtraProperty(2022, 3, 20),
                     values: {
                         meterId: 1,
-                        date: '2022-03-20', // niedziela
+                        date: dayJsInstance(2022, 3, 20), // niedziela
                         totalYield: 123,
                     },
                 },
@@ -65,7 +65,7 @@ describe('records-for-range', () => {
                     date: dayJsInstanceWithExtraProperty(2022, 3, 27),
                     values: {
                         meterId: 1,
-                        date: '2022-03-27', // niedziela
+                        date: dayJsInstance(2022, 3, 27), // niedziela
                         totalYield: 150,
                     },
                 },
@@ -93,7 +93,7 @@ describe('records-for-range', () => {
                     date: dayJsInstanceWithExtraProperty(2022, 5, 8),
                     values: {
                         meterId: 1,
-                        date: '2022-05-08', // niedziela
+                        date: dayJsInstance(2022, 5, 8), // niedziela
                         totalYield: 270,
                     },
                 },
@@ -107,7 +107,7 @@ describe('records-for-range', () => {
                     date: dayJsInstanceWithExtraProperty(2022, 3, 31),
                     values: {
                         meterId: 1,
-                        date: '2022-03-31', // czwartek
+                        date: dayJsInstance(2022, 3, 31), // czwartek
                         charged: 1123,
                         donated: 120,
                     },
@@ -120,7 +120,7 @@ describe('records-for-range', () => {
                     date: dayJsInstanceWithExtraProperty(2022, 5, 8),
                     values: {
                         meterId: 1,
-                        date: '2022-05-08', // niedziela
+                        date: dayJsInstance(2022, 5, 8), // niedziela
                         totalYield: 270,
                     },
                 },
@@ -132,35 +132,35 @@ describe('records-for-range', () => {
         const values: ValuesRecord[] = [
             {
                 meterId: 1,
-                date: '2022-01-30', // niedziela
+                date: dayJsInstance(2022, 1, 30), // niedziela
                 totalYield: 50,
                 charged: 1000,
                 donated: 500,
             },
             {
                 meterId: 1,
-                date: '2022-01-31', // poniedziałek
+                date: dayJsInstance(2022, 1, 31), // poniedziałek
                 totalYield: 60,
             },
             {
                 meterId: 1,
-                date: '2022-02-06', // niedziela
+                date: dayJsInstance(2022, 2, 6), // niedziela
                 totalYield: 70,
             },
             {
                 meterId: 1,
-                date: '2022-02-10', // czwartek
+                date: dayJsInstance(2022, 2, 10), // czwartek
                 totalYield: 100,
             },
             {
                 meterId: 1,
-                date: '2022-02-13', // niedziela
+                date: dayJsInstance(2022, 2, 13), // niedziela
                 charged: 1500,
                 donated: 800,
             },
             {
                 meterId: 1,
-                date: '2022-02-20', // niedziela
+                date: dayJsInstance(2022, 2, 20), // niedziela
                 totalYield: 200,
                 charged: 2000,
                 donated: 1000,
@@ -174,7 +174,7 @@ describe('records-for-range', () => {
                     date: dayJsInstanceWithExtraProperty(2022, 1, 30),
                     values: {
                         meterId: 1,
-                        date: '2022-01-30', // niedziela
+                        date: dayJsInstance(2022, 1, 30), // niedziela
                         totalYield: 50,
                         charged: 1000,
                         donated: 500,
@@ -184,7 +184,7 @@ describe('records-for-range', () => {
                     date: dayJsInstanceWithExtraProperty(2022, 2, 6),
                     values: {
                         meterId: 1,
-                        date: '2022-02-06', // niedziela
+                        date: dayJsInstance(2022, 2, 6), // niedziela
                         totalYield: 70,
                     },
                 },
@@ -196,7 +196,7 @@ describe('records-for-range', () => {
                     date: dayJsInstanceWithExtraProperty(2022, 2, 20),
                     values: {
                         meterId: 1,
-                        date: '2022-02-20', // niedziela
+                        date: dayJsInstance(2022, 2, 20), // niedziela
                         totalYield: 200,
                         charged: 2000,
                         donated: 1000,
@@ -212,7 +212,7 @@ describe('records-for-range', () => {
                     date: dayJsInstanceWithExtraProperty(2022, 1, 31),
                     values: {
                         meterId: 1,
-                        date: '2022-01-31', // poniedziałek
+                        date: dayJsInstance(2022, 1, 31), // poniedziałek
                         totalYield: 60,
                     },
                 },
@@ -220,7 +220,7 @@ describe('records-for-range', () => {
                     date: dayJsInstanceWithExtraProperty(2022, 2, 20),
                     values: {
                         meterId: 1,
-                        date: '2022-02-20', // niedziela
+                        date: dayJsInstance(2022, 2, 20), // niedziela
                         totalYield: 200,
                         charged: 2000,
                         donated: 1000,
@@ -236,7 +236,7 @@ describe('records-for-range', () => {
                     date: dayJsInstanceWithExtraProperty(2022, 1, 30),
                     values: {
                         meterId: 1,
-                        date: '2022-01-30', // niedziela
+                        date: dayJsInstance(2022, 1, 30), // niedziela
                         totalYield: 50,
                         charged: 1000,
                         donated: 500,
@@ -254,7 +254,7 @@ describe('records-for-range', () => {
                     date: dayJsInstanceWithExtraProperty(2022, 2, 20),
                     values: {
                         meterId: 1,
-                        date: '2022-02-20', // niedziela
+                        date: dayJsInstance(2022, 2, 20), // niedziela
                         totalYield: 200,
                         charged: 2000,
                         donated: 1000,
@@ -272,7 +272,7 @@ describe('records-for-range', () => {
                     date: dayJsInstanceWithExtraProperty(2022, 2, 20),
                     values: {
                         meterId: 1,
-                        date: '2022-02-20', // niedziela
+                        date: dayJsInstance(2022, 2, 20), // niedziela
                         totalYield: 200,
                         charged: 2000,
                         donated: 1000,
