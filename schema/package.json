@@ -13,7 +13,7 @@
     },
     "scripts": {
         "build": "yarn generate-validator && tsc --build",
-        "generate-validator": "node --experimental-specifier-resolution=node --no-warnings --loader ts-node/esm scripts/generate-standalone-validator.ts",
+        "generate-validator": "tsx scripts/generate-standalone-validator.ts",
         "test": "yarn generate-validator && vitest",
         "lint": "prettier --check . && eslint .",
         "format": "prettier --write ."
@@ -32,7 +32,7 @@
         "eslint-plugin-import": "^2.29.0",
         "prettier": "^3.1.1",
         "prettier-plugin-organize-imports": "^3.2.4",
-        "ts-node": "^10.9.2",
+        "tsx": "^4.7.1",
         "typescript": "^5.3.3",
         "vitest": "^1.2.1"
     }
