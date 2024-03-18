@@ -1,5 +1,5 @@
 import { Dayjs } from 'dayjs'
-import { BaseValuesRecord } from './values-record'
+import { BaseValuesRecord } from './values-record.js'
 
 export interface MeterRecordSchema {
     id: number

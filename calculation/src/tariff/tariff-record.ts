@@ -1,5 +1,5 @@
 import { TariffItem, TariffItemValue, UnitOfMeasure } from 'schema'
-import { VariableValueHolder } from './variable-value-holder'
+import { VariableValueHolder } from './variable-value-holder.js'
 
 /**
  * Klasa reprezentująca pozycję w taryfie energii elektrycznej.

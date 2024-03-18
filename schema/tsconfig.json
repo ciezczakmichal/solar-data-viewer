@@ -9,6 +9,7 @@
 
         // konieczne, aby załączyć plik JS z walidatorem
         "allowJs": true,
+        "checkJs": false,
 
         // dla dayjs
         "esModuleInterop": true

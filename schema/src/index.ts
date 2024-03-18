@@ -1,17 +1,15 @@
-export * from './error'
+export * from './error.js'
 
-export * from './definitions/date-format'
-export * from './definitions/meter-record'
-export * from './definitions/plant-properties'
-export * from './definitions/solar-data'
-export * from './definitions/tariff-item'
-export * from './definitions/values-record'
-export * from './definitions/vat-rate-item'
-export * from './definitions/yield-forecast-record'
+export * from './definitions/date-format.js'
+export * from './definitions/meter-record.js'
+export * from './definitions/plant-properties.js'
+export * from './definitions/solar-data.js'
+export * from './definitions/tariff-item.js'
+export * from './definitions/values-record.js'
+export * from './definitions/vat-rate-item.js'
+export * from './definitions/yield-forecast-record.js'
 
-export * from './utils/date'
-export * from './utils/dayjs-import'
+export * from './utils/date.js'
+export * from './utils/dayjs-import.js'
 
-export * from './validators/validator'
-
-// pozostałe pliki prywatne
+export * from './validators/validator.js'

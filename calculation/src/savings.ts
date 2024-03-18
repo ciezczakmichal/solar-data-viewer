@@ -1,14 +1,14 @@
 import currency from 'currency.js'
 import { Dayjs } from 'dayjs'
 import { CompleteValuesRecord } from 'schema'
+import { calculateEnergyCost } from './energy-cost.js'
 import {
     calculateEnergy,
     EnergyCalculationInputPlantProperties,
-} from './energy'
-import { calculateEnergyCost } from './energy-cost'
-import { MetersDataHelper } from './meters-data-helper'
-import { Tariff } from './tariff/tariff'
-import { CurrencyZloty } from './utils/currency-zloty'
+} from './energy.js'
+import { MetersDataHelper } from './meters-data-helper.js'
+import { Tariff } from './tariff/tariff.js'
+import { CurrencyZloty } from './utils/currency-zloty.js'
 
 export interface SavingsCalculationInput {
     values: CompleteValuesRecord[]

@@ -1,15 +1,20 @@
 {
+    "extends": [
+        "@tsconfig/node20/tsconfig.json",
+        "@tsconfig/strictest/tsconfig.json"
+    ],
     "compilerOptions": {
-        "module": "ES2020",
-        "moduleResolution": "Node",
-        "lib": ["es2023"],
-
         "declaration": true,
         "removeComments": true,
-        "target": "es2017",
         "sourceMap": true,
         "incremental": true,
         "strict": true,
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+
+        // przywraca zachowanie operatora "?" - włączonego przez konfigurację strictest
+        "exactOptionalPropertyTypes": false,
+
+        // dostęp do tablicy poprzez indeks nie dodaje typu undefined
+        "noUncheckedIndexedAccess": false
     }
 }

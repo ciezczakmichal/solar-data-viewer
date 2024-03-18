@@ -1,9 +1,9 @@
 import { CompleteValuesRecord, MeterRecord } from 'schema'
 import { describe, expect, test } from 'vitest'
-import { EnergyCalculationInput, calculateEnergy } from './energy'
-import { CalculationError } from './error'
-import { MetersDataHelper } from './meters-data-helper'
-import { dayJsDate } from './utils/tests-utils'
+import { EnergyCalculationInput, calculateEnergy } from './energy.js'
+import { CalculationError } from './error.js'
+import { MetersDataHelper } from './meters-data-helper.js'
+import { dayJsDate } from './utils/tests-utils.js'
 
 describe('calculateEnergy', () => {
     test('test obliczania liczby dni', () => {

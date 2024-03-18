@@ -1,7 +1,13 @@
-import Ajv from 'ajv'
-import standaloneCode from 'ajv/dist/standalone/index.js'
+/* Konieczne obejścia z powodu błędu https://github.com/ajv-validator/ajv/issues/2132 */
+
+import AjvModule from 'ajv'
+const Ajv = AjvModule.default
+
+import StandaloneCodeModule from 'ajv/dist/standalone/index.js'
+const standaloneCode = StandaloneCodeModule.default
+
 import { writeFileSync } from 'fs'
-import { SolarDataAjvSchema } from '../src/definitions/solar-data-ajv-schema'
+import { SolarDataAjvSchema } from '../src/definitions/solar-data-ajv-schema.js'
 
 const ajv = new Ajv({
     messages: false, // ze względu na użycie ajv-i18n
@@ -26,4 +32,4 @@ const data = {
 }
 
 moduleCode = moduleCode.replace(data.search, data.replace.replace('\n', ''))
-writeFileSync('src/validators/validator-standalone.js', moduleCode)
+writeFileSync('generated/validator-standalone.js', moduleCode)

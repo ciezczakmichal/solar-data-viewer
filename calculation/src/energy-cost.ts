@@ -1,8 +1,8 @@
 import currency from 'currency.js'
 import { Dayjs } from 'dayjs'
-import { CalculationError } from './error'
-import { Tariff } from './tariff/tariff'
-import { CurrencyZloty } from './utils/currency-zloty'
+import { CalculationError } from './error.js'
+import { Tariff } from './tariff/tariff.js'
+import { CurrencyZloty } from './utils/currency-zloty.js'
 
 export interface EnergyCostCalculationInput {
     tariff: Tariff

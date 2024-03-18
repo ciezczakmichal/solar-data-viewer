@@ -1,8 +1,8 @@
 import { readFile } from 'fs/promises'
 import { basename } from 'path'
 import { beforeEach, describe, expect, test } from 'vitest'
-import { InvalidSolarDataSchemaError } from '../error'
-import { validateSolarData } from './validator'
+import { InvalidSolarDataSchemaError } from '../error.js'
+import { validateSolarData } from './validator.js'
 
 const smallestDataPath = './tests/example-smallest-data.json'
 

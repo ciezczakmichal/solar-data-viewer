@@ -1,5 +1,4 @@
 node_modules
 build
 dist
-
-src/validators/validator-standalone.js
+generated/*.js

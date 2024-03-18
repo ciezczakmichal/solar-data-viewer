@@ -1,8 +1,8 @@
 import { TariffItem, UnitOfMeasure, VatRateItem } from 'schema'
 import { describe, expect, test } from 'vitest'
-import { CalculationError } from '../error'
-import { dayJsDate, dayJsDateWithProperty } from '../utils/tests-utils'
-import { Tariff } from './tariff'
+import { CalculationError } from '../error.js'
+import { dayJsDate, dayJsDateWithProperty } from '../utils/tests-utils.js'
+import { Tariff } from './tariff.js'
 
 describe('Tariff', () => {
     describe('getVatTaxRate', () => {

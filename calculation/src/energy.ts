@@ -6,8 +6,8 @@ import {
     ValuesRecordNumberProps,
     YieldValuesRecord,
 } from 'schema'
-import { CalculationError } from './error'
-import { MetersDataHelper } from './meters-data-helper'
+import { CalculationError } from './error.js'
+import { MetersDataHelper } from './meters-data-helper.js'
 
 export interface BaseEnergyParamsCalculationInputGeneric<
     T extends BaseValuesRecord,

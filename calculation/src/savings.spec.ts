@@ -6,10 +6,10 @@ import {
     VatRateItem,
 } from 'schema'
 import { describe, expect, test } from 'vitest'
-import { MetersDataHelper } from './meters-data-helper'
-import { SavingsCalculationInput, calculateSavings } from './savings'
-import { Tariff } from './tariff/tariff'
-import { dayJsDate } from './utils/tests-utils'
+import { MetersDataHelper } from './meters-data-helper.js'
+import { SavingsCalculationInput, calculateSavings } from './savings.js'
+import { Tariff } from './tariff/tariff.js'
+import { dayJsDate } from './utils/tests-utils.js'
 
 describe('calculateSavings', () => {
     test('test obliczania oszczędności przy kilku zmiennych parametrach z danymi o pełni pasujących datach', () => {

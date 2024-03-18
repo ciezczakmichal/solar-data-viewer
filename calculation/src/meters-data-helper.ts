@@ -6,7 +6,7 @@ import {
     ValuesRecord,
     ValuesRecordNumberProps,
 } from 'schema'
-import { CalculationError } from './error'
+import { CalculationError } from './error.js'
 
 interface MeterInternalData {
     meterData: MeterRecord

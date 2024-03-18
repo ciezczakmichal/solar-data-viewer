@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs'
 import { parseDate } from 'schema'
-import { DateRange } from './date-range'
+import { DateRange } from './date-range.js'
 
 export class Month {
     private year!: number

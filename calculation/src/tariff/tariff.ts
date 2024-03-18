@@ -1,8 +1,8 @@
 import { Dayjs } from 'dayjs'
 import { TariffItem, UnitOfMeasure, VatRateItem } from 'schema'
-import { CalculationError } from '../error'
-import { TariffRecord } from './tariff-record'
-import { VatRatesHolder } from './vat-rates-holder'
+import { CalculationError } from '../error.js'
+import { TariffRecord } from './tariff-record.js'
+import { VatRatesHolder } from './vat-rates-holder.js'
 
 /**
  * Klasa reprezentująca taryfę cen energii.

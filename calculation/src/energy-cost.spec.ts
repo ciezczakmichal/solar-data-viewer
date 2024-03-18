@@ -5,9 +5,9 @@ import {
     calculateEnergyCost,
     calculateFixedCost,
 } from './energy-cost'
-import { CalculationError } from './error'
-import { Tariff } from './tariff/tariff'
-import { dayJsDate } from './utils/tests-utils'
+import { CalculationError } from './error.js'
+import { Tariff } from './tariff/tariff.js'
+import { dayJsDate } from './utils/tests-utils.js'
 
 describe('calculateEnergyCost', () => {
     describe('testy na minimalnej liczbie danych', () => {
