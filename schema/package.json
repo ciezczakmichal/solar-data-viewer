@@ -14,7 +14,7 @@
     "scripts": {
         "build": "yarn generate-validator && tsc --build",
         "generate-validator": "tsx scripts/generate-standalone-validator.ts",
-        "test": "yarn generate-validator && vitest",
+        "test": "yarn generate-validator && vitest run",
         "lint": "prettier --check . && eslint .",
         "format": "prettier --write ."
     },
