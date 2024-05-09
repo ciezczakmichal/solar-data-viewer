@@ -32,4 +32,4 @@ const data = {
 }
 
 moduleCode = moduleCode.replace(data.search, data.replace.replace('\n', ''))
-writeFileSync('generated/validator-standalone.js', moduleCode)
+writeFileSync('src/generated/validator-standalone.js', moduleCode)

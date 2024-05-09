@@ -12,7 +12,7 @@
         "node": ">=16"
     },
     "scripts": {
-        "build": "tsc --build",
+        "build": "tsc --build tsconfig.build.json",
         "test": "vitest run",
         "lint": "prettier --check . && eslint .",
         "format": "prettier --write ."

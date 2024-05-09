@@ -1,7 +1,7 @@
 dist
 node_modules
-generated/*
-!generated/README.md
+src/generated/*
+!src/generated/README.md
 
 .yarn
 *.tsbuildinfo

@@ -1,6 +1,0 @@
-{
-    "extends": "./tsconfig.json",
-
-    // usuń z wykluczenia pliki testów jednostkowych
-    "exclude": ["node_modules", "test", "dist"]
-}

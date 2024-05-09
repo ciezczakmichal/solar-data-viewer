@@ -3,16 +3,16 @@
     "version": "1.0.0",
     "private": true,
     "type": "module",
-    "types": "dist/src/index.d.ts",
+    "types": "dist/index.d.ts",
     "exports": {
-        ".": "./dist/src/index.js",
+        ".": "./dist/index.js",
         "./package.json": "./package.json"
     },
     "engines": {
         "node": ">=16"
     },
     "scripts": {
-        "build": "yarn generate-validator && tsc --build",
+        "build": "yarn generate-validator && tsc --build tsconfig.build.json",
         "generate-validator": "tsx scripts/generate-standalone-validator.ts",
         "test": "yarn generate-validator && vitest run",
         "lint": "prettier --check . && eslint .",

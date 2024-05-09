@@ -2,7 +2,8 @@
     "extends": "../tsconfig.json",
     "compilerOptions": {
         "outDir": "dist",
-        "rootDir": "src",
+        "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo",
+        "rootDir": ".",
         "composite": true,
         "declaration": true,
         "declarationMap": true,
@@ -10,13 +11,6 @@
         // dla currency.js, dayjs
         "esModuleInterop": true
     },
-    "exclude": [
-        "node_modules",
-        "test",
-        "dist",
-        "**/*spec.ts",
-        "vite.config.ts"
-    ],
 
     "references": [{ "path": "../schema" }]
 }

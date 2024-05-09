@@ -4,10 +4,10 @@ import { DefinedError, ValidateFunction } from 'ajv'
 import Localize_plModule from 'ajv-i18n/localize/pl'
 const localize_pl = Localize_plModule as any
 
-import { validate as validate_ } from '../../generated/validator-standalone.js'
 import { SolarData, SolarDataSchema } from '../definitions/solar-data.js'
 import { ValuesRecord } from '../definitions/values-record.js'
 import { InvalidSolarDataSchemaError } from '../error.js'
+import { validate as validate_ } from '../generated/validator-standalone.js'
 import { parseDate } from '../utils/date.js'
 
 /* Wersja wymagająca kompilacji schemy w runtime */
