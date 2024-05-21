@@ -1,4 +1,4 @@
-import { TariffItem, UnitOfMeasure, VatRateItem } from 'schema'
+import { UnitOfMeasure, type TariffItem, type VatRateItem } from 'schema'
 import { describe, expect, test } from 'vitest'
 import { CalculationError } from '../error.js'
 import { dayJsDate, dayJsDateWithProperty } from '../utils/tests-utils.js'

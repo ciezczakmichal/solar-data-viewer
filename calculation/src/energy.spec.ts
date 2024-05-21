@@ -1,6 +1,6 @@
-import { CompleteValuesRecord, MeterRecord } from 'schema'
+import type { CompleteValuesRecord, MeterRecord } from 'schema'
 import { describe, expect, test } from 'vitest'
-import { EnergyCalculationInput, calculateEnergy } from './energy.js'
+import { calculateEnergy, type EnergyCalculationInput } from './energy.js'
 import { CalculationError } from './error.js'
 import { MetersDataHelper } from './meters-data-helper.js'
 import { dayJsDate } from './utils/tests-utils.js'

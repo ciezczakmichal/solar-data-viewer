@@ -1,5 +1,5 @@
-import { Dayjs } from 'dayjs'
-import { TariffItem, UnitOfMeasure, VatRateItem } from 'schema'
+import type { Dayjs } from 'dayjs'
+import { UnitOfMeasure, type TariffItem, type VatRateItem } from 'schema'
 import { CalculationError } from '../error.js'
 import { TariffRecord } from './tariff-record.js'
 import { VatRatesHolder } from './vat-rates-holder.js'

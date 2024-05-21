@@ -1,10 +1,10 @@
 import {
-    BaseValuesRecord,
-    CompleteValuesRecord,
     isCompleteRecord,
-    PlantProperties,
-    ValuesRecordNumberProps,
-    YieldValuesRecord,
+    type BaseValuesRecord,
+    type CompleteValuesRecord,
+    type PlantProperties,
+    type ValuesRecordNumberProps,
+    type YieldValuesRecord,
 } from 'schema'
 import { CalculationError } from './error.js'
 import { MetersDataHelper } from './meters-data-helper.js'

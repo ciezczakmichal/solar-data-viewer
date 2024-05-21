@@ -1,5 +1,5 @@
 import currency from 'currency.js'
-import { PlantProperties } from 'schema'
+import type { PlantProperties } from 'schema'
 
 type InvestmentCalculationInputPlantProperties = Pick<
     PlantProperties,

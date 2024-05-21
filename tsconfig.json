@@ -10,6 +10,7 @@
         "incremental": true,
         "strict": true,
         "experimentalDecorators": true,
+        "verbatimModuleSyntax": true,
 
         // przywraca zachowanie operatora "?" - włączonego przez konfigurację strictest
         "exactOptionalPropertyTypes": false,

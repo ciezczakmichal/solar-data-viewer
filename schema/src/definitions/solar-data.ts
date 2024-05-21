@@ -1,10 +1,10 @@
-import { Message } from './message.js'
-import { MeterRecord, MeterRecordSchema } from './meter-record.js'
-import { PlantProperties } from './plant-properties.js'
-import { TariffItem, TariffItemSchema } from './tariff-item.js'
-import { ValuesRecord, ValuesRecordSchema } from './values-record.js'
-import { VatRateItem, VatRateItemSchema } from './vat-rate-item.js'
-import { YieldForecastRecord } from './yield-forecast-record.js'
+import type { Message } from './message.js'
+import type { MeterRecord, MeterRecordSchema } from './meter-record.js'
+import type { PlantProperties } from './plant-properties.js'
+import type { TariffItem, TariffItemSchema } from './tariff-item.js'
+import type { ValuesRecord, ValuesRecordSchema } from './values-record.js'
+import type { VatRateItem, VatRateItemSchema } from './vat-rate-item.js'
+import type { YieldForecastRecord } from './yield-forecast-record.js'
 
 export const SolarDataVersion = 12
 

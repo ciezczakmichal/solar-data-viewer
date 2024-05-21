@@ -1,4 +1,4 @@
-import { TariffItem, TariffItemValue, UnitOfMeasure } from 'schema'
+import { UnitOfMeasure, type TariffItem, type TariffItemValue } from 'schema'
 import { VariableValueHolder } from './variable-value-holder.js'
 
 /**

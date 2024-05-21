@@ -1,5 +1,5 @@
 import currency from 'currency.js'
-import { Dayjs } from 'dayjs'
+import type { Dayjs } from 'dayjs'
 import { CalculationError } from './error.js'
 import { Tariff } from './tariff/tariff.js'
 import { CurrencyZloty } from './utils/currency-zloty.js'

@@ -1,4 +1,4 @@
-import currency, { Options } from 'currency.js'
+import currency, { type Options } from 'currency.js'
 
 const options: Options = {
     symbol: 'zł',

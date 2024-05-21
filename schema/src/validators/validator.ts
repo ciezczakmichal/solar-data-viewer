@@ -1,11 +1,11 @@
-import { DefinedError, ValidateFunction } from 'ajv'
+import type { DefinedError, ValidateFunction } from 'ajv'
 
 // konieczne obejścia z powodu błędu https://github.com/ajv-validator/ajv/issues/2132
 import Localize_plModule from 'ajv-i18n/localize/pl'
 const localize_pl = Localize_plModule as any
 
-import { SolarData, SolarDataSchema } from '../definitions/solar-data.js'
-import { ValuesRecord } from '../definitions/values-record.js'
+import type { SolarData, SolarDataSchema } from '../definitions/solar-data.js'
+import type { ValuesRecord } from '../definitions/values-record.js'
 import { InvalidSolarDataSchemaError } from '../error.js'
 import { validate as validate_ } from '../generated/validator-standalone.js'
 import { parseDate } from '../utils/date.js'

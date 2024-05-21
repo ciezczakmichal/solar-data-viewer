@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from 'dayjs'
+import dayjs, { type Dayjs } from 'dayjs'
 import { formatDate, parseDate } from 'schema'
 
 // miesiąc tak jak wyświetlany (czyli 1 = styczeń)

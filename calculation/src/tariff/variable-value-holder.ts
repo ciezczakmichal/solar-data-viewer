@@ -1,5 +1,5 @@
-import { Dayjs } from 'dayjs'
-import { DateRange } from '../utils/date-range.js'
+import type { Dayjs } from 'dayjs'
+import type { DateRange } from '../utils/date-range.js'
 
 export interface ValueItem {
     from: Dayjs

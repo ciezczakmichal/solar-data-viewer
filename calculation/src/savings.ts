@@ -1,10 +1,10 @@
 import currency from 'currency.js'
-import { Dayjs } from 'dayjs'
-import { CompleteValuesRecord } from 'schema'
+import type { Dayjs } from 'dayjs'
+import type { CompleteValuesRecord } from 'schema'
 import { calculateEnergyCost } from './energy-cost.js'
 import {
     calculateEnergy,
-    EnergyCalculationInputPlantProperties,
+    type EnergyCalculationInputPlantProperties,
 } from './energy.js'
 import { MetersDataHelper } from './meters-data-helper.js'
 import { Tariff } from './tariff/tariff.js'

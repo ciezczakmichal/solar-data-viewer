@@ -1,10 +1,10 @@
-import { TariffItem, UnitOfMeasure, VatRateItem } from 'schema'
+import { UnitOfMeasure, type TariffItem, type VatRateItem } from 'schema'
 import { beforeEach, describe, expect, test } from 'vitest'
 import {
-    EnergyCostCalculationInput,
     calculateEnergyCost,
     calculateFixedCost,
-} from './energy-cost'
+    type EnergyCostCalculationInput,
+} from './energy-cost.js'
 import { CalculationError } from './error.js'
 import { Tariff } from './tariff/tariff.js'
 import { dayJsDate } from './utils/tests-utils.js'

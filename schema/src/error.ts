@@ -1,4 +1,4 @@
-import { DefinedError } from 'ajv'
+import type { DefinedError } from 'ajv'
 
 export class InvalidSolarDataError extends Error {
     constructor(message?: string) {

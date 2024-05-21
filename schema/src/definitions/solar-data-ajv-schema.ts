@@ -1,6 +1,6 @@
-import { JSONSchemaType } from 'ajv'
+import type { JSONSchemaType } from 'ajv'
 import { MessageType } from './message.js'
-import { SolarDataSchema, SolarDataVersion } from './solar-data.js'
+import { SolarDataVersion, type SolarDataSchema } from './solar-data.js'
 import { UnitOfMeasure } from './tariff-item.js'
 
 // JSON Schema draft-07
