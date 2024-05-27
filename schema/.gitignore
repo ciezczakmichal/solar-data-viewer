@@ -1,7 +1,2 @@
-dist
-node_modules
 src/generated/*
 !src/generated/README.md
-
-.yarn
-*.tsbuildinfo
