@@ -7,12 +7,14 @@
     export let unit: string = ''
     export let noSpaceBeforeUnit: boolean = false
 
-    let valueToUse = value
+    let valueToUse: string
 
     if (typeof value === 'number') {
         valueToUse = formatNumber(value)
     } else if (value instanceof currency) {
         valueToUse = value.format()
+    } else {
+        valueToUse = value
     }
 
     const space = noSpaceBeforeUnit ? '' : ' '

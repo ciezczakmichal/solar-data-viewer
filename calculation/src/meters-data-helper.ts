@@ -66,7 +66,9 @@ export class MetersDataHelper {
 
         const getValue = (field: ValuesRecordNumberProps): number =>
             field in initialValues
-                ? (initialValues as any)[field]
+                ? (initialValues as Record<ValuesRecordNumberProps, number>)[
+                      field
+                  ]
                 : previousMeterLastValue
                   ? previousMeterLastValue[field]
                   : 0

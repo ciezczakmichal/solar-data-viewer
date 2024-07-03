@@ -87,10 +87,12 @@
     }
 
     onMount(() => {
-        addEventListener('hashchange', updateDataSource)
-        updateDataSource()
+        const updateDataSourceSync = () => void updateDataSource()
 
-        return () => removeEventListener('hashchange', updateDataSource)
+        addEventListener('hashchange', updateDataSourceSync)
+        updateDataSourceSync()
+
+        return () => removeEventListener('hashchange', updateDataSourceSync)
     })
 </script>
 

@@ -1,5 +1,9 @@
 <script lang="ts">
-    import { Chart } from 'chart.js'
+    import {
+        Chart,
+        type ScriptableContext,
+        type ScriptableLineSegmentContext,
+    } from 'chart.js'
     import { getAppContext } from '$lib/global/app-context'
     import { DataRange } from '$lib/computation/records-for-range'
     import { ChartType } from '$lib/computation/chart-data'
@@ -114,7 +118,7 @@
         return value >= 0 ? '#4caf50' : '#ff1744'
     }
 
-    function getColor(ctx: any) {
+    function getColor(ctx: ScriptableContext<'line' | 'bar'>) {
         if (ctx.type !== 'data') {
             return undefined
         }
@@ -122,7 +126,7 @@
         return getColorFromValue(ctx.parsed.y)
     }
 
-    function getSegmentColor(ctx: any) {
+    function getSegmentColor(ctx: ScriptableLineSegmentContext) {
         return getColorFromValue(ctx.p1.parsed.y)
     }
 

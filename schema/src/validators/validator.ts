@@ -2,7 +2,7 @@ import type { DefinedError, ValidateFunction } from 'ajv'
 
 // konieczne obejścia z powodu błędu https://github.com/ajv-validator/ajv/issues/2132
 import Localize_plModule from 'ajv-i18n/localize/pl'
-const localize_pl = Localize_plModule as any
+const localize_pl = Localize_plModule as unknown as (data: any) => void
 
 import type { SolarData, SolarDataSchema } from '../definitions/solar-data.js'
 import type { ValuesRecord } from '../definitions/values-record.js'
@@ -18,6 +18,7 @@ import { parseDate } from '../utils/date.js'
 
 const validate = validate_ as ValidateFunction<SolarDataSchema>
 
+// eslint-disable-next-line @typescript-eslint/require-await
 export async function validateSolarData(data: any): Promise<SolarData> {
     if (!validate(data)) {
         const errors = validate.errors as DefinedError[]

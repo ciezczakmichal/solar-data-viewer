@@ -21,7 +21,6 @@ export abstract class BaseChartController implements ChartController {
 
     protected chart: ChartJsType | null = null
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     protected beforeInitOrUpdate(): void {}
 
     protected abstract createChartInstance(

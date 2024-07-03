@@ -11,7 +11,7 @@ async function getExampleSmallestData(): Promise<Record<string, any>> {
         new URL(smallestDataPath, import.meta.url),
         'utf8',
     )
-    return JSON.parse(json)
+    return JSON.parse(json) as Record<string, any>
 }
 
 describe('validateSolarData', () => {
