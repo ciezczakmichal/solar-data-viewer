@@ -3,7 +3,7 @@
     import { formatNumber } from '../utils/formatters/format-numbers'
 
     export let label: string = ''
-    export let value: string | number | currency
+    export let value: currency | number | string
     export let unit: string = ''
     export let noSpaceBeforeUnit: boolean = false
 

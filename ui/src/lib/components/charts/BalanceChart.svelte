@@ -1,22 +1,22 @@
 <script lang="ts">
+    import { ChartType } from '$lib/computation/chart-data'
+    import { DataRange } from '$lib/computation/records-for-range'
+    import { getAppContext } from '$lib/global/app-context'
+    import { formatKwh } from '$lib/utils/formatters/format-numbers'
     import {
         Chart,
         type ScriptableContext,
         type ScriptableLineSegmentContext,
     } from 'chart.js'
-    import { getAppContext } from '$lib/global/app-context'
-    import { DataRange } from '$lib/computation/records-for-range'
-    import { ChartType } from '$lib/computation/chart-data'
-    import { formatKwh } from '$lib/utils/formatters/format-numbers'
+    import ChartViewer from './ChartViewer.svelte'
     import {
-        getBalanceChartData,
         type BalanceChartData,
+        getBalanceChartData,
     } from './balance-chart-data'
     import {
         BaseChartController,
         type ChartJsType,
     } from './base-chart-controller'
-    import ChartViewer from './ChartViewer.svelte'
 
     const { data, from, metersHelper } = getAppContext()
 
@@ -118,7 +118,7 @@
         return value >= 0 ? '#4caf50' : '#ff1744'
     }
 
-    function getColor(ctx: ScriptableContext<'line' | 'bar'>) {
+    function getColor(ctx: ScriptableContext<'bar' | 'line'>) {
         if (ctx.type !== 'data') {
             return undefined
         }
@@ -135,7 +135,7 @@
 
 <ChartViewer
     {controller}
-    title="Wykres bilansowania"
     description="Różnica pomiędzy ilością energii pobranej a przesłanej do sieci
     - przy uwzględnieniu współczynnika bilansowania."
+    title="Wykres bilansowania"
 />

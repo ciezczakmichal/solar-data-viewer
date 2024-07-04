@@ -1,16 +1,16 @@
 <script lang="ts">
-    import { Chart } from 'chart.js'
-    import { getAppContext } from '$lib/global/app-context'
     import { ChartType } from '$lib/computation/chart-data'
+    import { getAppContext } from '$lib/global/app-context'
     import { formatKwh } from '$lib/utils/formatters/format-numbers'
+    import { Chart } from 'chart.js'
+    import ChartViewer from './ChartViewer.svelte'
     import {
         BaseChartController,
         type ChartJsType,
     } from './base-chart-controller'
-    import ChartViewer from './ChartViewer.svelte'
     import {
-        getConsumptionChartData,
         type ConsumptionChartData,
+        getConsumptionChartData,
     } from './consumption-chart-data'
     import { getTooltipLabel } from './utils'
 
@@ -102,6 +102,6 @@
 
 <ChartViewer
     {controller}
-    title="Wykres zużycia"
     description="Całkowita ilość energii zużytej przez dom."
+    title="Wykres zużycia"
 />

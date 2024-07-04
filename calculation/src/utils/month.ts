@@ -8,9 +8,9 @@ export class Month {
     // wartości 0-11
     private month!: number
 
-    constructor(date: string | Dayjs)
+    constructor(date: Dayjs | string)
     constructor(year: number, month: number)
-    constructor(dateOrYear: string | Dayjs | number, month?: number) {
+    constructor(dateOrYear: Dayjs | number | string, month?: number) {
         this.setMonth(dateOrYear, month)
     }
 
@@ -35,7 +35,7 @@ export class Month {
     }
 
     private setMonth(
-        dateOrYear: string | Dayjs | number,
+        dateOrYear: Dayjs | number | string,
         month?: number,
     ): void {
         if (typeof dateOrYear === 'number') {

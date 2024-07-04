@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, test } from 'vitest'
 import type { DateRange } from '../utils/date-range.js'
 import { dayJsDate, dayJsDateWithProperty } from '../utils/tests-utils.js'
-import { VariableValueHolder, type ValueItem } from './variable-value-holder.js'
+import { type ValueItem, VariableValueHolder } from './variable-value-holder.js'
 
 describe('VariableValueHolder', () => {
     let instance: VariableValueHolder<ValueItem>
@@ -26,7 +26,7 @@ describe('VariableValueHolder', () => {
     })
 
     test('valueForDate', () => {
-        let result: number | null
+        let result: null | number
 
         result = instance.valueForDate(dayJsDate(2010, 2, 3))
         expect(result).toEqual(null)

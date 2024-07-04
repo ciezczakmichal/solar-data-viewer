@@ -1,10 +1,10 @@
 import {
-    isCompleteRecord,
     type BaseValuesRecord,
     type CompleteValuesRecord,
     type PlantProperties,
     type ValuesRecordNumberProps,
     type YieldValuesRecord,
+    isCompleteRecord,
 } from 'schema'
 import { CalculationError } from './error.js'
 import { MetersDataHelper } from './meters-data-helper.js'
@@ -32,7 +32,7 @@ export type BaseEnergyParamsCalculationResult = Pick<
 
 export type EnergyCalculationInputPlantProperties = Pick<
     PlantProperties,
-    'installationPower' | 'energyInWarehouseFactor'
+    'energyInWarehouseFactor' | 'installationPower'
 >
 
 export interface EnergyCalculationInput

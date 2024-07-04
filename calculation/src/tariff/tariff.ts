@@ -1,5 +1,5 @@
 import type { Dayjs } from 'dayjs'
-import { UnitOfMeasure, type TariffItem, type VatRateItem } from 'schema'
+import { type TariffItem, UnitOfMeasure, type VatRateItem } from 'schema'
 import { CalculationError } from '../error.js'
 import { TariffRecord } from './tariff-record.js'
 import { VatRatesHolder } from './vat-rates-holder.js'
@@ -18,7 +18,7 @@ export class Tariff {
     constructor(items: TariffRecord[], vatRates?: VatRateItem[])
     constructor(items: TariffItem[], vatRates?: VatRateItem[])
     constructor(
-        items: TariffRecord[] | TariffItem[],
+        items: TariffItem[] | TariffRecord[],
         vatRates?: VatRateItem[],
     ) {
         this.setTariff(items, vatRates)
@@ -27,10 +27,10 @@ export class Tariff {
     setTariff(items: TariffRecord[], vatRates?: VatRateItem[]): void
     setTariff(items: TariffItem[], vatRates?: VatRateItem[]): void
     setTariff(
-        items: TariffRecord[] | TariffItem[],
+        items: TariffItem[] | TariffRecord[],
         vatRates?: VatRateItem[],
     ): void
-    setTariff(items: TariffRecord[] | TariffItem[], vatRates?: VatRateItem[]) {
+    setTariff(items: TariffItem[] | TariffRecord[], vatRates?: VatRateItem[]) {
         if (items.length > 0 && items[0] instanceof TariffRecord) {
             this._items = items as TariffRecord[]
         } else {

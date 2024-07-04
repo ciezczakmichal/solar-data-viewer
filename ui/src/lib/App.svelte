@@ -1,16 +1,16 @@
 <script lang="ts">
     import {
         InvalidSolarDataSchemaError,
-        validateSolarData,
         type SolarData,
+        validateSolarData,
     } from 'schema'
     import { onMount } from 'svelte'
-    import './global/chartjs-import'
-    import './global/dayjs-import'
     import AppContent from './components/AppContent.svelte'
     import AppContextProvider from './components/AppContextProvider.svelte'
     import AppFooter from './components/AppFooter.svelte'
     import AppHeader from './components/AppHeader.svelte'
+    import './global/chartjs-import'
+    import './global/dayjs-import'
     import { generateApplicationTitle } from './utils/app-title'
     import { getHashValue } from './utils/get-hash-value'
 

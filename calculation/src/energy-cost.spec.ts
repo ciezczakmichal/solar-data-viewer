@@ -1,9 +1,9 @@
-import { UnitOfMeasure, type TariffItem, type VatRateItem } from 'schema'
+import { type TariffItem, UnitOfMeasure, type VatRateItem } from 'schema'
 import { beforeEach, describe, expect, test } from 'vitest'
 import {
+    type EnergyCostCalculationInput,
     calculateEnergyCost,
     calculateFixedCost,
-    type EnergyCostCalculationInput,
 } from './energy-cost.js'
 import { CalculationError } from './error.js'
 import { Tariff } from './tariff/tariff.js'

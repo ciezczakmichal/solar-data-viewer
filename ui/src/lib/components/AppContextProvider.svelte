@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { isCompleteRecord, type SolarData } from 'schema'
-    import { MetersDataHelper, Tariff } from 'calculation'
     import { setAppContext } from '$lib/global/app-context'
+    import { MetersDataHelper, Tariff } from 'calculation'
+    import { type SolarData, isCompleteRecord } from 'schema'
 
     export let data: SolarData
     export let url: string

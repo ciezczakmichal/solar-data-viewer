@@ -20,7 +20,7 @@ export interface ChartDataItemXAxis {
 
 export interface ChartDataItemYAxis {
     // value, wartość (na osi Y)
-    y: number | null
+    y: null | number
 }
 
 export type ChartDataItem = ChartDataItemXAxis & ChartDataItemYAxis

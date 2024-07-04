@@ -1,7 +1,7 @@
 import dayjs, { type Dayjs } from 'dayjs'
 import { DateFormat } from '../definitions/date-format.js'
 
-export function parseDate(date: string | Dayjs): Dayjs {
+export function parseDate(date: Dayjs | string): Dayjs {
     if (typeof date === 'string') {
         return dayjs(date, DateFormat, true)
     }

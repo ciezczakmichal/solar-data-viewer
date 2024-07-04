@@ -34,7 +34,7 @@ export function formatDuration(
     flag?: DurationFormatFlag,
 ): string
 export function formatDuration(
-    input: number | DateRange,
+    input: DateRange | number,
     flag = DurationFormatFlag.None,
 ): string {
     let values: number[]

@@ -1,13 +1,13 @@
 import {
-    UnitOfMeasure,
     type CompleteValuesRecord,
     type MeterRecord,
     type TariffItem,
+    UnitOfMeasure,
     type VatRateItem,
 } from 'schema'
 import { describe, expect, test } from 'vitest'
 import { MetersDataHelper } from './meters-data-helper.js'
-import { calculateSavings, type SavingsCalculationInput } from './savings.js'
+import { type SavingsCalculationInput, calculateSavings } from './savings.js'
 import { Tariff } from './tariff/tariff.js'
 import { dayJsDate } from './utils/tests-utils.js'
 

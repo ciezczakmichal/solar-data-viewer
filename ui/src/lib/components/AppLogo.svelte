@@ -3,7 +3,7 @@
 </script>
 
 <div>
-    <img class="logo" src={logo} alt="Ikona aplikacja" />
+    <img alt="Ikona aplikacja" class="logo" src={logo} />
 </div>
 
 <style>

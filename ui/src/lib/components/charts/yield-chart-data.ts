@@ -1,11 +1,11 @@
-import { calculateBaseEnergyParams, type MetersDataHelper } from 'calculation'
 import type { Dayjs } from 'dayjs'
 import type { SolarData, YieldValuesRecord } from 'schema'
+import { type MetersDataHelper, calculateBaseEnergyParams } from 'calculation'
 import {
-    ChartType,
-    getChartData,
     type ChartDataItem,
     type ChartOptions,
+    ChartType,
+    getChartData,
 } from '../../computation/chart-data'
 import {
     DataRange,
@@ -26,11 +26,11 @@ export interface YieldChartData {
 
 interface CalculationReturnType {
     totalYield: number
-    forecastedYield: number | null
+    forecastedYield: null | number
 }
 
 interface ForecastFunctionFactoryResult {
-    fn: (date: Dayjs) => number | null
+    fn: (date: Dayjs) => null | number
     useForecastedData: boolean
 }
 

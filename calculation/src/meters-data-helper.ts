@@ -1,17 +1,17 @@
 import {
-    isCompleteRecord,
     type CompleteValuesRecord,
     type MeterRecord,
     type SolarData,
     type ValuesRecord,
     type ValuesRecordNumberProps,
+    isCompleteRecord,
 } from 'schema'
 import { CalculationError } from './error.js'
 
 interface MeterInternalData {
     meterData: MeterRecord
     lastValue: CompleteValuesRecord
-    previousMeterId: number | null
+    previousMeterId: null | number
 }
 
 export type MetersDataHelperInput = Pick<SolarData, 'meters' | 'values'>
@@ -48,7 +48,7 @@ export class MetersDataHelper {
         return this.getMeterInternalData(meterId).meterData
     }
 
-    getMeterIdPreviousTo(meterId: number): number | null {
+    getMeterIdPreviousTo(meterId: number): null | number {
         return this.getMeterInternalData(meterId).previousMeterId
     }
 
@@ -92,7 +92,7 @@ export class MetersDataHelper {
         }
 
         const result: number[] = [to.meterId]
-        let previous: number | null = to.meterId
+        let previous: null | number = to.meterId
 
         do {
             previous = this.getMeterIdPreviousTo(previous)

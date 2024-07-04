@@ -1,18 +1,9 @@
 <script lang="ts">
-    import { isCompleteRecord } from 'schema'
-    import {
-        calculateEnergy,
-        calculateEnergyCostAtDay,
-        calculateFixedCost,
-        calculateInvestment,
-        calculateSavings,
-        type EnergyCalculationResult,
-    } from 'calculation'
-    import { getAppContext } from '$lib/global/app-context'
     import { getCompleteValueCloseToYear } from '$lib/computation/value-close-to-year'
+    import { getAppContext } from '$lib/global/app-context'
     import {
-        formatNumber,
         formatKwh,
+        formatNumber,
         formatPercent,
     } from '$lib/utils/formatters/format-numbers'
     import {
@@ -20,8 +11,17 @@
         formatDate,
         formatDuration,
     } from '$lib/utils/formatters/format-time'
-    import Item from './Item.svelte'
+    import {
+        type EnergyCalculationResult,
+        calculateEnergy,
+        calculateEnergyCostAtDay,
+        calculateFixedCost,
+        calculateInvestment,
+        calculateSavings,
+    } from 'calculation'
+    import { isCompleteRecord } from 'schema'
     import EnergyCountItem from './EnergyCountItem.svelte'
+    import Item from './Item.svelte'
 
     const { data, from, to, metersHelper, tariff } = getAppContext()
     const { values, plantProperties } = data
@@ -165,19 +165,19 @@
 
     <br />
 
-    <Item label="Bieżąca cena energii" value={currentEnergyCost} unit="/ kWh" />
+    <Item label="Bieżąca cena energii" unit="/ kWh" value={currentEnergyCost} />
     <Item
         label="Bieżące opłaty stałe"
-        value={currentFixedCost}
         unit="/ miesiąc"
+        value={currentFixedCost}
     />
 
     <br />
 
     <Item
         label="Oszczędności na rachunkach za prąd"
-        value={savings}
         unit={!accurate ? '(dane przybliżone)' : undefined}
+        value={savings}
     />
     <Item label="Średnia kwota oszczędności na dzień" value={dailySaving} />
     <Item

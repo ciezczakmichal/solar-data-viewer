@@ -1,18 +1,18 @@
 export interface PlantProperties {
     // lokalizacja - miejscowość
-    location?: string | null
+    location?: null | string
 
     // moc instalacji w kWp
     installationPower: number
 
     // kąt nachylenia paneli
-    pitch?: number | null
+    pitch?: null | number
 
     // orientacja - kierunek skierowania paneli
-    orientation?: number | null
+    orientation?: null | number
 
     // powierzchnia paneli w m^2
-    panelsArea?: number | null
+    panelsArea?: null | number
 
     // koszt inwestycji
     // @todo osobne gromadzenie kosztów i dopłat

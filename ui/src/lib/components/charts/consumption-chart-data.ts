@@ -1,9 +1,9 @@
-import { MetersDataHelper, calculateEnergy } from 'calculation'
 import type { CompleteValuesRecord, SolarData } from 'schema'
+import { MetersDataHelper, calculateEnergy } from 'calculation'
 import {
-    getChartData,
     type ChartDataItem,
     type ChartOptions,
+    getChartData,
 } from '../../computation/chart-data'
 import { getCompleteRecordsForRange } from '../../computation/records-for-range'
 

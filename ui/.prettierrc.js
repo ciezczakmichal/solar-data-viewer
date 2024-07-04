@@ -10,10 +10,6 @@ export default {
     /* Konfiguracja dla UI */
 
     // plugin tailwindcss musi być ostatni
-    plugins: [
-        'prettier-plugin-svelte',
-        'prettier-plugin-organize-imports',
-        'prettier-plugin-tailwindcss',
-    ],
+    plugins: ['prettier-plugin-svelte', 'prettier-plugin-tailwindcss'],
     overrides: [{ files: '*.svelte', options: { parser: 'svelte' } }],
 }

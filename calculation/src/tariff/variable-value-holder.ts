@@ -17,7 +17,7 @@ export class VariableValueHolder<T extends ValueItem> {
      * @param date Dzień, dla którego pobrać dane
      * @returns Wartość pozycji (netto - bez podatku)
      */
-    valueForDate(date: Dayjs): number | null {
+    valueForDate(date: Dayjs): null | number {
         const item = this.valueItemForDate(date)
         return item ? item.value : null
     }

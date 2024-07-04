@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { onMount } from 'svelte'
     import { ChartType } from '$lib/computation/chart-data'
     import { DataRange } from '$lib/computation/records-for-range'
+    import { onMount } from 'svelte'
     import type { ChartController } from './chart-controller'
 
     export let controller: ChartController
@@ -49,5 +49,5 @@
             >
         </div>
     </div>
-    <canvas bind:this={canvas} width="4" height="1" />
+    <canvas bind:this={canvas} height="1" width="4" />
 </div>

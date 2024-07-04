@@ -11,31 +11,31 @@
         <Item label="Lokalizacja" value={props.location} />
     {/if}
 
-    <Item label="Moc instalacji" value={props.installationPower} unit="kWp" />
+    <Item label="Moc instalacji" unit="kWp" value={props.installationPower} />
 
     {#if props.pitch}
         <Item
             label="Nachylenie paneli"
-            value={props.pitch}
-            unit="°"
             noSpaceBeforeUnit
+            unit="°"
+            value={props.pitch}
         />
     {/if}
 
     {#if props.orientation}
         <Item
             label="Orientacja"
-            value={props.orientation}
-            unit="°"
             noSpaceBeforeUnit
+            unit="°"
+            value={props.orientation}
         />
     {/if}
 
     {#if props.panelsArea}
-        <Item label="Powierzchnia paneli" value={props.panelsArea} unit="m²" />
+        <Item label="Powierzchnia paneli" unit="m²" value={props.panelsArea} />
     {/if}
 
-    <Item label="Koszt inwestycji" value={props.investmentCost} unit="zł" />
+    <Item label="Koszt inwestycji" unit="zł" value={props.investmentCost} />
 </div>
 
 <style>

@@ -12,15 +12,15 @@
             <div class="alert-orange alert mb-1">
                 <!-- TODO zastąpić ikoną z projektu -->
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 shrink-0 stroke-current"
                     fill="none"
                     viewBox="0 0 24 24"
-                    class="h-6 w-6 shrink-0 stroke-current"
+                    xmlns="http://www.w3.org/2000/svg"
                     ><path
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                         stroke-linecap="round"
                         stroke-linejoin="round"
                         stroke-width="2"
-                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                     ></path></svg
                 >
 
@@ -28,8 +28,8 @@
                     <a
                         class="link-hover link"
                         href={message.url}
-                        target="_blank"
-                        rel="noreferrer">{message.text}</a
+                        rel="noreferrer"
+                        target="_blank">{message.text}</a
                     >
                 {:else}
                     {message.text}

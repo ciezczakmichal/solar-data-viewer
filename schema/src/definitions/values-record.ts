@@ -13,12 +13,12 @@ export interface BaseMeterValuesRecord {
     donated: number
 }
 
-export type BaseCompleteValuesRecord = BaseYieldValuesRecord &
-    BaseMeterValuesRecord
+export type BaseCompleteValuesRecord = BaseMeterValuesRecord &
+    BaseYieldValuesRecord
 export type BaseValuesRecord =
-    | BaseYieldValuesRecord
-    | BaseMeterValuesRecord
     | BaseCompleteValuesRecord
+    | BaseMeterValuesRecord
+    | BaseYieldValuesRecord
 
 export interface ValuesRecordPropertiesSchema {
     meterId: number
@@ -31,20 +31,20 @@ export interface ValuesRecordProperties
     date: Dayjs
 }
 
-export type YieldValuesRecord = ValuesRecordProperties & BaseYieldValuesRecord
-export type MeterValuesRecord = ValuesRecordProperties & BaseMeterValuesRecord
-export type CompleteValuesRecord = YieldValuesRecord & MeterValuesRecord
+export type YieldValuesRecord = BaseYieldValuesRecord & ValuesRecordProperties
+export type MeterValuesRecord = BaseMeterValuesRecord & ValuesRecordProperties
+export type CompleteValuesRecord = MeterValuesRecord & YieldValuesRecord
 
 export type ValuesRecord =
-    | YieldValuesRecord
-    | MeterValuesRecord
     | CompleteValuesRecord
+    | MeterValuesRecord
+    | YieldValuesRecord
 
-export type ValuesRecordSchema = Omit<ValuesRecord, 'date'> & {
+export type ValuesRecordSchema = {
     date: string
-}
+} & Omit<ValuesRecord, 'date'>
 
-export type ValuesRecordNumberProps = 'totalYield' | 'charged' | 'donated'
+export type ValuesRecordNumberProps = 'charged' | 'donated' | 'totalYield'
 
 export function isYieldRecord(
     data: ValuesRecordProperties,
