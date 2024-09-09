@@ -112,9 +112,10 @@
             {errorMessage}.
         </p>
         <p>
-            Alternatywnie możesz wyświetlić <a href="#source=demo-data.json"
-                >dane demo</a
-            >.
+            Alternatywnie możesz wyświetlić <a href="#source=demo-data.json">
+                dane demo
+            </a>
+            .
         </p>
     {:else if data !== null}
         <AppContextProvider {data} {url}><AppContent /></AppContextProvider>

@@ -21,8 +21,10 @@
                 class="link-hover link"
                 href={url}
                 rel="noreferrer"
-                target="_blank">{url}</a
+                target="_blank"
             >
+                {url}
+            </a>
         </div>
     </div>
 

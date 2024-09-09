@@ -40,13 +40,15 @@
             <button
                 class="btn btn-neutral"
                 on:click={() => controller.switchChartType()}
-                >{switchTypeButtonText}</button
             >
+                {switchTypeButtonText}
+            </button>
             <button
                 class="btn btn-neutral"
                 on:click={() => controller.switchDataRange()}
-                >{switchRangeButtonText}</button
             >
+                {switchRangeButtonText}
+            </button>
         </div>
     </div>
     <canvas bind:this={canvas} height="1" width="4" />
