@@ -2,8 +2,8 @@ import type { Dayjs } from 'dayjs'
 import type { CompleteValuesRecord } from 'schema'
 import currency from 'currency.js'
 import {
-    type EnergyCalculationInputPlantProperties,
     calculateEnergy,
+    type EnergyCalculationInputPlantProperties,
 } from './energy.js'
 import { calculateEnergyCost } from './energy-cost.js'
 import { MetersDataHelper } from './meters-data-helper.js'
@@ -113,7 +113,7 @@ function getValuesForRange(
     values: CompleteValuesRecord[],
     currentStart: Dayjs,
     nextStart: Dayjs | null,
-): ValuesForRange | null {
+): null | ValuesForRange {
     // @todo reverse wartości - optymalizacja - tylko raz
 
     const currentStartFrom = currentStart.add(-1, 'day')

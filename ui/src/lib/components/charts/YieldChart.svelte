@@ -2,14 +2,14 @@
     import { ChartType } from '$lib/computation/chart-data'
     import { getAppContext } from '$lib/global/app-context'
     import { Chart } from 'chart.js'
-    import ChartViewer from './ChartViewer.svelte'
     import {
         BaseChartController,
         type ChartJsDataset,
         type ChartJsType,
     } from './base-chart-controller'
+    import ChartViewer from './ChartViewer.svelte'
     import { getTooltipLabel } from './utils'
-    import { type YieldChartData, getYieldChartData } from './yield-chart-data'
+    import { getYieldChartData, type YieldChartData } from './yield-chart-data'
 
     const { data, from, metersHelper } = getAppContext()
 

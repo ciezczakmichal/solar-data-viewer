@@ -47,7 +47,7 @@ export class VariableValueHolder<T extends ValueItem> {
         return fromItem !== toItem
     }
 
-    protected valueItemForDate(date: Dayjs): T | null {
+    protected valueItemForDate(date: Dayjs): null | T {
         return (
             this._data.findLast(item => item.from.isSameOrBefore(date)) || null
         )

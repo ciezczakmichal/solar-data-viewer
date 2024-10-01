@@ -12,12 +12,12 @@
         formatDuration,
     } from '$lib/utils/formatters/format-time'
     import {
-        type EnergyCalculationResult,
         calculateEnergy,
         calculateEnergyCostAtDay,
         calculateFixedCost,
         calculateInvestment,
         calculateSavings,
+        type EnergyCalculationResult,
     } from 'calculation'
     import { isCompleteRecord } from 'schema'
     import EnergyCountItem from './EnergyCountItem.svelte'

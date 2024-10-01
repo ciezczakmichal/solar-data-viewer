@@ -24,7 +24,7 @@
     let errorMessage = ''
 
     let url: string = ''
-    let data: SolarData | null = null
+    let data: null | SolarData = null
 
     function getDataUrl(): string {
         let result = getHashValue('source')
@@ -44,7 +44,7 @@
             )
         }
 
-        let response, data
+        let data, response
 
         try {
             response = await fetch(url)

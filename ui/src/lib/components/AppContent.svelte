@@ -1,11 +1,11 @@
 <script lang="ts">
     import { getAppContext } from '../global/app-context'
     import CalculationResult from './CalculationResult.svelte'
-    import MessageList from './MessageList.svelte'
-    import PlantProperties from './PlantProperties.svelte'
     import BalanceChart from './charts/BalanceChart.svelte'
     import ConsumptionChart from './charts/ConsumptionChart.svelte'
     import YieldChart from './charts/YieldChart.svelte'
+    import MessageList from './MessageList.svelte'
+    import PlantProperties from './PlantProperties.svelte'
 
     const { url } = getAppContext()
 </script>

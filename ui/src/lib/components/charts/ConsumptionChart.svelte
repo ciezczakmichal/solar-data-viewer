@@ -3,11 +3,11 @@
     import { getAppContext } from '$lib/global/app-context'
     import { formatKwh } from '$lib/utils/formatters/format-numbers'
     import { Chart } from 'chart.js'
-    import ChartViewer from './ChartViewer.svelte'
     import {
         BaseChartController,
         type ChartJsType,
     } from './base-chart-controller'
+    import ChartViewer from './ChartViewer.svelte'
     import {
         type ConsumptionChartData,
         getConsumptionChartData,

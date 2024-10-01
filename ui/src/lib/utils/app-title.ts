@@ -3,7 +3,7 @@ import { formatNumber } from './formatters/format-numbers'
 
 export const AppTitle = 'Solar Data Viewer'
 
-export function generateApplicationTitle(data: SolarData | null): string {
+export function generateApplicationTitle(data: null | SolarData): string {
     if (!data) {
         return AppTitle
     }

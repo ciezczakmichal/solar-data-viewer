@@ -1,10 +1,10 @@
 import {
     type CompleteValuesRecord,
+    isCompleteRecord,
     type MeterRecord,
     type SolarData,
     type ValuesRecord,
     type ValuesRecordNumberProps,
-    isCompleteRecord,
 } from 'schema'
 import { CalculationError } from './error.js'
 

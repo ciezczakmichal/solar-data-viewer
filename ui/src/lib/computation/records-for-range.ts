@@ -1,12 +1,12 @@
 import type { Dayjs } from 'dayjs'
 import {
     type CompleteValuesRecord,
+    isCompleteRecord,
+    isYieldRecord,
     type MeterValuesRecord,
     type ValuesRecord,
     type ValuesRecordProperties,
     type YieldValuesRecord,
-    isCompleteRecord,
-    isYieldRecord,
 } from 'schema'
 import { getLastDayOfMonth, isLastDayOfMonth } from '../utils/date'
 
@@ -19,7 +19,7 @@ export interface RangeValuesRecord<
     T extends ValuesRecordProperties = ValuesRecord,
 > {
     date: Dayjs
-    values: T | null
+    values: null | T
 }
 
 export type RangeYieldValuesRecord = RangeValuesRecord<YieldValuesRecord>

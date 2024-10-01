@@ -8,7 +8,6 @@
         type ScriptableContext,
         type ScriptableLineSegmentContext,
     } from 'chart.js'
-    import ChartViewer from './ChartViewer.svelte'
     import {
         type BalanceChartData,
         getBalanceChartData,
@@ -17,6 +16,7 @@
         BaseChartController,
         type ChartJsType,
     } from './base-chart-controller'
+    import ChartViewer from './ChartViewer.svelte'
 
     const { data, from, metersHelper } = getAppContext()
 

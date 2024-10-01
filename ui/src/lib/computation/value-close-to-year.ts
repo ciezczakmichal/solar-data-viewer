@@ -1,8 +1,8 @@
 import type { Dayjs } from 'dayjs'
 import {
     type CompleteValuesRecord,
-    type ValuesRecord,
     isCompleteRecord,
+    type ValuesRecord,
 } from 'schema'
 
 /**

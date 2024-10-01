@@ -1,10 +1,10 @@
 import {
     type BaseValuesRecord,
     type CompleteValuesRecord,
+    isCompleteRecord,
     type PlantProperties,
     type ValuesRecordNumberProps,
     type YieldValuesRecord,
-    isCompleteRecord,
 } from 'schema'
 import { CalculationError } from './error.js'
 import { MetersDataHelper } from './meters-data-helper.js'
@@ -131,9 +131,9 @@ function calculateBaseEnergyParamsImpl(
         ? metersHelper.getMetersIdForPeriod(from, to)
         : [from.meterId]
 
-    let totalYield = 0,
-        charged = 0,
-        donated = 0
+    let charged = 0,
+        donated = 0,
+        totalYield = 0
 
     while (metersId.length > 0) {
         const currentMeterId = metersId.shift() as number
@@ -178,11 +178,11 @@ export function calculateEnergy(
     const dailyConsumption = totalConsumption / days
     const monthlyConsumption = dailyConsumption * (365 / 12)
 
-    let savedEnergy: number,
-        demandFulfillmentPercent: number,
+    let demandFulfillmentPercent: number,
         energyToBuy: number,
         energyToCharge: number,
-        energyToChargeOrBuy: number
+        energyToChargeOrBuy: number,
+        savedEnergy: number
 
     const fulfillNeeds = donatedToUse >= charged
 
