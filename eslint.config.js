@@ -4,8 +4,7 @@ import svelte from 'eslint-plugin-svelte'
 import globals from 'globals'
 import ts from 'typescript-eslint'
 
-// @ts-ignore
-import perfectionistNatural from 'eslint-plugin-perfectionist/configs/recommended-natural'
+import perfectionist from 'eslint-plugin-perfectionist'
 
 export default ts.config(
     js.configs.recommended,
@@ -13,7 +12,8 @@ export default ts.config(
     ...svelte.configs['flat/recommended'],
     prettier,
     ...svelte.configs['flat/prettier'],
-    perfectionistNatural,
+    // @ts-ignore
+    perfectionist.configs['recommended-natural'],
     {
         languageOptions: {
             parserOptions: {
@@ -84,11 +84,9 @@ export default ts.config(
             'perfectionist/sort-imports': [
                 'error',
                 {
-                    // bez włączenia pozostałych opcji nie były one stosowane
-                    ...perfectionistNatural.rules[
-                        'perfectionist/sort-imports'
-                    ][1],
-                    'newlines-between': 'never',
+                    type: 'natural',
+                    newlinesBetween: 'never',
+                    ignoreCase: true,
                 },
             ],
         },
