@@ -3,11 +3,11 @@
     import Item from './Item.svelte'
 
     interface Props {
-        label?: string;
-        value: number;
+        label?: string
+        value: number
     }
 
-    let { label = '', value }: Props = $props();
+    let { label = '', value }: Props = $props()
 </script>
 
 <Item {label} value={formatKwh(value)} />

@@ -5,12 +5,12 @@
     import type { ChartController } from './chart-controller'
 
     interface Props {
-        controller: ChartController;
-        title: string;
-        description: string;
+        controller: ChartController
+        title: string
+        description: string
     }
 
-    let { controller, title, description }: Props = $props();
+    let { controller, title, description }: Props = $props()
 
     let canvas: HTMLCanvasElement
 
