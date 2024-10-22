@@ -4,14 +4,18 @@
     import { onMount } from 'svelte'
     import type { ChartController } from './chart-controller'
 
-    export let controller: ChartController
-    export let title: string
-    export let description: string
+    interface Props {
+        controller: ChartController;
+        title: string;
+        description: string;
+    }
+
+    let { controller, title, description }: Props = $props();
 
     let canvas: HTMLCanvasElement
 
-    let switchTypeButtonText: string
-    let switchRangeButtonText: string
+    let switchTypeButtonText = $state('')
+    let switchRangeButtonText = $state('')
 
     function updateButtonTexts() {
         const { type, range } = controller.getOptions()
@@ -39,13 +43,13 @@
         <div>
             <button
                 class="btn btn-neutral"
-                on:click={() => controller.switchChartType()}
+                onclick={() => controller.switchChartType()}
             >
                 {switchTypeButtonText}
             </button>
             <button
                 class="btn btn-neutral"
-                on:click={() => controller.switchDataRange()}
+                onclick={() => controller.switchDataRange()}
             >
                 {switchRangeButtonText}
             </button>

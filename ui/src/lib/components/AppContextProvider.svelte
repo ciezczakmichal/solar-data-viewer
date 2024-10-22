@@ -1,10 +1,16 @@
 <script lang="ts">
+    import type { Snippet } from 'svelte'
     import { setAppContext } from '$lib/global/app-context'
     import { MetersDataHelper, Tariff } from 'calculation'
     import { isCompleteRecord, type SolarData } from 'schema'
 
-    export let data: SolarData
-    export let url: string
+    interface Props {
+        data: SolarData
+        url: string
+        children?: Snippet
+    }
+
+    let { data, url, children }: Props = $props()
 
     const metersHelper = new MetersDataHelper(data)
     const tariff = new Tariff(data.tariff, data.vatRates)
@@ -31,4 +37,4 @@
     })
 </script>
 
-<slot />
+{@render children?.()}

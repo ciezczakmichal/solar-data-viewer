@@ -2,8 +2,12 @@
     import { formatKwh } from '../utils/formatters/format-numbers'
     import Item from './Item.svelte'
 
-    export let label: string = ''
-    export let value: number
+    interface Props {
+        label?: string;
+        value: number;
+    }
+
+    let { label = '', value }: Props = $props();
 </script>
 
 <Item {label} value={formatKwh(value)} />

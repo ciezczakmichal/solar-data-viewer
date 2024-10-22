@@ -14,17 +14,18 @@
     import { generateApplicationTitle } from './utils/app-title'
     import { getHashValue } from './utils/get-hash-value'
 
+    // eslint-disable-next-line svelte/valid-compile
     enum Status {
         Loading,
         DataDisplay,
         Error,
     }
 
-    let status = Status.Loading
-    let errorMessage = ''
+    let status = $state(Status.Loading)
+    let errorMessage = $state('')
 
-    let url: string = ''
-    let data: null | SolarData = null
+    let url = $state('')
+    let data = $state<null | SolarData>(null)
 
     function getDataUrl(): string {
         let result = getHashValue('source')
