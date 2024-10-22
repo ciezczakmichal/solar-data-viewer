@@ -51,5 +51,5 @@
             </button>
         </div>
     </div>
-    <canvas bind:this={canvas} height="1" width="4" />
+    <canvas bind:this={canvas} height="1" width="4"></canvas>
 </div>
