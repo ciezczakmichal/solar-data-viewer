@@ -8,9 +8,6 @@
         ".": "./dist/index.js",
         "./package.json": "./package.json"
     },
-    "engines": {
-        "node": ">=16"
-    },
     "scripts": {
         "prebuild": "rimraf dist",
         "build": "tsc --build tsconfig.build.json",
