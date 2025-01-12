@@ -44,7 +44,7 @@ jobs:
             - name: Build
               run: yarn build
 
-            # TODO: sprawdż, czy testy w innym workflow się wykonały
+            # TODO: sprawdź, czy testy w innym workflow się wykonały
             # ewentualnie zawsze deploy do dev, a na produkcję po wydaniu wersji
             - name: Test
               run: yarn test
