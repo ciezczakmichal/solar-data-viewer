@@ -29,14 +29,14 @@ jobs:
             - name: Setup Pages
               uses: actions/configure-pages@v4
 
+            - name: Enable Corepack
+              run: corepack enable
+
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
                   node-version: 22
                   cache: 'yarn'
-
-            - name: Install Yarn 4
-              run: corepack enable && yarn set version berry
 
             - name: Install dependencies
               run: yarn --immutable
