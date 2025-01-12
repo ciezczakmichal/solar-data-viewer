@@ -4130,6 +4130,8 @@ __metadata:
 "solar-data-viewer-package@workspace:.":
   version: 0.0.0-use.local
   resolution: "solar-data-viewer-package@workspace:."
+  dependencies:
+    prettier: "npm:^3.1.1"
   languageName: unknown
   linkType: soft
 
