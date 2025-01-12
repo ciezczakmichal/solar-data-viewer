@@ -22,5 +22,6 @@
         "lint": "prettier --check *.* && yarn build:core && yarn schema lint && yarn calculation lint && yarn ui lint",
         "format": "prettier --write *.* && yarn schema format && yarn calculation format && yarn ui format",
         "ncu": "node scripts/ncu-upgrade.mjs"
-    }
+    },
+    "packageManager": "yarn@4.6.0"
 }

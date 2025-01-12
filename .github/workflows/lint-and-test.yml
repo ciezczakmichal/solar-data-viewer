@@ -28,7 +28,11 @@ jobs:
                   node-version: 22
                   cache: 'yarn'
 
-            - run: yarn --frozen-lockfile
+            - name: Install Yarn 4
+              run: corepack enable && yarn set version berry
+
+            - name: Install dependencies
+              run: yarn --immutable
 
     lint:
         runs-on: ubuntu-latest
@@ -43,7 +47,12 @@ jobs:
                   node-version: 22
                   cache: 'yarn'
 
-            - run: yarn --frozen-lockfile
+            - name: Install Yarn 4
+              run: corepack enable && yarn set version berry
+
+            - name: Install dependencies
+              run: yarn --immutable
+
             - run: yarn lint
 
     test:
@@ -59,7 +68,12 @@ jobs:
                   node-version: 22
                   cache: 'yarn'
 
-            - run: yarn --frozen-lockfile
+            - name: Install Yarn 4
+              run: corepack enable && yarn set version berry
+
+            - name: Install dependencies
+              run: yarn --immutable
+
             - run: yarn test
 
     svelte-check:
@@ -75,6 +89,11 @@ jobs:
                   node-version: 22
                   cache: 'yarn'
 
-            - run: yarn --frozen-lockfile
+            - name: Install Yarn 4
+              run: corepack enable && yarn set version berry
+
+            - name: Install dependencies
+              run: yarn --immutable
+
             - run: yarn build:core
             - run: yarn ui run check

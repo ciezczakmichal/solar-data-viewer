@@ -9,8 +9,7 @@
         "./package.json": "./package.json"
     },
     "scripts": {
-        "prebuild": "rimraf dist",
-        "build": "yarn generate-validator && tsc --build tsconfig.build.json",
+        "build": "rimraf dist && yarn generate-validator && tsc --build tsconfig.build.json",
         "generate-validator": "tsx scripts/generate-standalone-validator.ts",
         "test": "yarn generate-validator && vitest run",
         "lint": "prettier --check . && eslint .",

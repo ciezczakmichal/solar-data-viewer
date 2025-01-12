@@ -35,8 +35,11 @@ jobs:
                   node-version: 22
                   cache: 'yarn'
 
+            - name: Install Yarn 4
+              run: corepack enable && yarn set version berry
+
             - name: Install dependencies
-              run: yarn --frozen-lockfile
+              run: yarn --immutable
 
             - name: Build
               run: yarn build
