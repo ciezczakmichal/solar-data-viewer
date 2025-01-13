@@ -19,8 +19,8 @@
         "build:ui": "yarn ui build",
         "dev": "yarn build:core && yarn ui dev",
         "test": "yarn build:core && yarn schema test && yarn calculation test && yarn ui test",
-        "lint": "prettier --check *.* && yarn build:core && yarn schema lint && yarn calculation lint && yarn ui lint",
-        "format": "prettier --write *.* && yarn schema format && yarn calculation format && yarn ui format",
+        "lint": "prettier --check *.* && yarn build:core && yarn workspaces foreach --all --exclude . run lint",
+        "format": "prettier --write *.* && yarn workspaces foreach --all --exclude . run format",
         "ncu": "node scripts/ncu-upgrade.mjs"
     },
     "devDependencies": {
