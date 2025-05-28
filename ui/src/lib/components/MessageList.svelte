@@ -8,7 +8,7 @@
 
 {#if messages.length > 0}
     <div class="pb-1 pt-3">
-        {#each messages as message}
+        {#each messages as message, i (i)}
             <div class="alert-orange alert mb-1">
                 <!-- TODO zastąpić ikoną z projektu -->
                 <svg

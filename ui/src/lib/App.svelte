@@ -14,7 +14,6 @@
     import { generateApplicationTitle } from './utils/app-title'
     import { getHashValue } from './utils/get-hash-value'
 
-    // eslint-disable-next-line svelte/valid-compile
     enum Status {
         Loading,
         DataDisplay,
