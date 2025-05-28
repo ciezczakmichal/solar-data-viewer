@@ -40,9 +40,9 @@ export type ValuesRecord =
     | MeterValuesRecord
     | YieldValuesRecord
 
-export type ValuesRecordSchema = {
+export type ValuesRecordSchema = Omit<ValuesRecord, 'date'> & {
     date: string
-} & Omit<ValuesRecord, 'date'>
+}
 
 export type ValuesRecordNumberProps = 'charged' | 'donated' | 'totalYield'
 

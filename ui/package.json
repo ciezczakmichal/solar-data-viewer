@@ -30,7 +30,7 @@
         "daisyui": "^4.4.19",
         "eslint": "^9.27.0",
         "eslint-config-prettier": "^10.1.5",
-        "eslint-plugin-perfectionist": "^3.8.0",
+        "eslint-plugin-perfectionist": "^4.13.0",
         "eslint-plugin-svelte": "^3.9.0",
         "globals": "^15.8.0",
         "jsdom": "^24.0.0",

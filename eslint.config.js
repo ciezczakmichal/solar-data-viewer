@@ -12,7 +12,6 @@ export default ts.config(
     ...svelte.configs['flat/recommended'],
     prettier,
     ...svelte.configs['flat/prettier'],
-    // @ts-ignore
     perfectionist.configs['recommended-natural'],
     {
         languageOptions: {
@@ -80,6 +79,7 @@ export default ts.config(
             'perfectionist/sort-classes': 'off',
             'perfectionist/sort-enums': 'off',
             'perfectionist/sort-interfaces': 'off',
+            'perfectionist/sort-modules': 'off',
             'perfectionist/sort-objects': 'off',
             'perfectionist/sort-imports': [
                 'error',
