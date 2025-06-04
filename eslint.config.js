@@ -9,9 +9,9 @@ import perfectionist from 'eslint-plugin-perfectionist'
 export default ts.config(
     js.configs.recommended,
     ...ts.configs.recommendedTypeChecked,
-    ...svelte.configs['flat/recommended'],
+    ...svelte.configs.recommended,
     prettier,
-    ...svelte.configs['flat/prettier'],
+    ...svelte.configs.prettier,
     perfectionist.configs['recommended-natural'],
     {
         languageOptions: {
@@ -53,6 +53,22 @@ export default ts.config(
         // konieczne z uwagi na nierozpoznawanie przez ESLint typów komponentów
         // https://github.com/sveltejs/eslint-plugin-svelte/issues/298
         ...ts.configs.disableTypeChecked,
+    },
+    {
+        files: ['**/*.svelte'],
+        rules: {
+            'svelte/sort-attributes': [
+                'error',
+                {
+                    order: [
+                        {
+                            match: '/^.*/u',
+                            sort: 'alphabetical',
+                        },
+                    ],
+                },
+            ],
+        },
     },
     {
         ignores: [
