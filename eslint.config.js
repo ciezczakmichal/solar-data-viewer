@@ -61,6 +61,9 @@ export default ts.config(
                 'error',
                 {
                     order: [
+                        // this musi być na początku, ponieważ koliduje z prettier-plugin-svelte; nie obejmuje to bind:this
+                        // https://github.com/sveltejs/prettier-plugin-svelte/issues/443
+                        'this',
                         {
                             match: '/^.*/u',
                             sort: 'alphabetical',
