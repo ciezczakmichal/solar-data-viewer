@@ -1,5 +1,6 @@
 import type { DefinedError, ValidateFunction } from 'ajv'
 // konieczne obejścia z powodu błędu https://github.com/ajv-validator/ajv/issues/2132
+// @ts-expect-error Nieaktualizowana biblioteka
 import Localize_plModule from 'ajv-i18n/localize/pl'
 const localize_pl = Localize_plModule as unknown as (data: any) => void
 
