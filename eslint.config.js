@@ -3,8 +3,8 @@ import prettier from 'eslint-config-prettier'
 import svelte from 'eslint-plugin-svelte'
 import globals from 'globals'
 import ts from 'typescript-eslint'
-
 import perfectionist from 'eslint-plugin-perfectionist'
+import svelteConfig from './ui/svelte.config.js'
 
 export default ts.config(
     js.configs.recommended,
@@ -18,7 +18,6 @@ export default ts.config(
             parserOptions: {
                 parser: ts.parser,
                 projectService: true,
-                extraFileExtensions: ['.svelte'],
             },
             globals: {
                 ...globals.browser,
@@ -43,15 +42,20 @@ export default ts.config(
         },
     },
     {
-        files: ['**/*.svelte'],
+        files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
         languageOptions: {
-            globals: {
-                ...globals.browser,
+            parserOptions: {
+                projectService: true,
+                extraFileExtensions: ['.svelte'],
+                parser: ts.parser,
+                svelteConfig,
             },
         },
-
+    },
+    {
         // konieczne z uwagi na nierozpoznawanie przez ESLint typów komponentów
         // https://github.com/sveltejs/eslint-plugin-svelte/issues/298
+        files: ['**/*.svelte'],
         ...ts.configs.disableTypeChecked,
     },
     {
@@ -81,6 +85,7 @@ export default ts.config(
             '**/.prettierrc.js',
             '**/*.config.js',
             '**/*.config.ts',
+            '**/vitest-setup-client.ts',
 
             // lokalne
             'schema/**/generated/*.js',
