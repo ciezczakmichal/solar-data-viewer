@@ -4,7 +4,6 @@ import { defineConfig } from 'vitest/config'
 export default defineConfig({
     plugins: [sveltekit()],
     test: {
-        environment: 'jsdom',
         setupFiles: ['./src/lib/global/dayjs-import.ts'],
     },
 })
