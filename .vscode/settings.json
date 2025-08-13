@@ -4,5 +4,13 @@
             "mode": "auto"
         }
     ],
-    "eslint.validate": ["javascript", "svelte"]
+    "eslint.validate": [
+        "javascript",
+        "typescript",
+        "svelte",
+        "html",
+        "markdown",
+        "json",
+        "jsonc"
+    ]
 }
