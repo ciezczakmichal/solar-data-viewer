@@ -7,7 +7,7 @@ import StandaloneCodeModule from 'ajv/dist/standalone/index.js'
 const standaloneCode = StandaloneCodeModule.default
 
 import { writeFileSync } from 'fs'
-import { SolarDataAjvSchema } from '../src/definitions/solar-data-ajv-schema.js'
+import { SolarDataAjvSchema } from '../lib/definitions/solar-data-ajv-schema.js'
 
 const ajv = new Ajv({
     messages: false, // ze względu na użycie ajv-i18n
@@ -32,4 +32,4 @@ const data = {
 }
 
 moduleCode = moduleCode.replace(data.search, data.replace.replace('\n', ''))
-writeFileSync('src/generated/validator-standalone.js', moduleCode)
+writeFileSync('lib/generated/validator-standalone.js', moduleCode)

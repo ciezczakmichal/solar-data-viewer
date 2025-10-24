@@ -1,2 +1,2 @@
-src/generated/*
-!src/generated/README.md
+lib/generated/*
+!lib/generated/README.md
