@@ -13,7 +13,6 @@ on:
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
-    cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
     # Akcja przygotowująca zależności, generująca w ten sposób cache dla pozostałych operacji
