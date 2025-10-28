@@ -6,10 +6,10 @@ on:
             - main
     pull_request:
         types:
-            - "synchronize"
-            - "opened"
+            - 'synchronize'
+            - 'opened'
         branches:
-            - "**"
+            - '**'
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
@@ -28,7 +28,7 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: 22
-                  cache: "yarn"
+                  cache: 'yarn'
 
             - name: Install dependencies
               run: yarn --immutable
@@ -47,7 +47,7 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: 22
-                  cache: "yarn"
+                  cache: 'yarn'
 
             - name: Install dependencies
               run: yarn --immutable
@@ -68,7 +68,7 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: 22
-                  cache: "yarn"
+                  cache: 'yarn'
 
             - name: Install dependencies
               run: yarn --immutable
@@ -89,7 +89,7 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: 22
-                  cache: "yarn"
+                  cache: 'yarn'
 
             - name: Install dependencies
               run: yarn --immutable
