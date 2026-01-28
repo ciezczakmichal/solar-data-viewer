@@ -19,7 +19,10 @@ export default defineConfig(
             parserOptions: {
                 parser: ts.parser,
                 projectService: {
-                    allowDefaultProject: ['.prettierrc.js'],
+                    allowDefaultProject: [
+                        '.prettierrc.js',
+                        'ui/.prettierrc.js',
+                    ],
                     defaultProject: 'tsconfig.json',
                 },
             },
