@@ -26,8 +26,10 @@ export interface ValuesRecordPropertiesSchema {
     comment?: string
 }
 
-export interface ValuesRecordProperties
-    extends Omit<ValuesRecordPropertiesSchema, 'date'> {
+export interface ValuesRecordProperties extends Omit<
+    ValuesRecordPropertiesSchema,
+    'date'
+> {
     date: Dayjs
 }
 

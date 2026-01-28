@@ -35,8 +35,7 @@ export type EnergyCalculationInputPlantProperties = Pick<
     'energyInWarehouseFactor' | 'installationPower'
 >
 
-export interface EnergyCalculationInput
-    extends BaseEnergyParamsCalculationInput {
+export interface EnergyCalculationInput extends BaseEnergyParamsCalculationInput {
     plantProperties: EnergyCalculationInputPlantProperties
 }
 

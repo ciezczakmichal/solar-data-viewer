@@ -8,7 +8,9 @@ export interface MeterRecordSchema {
     comment?: string
 }
 
-export interface MeterRecord
-    extends Omit<MeterRecordSchema, 'installationDate'> {
+export interface MeterRecord extends Omit<
+    MeterRecordSchema,
+    'installationDate'
+> {
     installationDate: Dayjs
 }

@@ -78,6 +78,21 @@ export default ts.config(
         },
     },
     {
+        files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js', '**/*.ts'],
+        rules: {
+            // wyłączamy na ten moment w tym projekcie - linter wymaga użycia resolve nawet wtedy,
+            // gdy funkcja generuje odpowiedni typ ResolvedPathname
+            'svelte/no-navigation-without-resolve': [
+                'error',
+                {
+                    ignoreGoto: true,
+                    ignoreReplaceState: true,
+                    ignoreLinks: true,
+                },
+            ],
+        },
+    },
+    {
         ignores: [
             '**/build/',
             '**/dist/',
