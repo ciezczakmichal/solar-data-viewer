@@ -109,7 +109,7 @@ export default ts.config(
                 'error',
                 {
                     type: 'natural',
-                    newlinesBetween: 'never',
+                    newlinesBetween: 0,
                     ignoreCase: true,
                 },
             ],
