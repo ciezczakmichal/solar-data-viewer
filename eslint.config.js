@@ -18,7 +18,10 @@ export default defineConfig(
         languageOptions: {
             parserOptions: {
                 parser: ts.parser,
-                projectService: true,
+                projectService: {
+                    allowDefaultProject: ['.prettierrc.js'],
+                    defaultProject: 'tsconfig.json',
+                },
             },
             globals: {
                 ...globals.browser,
@@ -98,7 +101,6 @@ export default defineConfig(
             '**/build/',
             '**/dist/',
             '**/.svelte-kit/',
-            '**/.prettierrc.js',
             '**/vitest-setup-client.ts',
 
             // lokalne
